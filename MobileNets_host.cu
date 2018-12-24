@@ -7,10 +7,10 @@
 
 #define INPUT_LAYER_SIZE 225 * 225 * 3
 #define FIRST_LAYER_WEIGHT_SIZE 32 * 3 * 3 * 3
-#define FIRST_LAYER_OUTPUT_SIZE 112 * 112 * 32
+#define FIRST_LAYER_OUTPUT_SIZE 114 * 114 * 32
 #define FIRST_LAYER_CHANNELS 32
 
-// Function declarations 
+// Function declarations
 void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
      double * Layer1_Weights_CPU,
      double * Layer1_Mean_CPU,
@@ -24,11 +24,11 @@ void read_File(const char * weightFileName, double *Layer1_Weights_CPU);
 void read_Input_File(const char * inputFileName, double *Layer1_Neurons_CPU);
 
 int main(){
-    NeuralNetwork();    
+    NeuralNetwork();
 }
 
 void NeuralNetwork(){
-    // Reading the input layer data 
+    // Reading the input layer data
     double * Layer1_Neurons_CPU = (double *) malloc(sizeof(double) * INPUT_LAYER_SIZE);
     double * Layer1_Weights_CPU = (double *) malloc(sizeof(double) * FIRST_LAYER_WEIGHT_SIZE);
     double * Layer1_Mean_CPU = (double *) malloc(sizeof(double) * FIRST_LAYER_CHANNELS);
@@ -48,7 +48,7 @@ void NeuralNetwork(){
     double * Layer2_Neurons_CPU = (double *) malloc(sizeof(double) * FIRST_LAYER_OUTPUT_SIZE);
 
     // Copy memory from Host to Kernel
-    double *Layer1_Weights_GPU, 
+    double *Layer1_Weights_GPU,
            *Layer1_Neurons_GPU,
            *Layer2_Neurons_GPU,
            *Layer1_Mean_GPU,
@@ -56,7 +56,7 @@ void NeuralNetwork(){
            *Layer1_Gamma_GPU,
            *Layer1_Beta_GPU;
 
-    cudaMalloc((void**) &Layer1_Neurons_GPU, sizeof(double) * INPUT_LAYER_SIZE); 
+    cudaMalloc((void**) &Layer1_Neurons_GPU, sizeof(double) * INPUT_LAYER_SIZE);
     cudaMalloc((void**) &Layer1_Weights_GPU, sizeof(double) * FIRST_LAYER_WEIGHT_SIZE);
     cudaMalloc((void**) &Layer2_Neurons_GPU, sizeof(double) * FIRST_LAYER_OUTPUT_SIZE);
     cudaMalloc((void**) &Layer1_Mean_GPU, sizeof(double) * FIRST_LAYER_CHANNELS);
@@ -71,9 +71,9 @@ void NeuralNetwork(){
     cudaMemcpy(Layer1_StanDev_GPU, Layer1_StanDev_CPU, sizeof(double) * FIRST_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer1_Gamma_GPU, Layer1_Gamma_CPU, sizeof(double) * FIRST_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer1_Beta_GPU, Layer1_Beta_CPU, sizeof(double) * FIRST_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    
 
-    // Kernel Launch 
+
+    // Kernel Launch
     dim3 gridSizeA(32, 3, 3);
     dim3 blockSizeA(32,32);
 
@@ -120,7 +120,7 @@ void NeuralNetwork(){
     FILE * fOutput = fopen("data/FirstLayer/output.txt", "w");
     int value = FIRST_LAYER_OUTPUT_SIZE;
     for(int i = 0 ; i < value ; i++){
-        fprintf (fOutput, "%lf\n", Layer2_Neurons_CPU[i]);
+        fprintf (fOutput, "%0.7lf\n", Layer2_Neurons_CPU[i]);
     }
     fclose(fOutput);
 
@@ -144,8 +144,8 @@ void NeuralNetwork(){
     cudaFree(Layer1_Beta_GPU);
 }
 
-void Read_First_Layer_Data(double * Layer1_Neurons_CPU, 
-    double * Layer1_Weights_CPU, 
+void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
+    double * Layer1_Weights_CPU,
     double * Layer1_Mean_CPU,
     double * Layer1_StanDev_CPU,
     double * Layer1_Gamma_CPU,
@@ -161,7 +161,7 @@ void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
 
 
 void read_File(const char * input_FileName, double * input_values){
-    
+
     FILE *fp = fopen(input_FileName, "r");
     if (fp == NULL){
         printf("\n No input file present at the location \n");
@@ -173,7 +173,7 @@ void read_File(const char * input_FileName, double * input_values){
     char * line = NULL;
     size_t len = 1000;
 
-    while ((read = getline(&line, &len, fp)) != -1) 
+    while ((read = getline(&line, &len, fp)) != -1)
         input_values[counter++] = atof(line);
     fclose(fp);
 }
@@ -196,7 +196,7 @@ void read_Input_File(const char * inputFileName, double * Layer1_Neurons_CPU){
     while ((read = getline(&line, &len, fp)) != -1) {
         Layer1_Neurons_CPU[counter++] = atof(line);
         index++;
-        // handle padding 
+        // handle padding
         if (index == 224){
             Layer1_Neurons_CPU[counter++] = 0;
             index = 0;
@@ -215,4 +215,3 @@ void read_Input_File(const char * inputFileName, double * Layer1_Neurons_CPU){
     printf("\n Total characters read ---> %d\n", counter);
     fclose(fp);
 }
-
