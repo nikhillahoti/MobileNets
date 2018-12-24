@@ -124,7 +124,7 @@ void NeuralNetwork(){
     }
     fclose(fOutput);
 
-    printf("\n\n Processing Done !!! ");
+    printf("\n\n Processing Done !!! \n\n");
 
     // Free the memory at the end
     free(Layer1_Neurons_CPU);
