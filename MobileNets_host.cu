@@ -10,6 +10,9 @@
 #define FIRST_LAYER_OUTPUT_SIZE 114 * 114 * 32
 #define FIRST_LAYER_CHANNELS 32
 
+#define SECOND_LAYER_WEIGHT_SIZE 32 * 3 * 3
+#define SECOND_LAYER_OUTPUT_SIZE 112 * 112 * 32
+
 // Function declarations
 void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
      double * Layer1_Weights_CPU,
@@ -22,6 +25,8 @@ void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
 void NeuralNetwork();
 void read_File(const char * weightFileName, double *Layer1_Weights_CPU);
 void read_Input_File(const char * inputFileName, double *Layer1_Neurons_CPU);
+
+void Read_SecondLayer_Data(double *Layer1_Weights_CPU);
 
 int main(){
     NeuralNetwork();
@@ -110,17 +115,58 @@ void NeuralNetwork(){
                         Layer1_Beta_GPU
                     );
 
+    
+    double * Layer2_Weights_CPU = (double *) malloc(sizeof(double) * SECOND_LAYER_WEIGHT_SIZE);
+    double * Layer3_Neurons_CPU = (double *) malloc(sizeof(double) * SECOND_LAYER_OUTPUT_SIZE);
+
+    Read_SecondLayer_Data(Layer2_Weights_CPU);
+
+    double *Layer3_Neurons_GPU,
+           *Layer2_Weights_GPU;
+
+    cudaMalloc((void**) &Layer2_Weights_GPU, sizeof(double) * SECOND_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer3_Neurons_GPU, sizeof(double) * SECOND_LAYER_OUTPUT_SIZE);
+
+    cudaMemcpy(Layer2_Weights_GPU, Layer2_Weights_CPU, sizeof(double) * SECOND_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+
+    executeSecondLayer_partA<<< gridSizeA, blockSizeA>>>(Layer2_Neurons_GPU,
+                                            Layer2_Weights_GPU,
+                                            Layer3_Neurons_GPU
+                                        );
+
+    executeSecondLayer_partB<<< gridSizeB, blockSizeB>>>(Layer2_Neurons_GPU,
+        Layer2_Weights_GPU,
+        Layer3_Neurons_GPU
+    );
+
+    executeSecondLayer_partC<<< gridSizeC, blockSizeC>>>(Layer2_Neurons_GPU,
+        Layer2_Weights_GPU,
+        Layer3_Neurons_GPU
+    );
 
     // Get back the data from the kernel to the host
+    cudaMemcpy(Layer3_Neurons_CPU, Layer3_Neurons_GPU, sizeof(double) * SECOND_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+    cudaDeviceSynchronize();
+
+    // Logic to save into the file to verify the results
+    FILE * fOutput = fopen("data/SecondLayer/output.txt", "w");
+    int value = SECOND_LAYER_OUTPUT_SIZE;
+    for(int i = 0 ; i < value ; i++){
+        fprintf (fOutput, "%0.6lf\n", Layer3_Neurons_CPU[i]);
+    }
+    fclose(fOutput);
+
+    // Saving output of the first layer
     cudaMemcpy(Layer2_Neurons_CPU, Layer2_Neurons_GPU, sizeof(double) * FIRST_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
 
     cudaDeviceSynchronize();
 
     // Logic to save into the file to verify the results
-    FILE * fOutput = fopen("data/FirstLayer/output.txt", "w");
-    int value = FIRST_LAYER_OUTPUT_SIZE;
+    fOutput = fopen("data/FirstLayer/output.txt", "w");
+    value = FIRST_LAYER_OUTPUT_SIZE;
     for(int i = 0 ; i < value ; i++){
-        fprintf (fOutput, "%0.7lf\n", Layer2_Neurons_CPU[i]);
+        fprintf (fOutput, "%0.6lf\n", Layer2_Neurons_CPU[i]);
     }
     fclose(fOutput);
 
@@ -135,6 +181,9 @@ void NeuralNetwork(){
     free(Layer1_Gamma_CPU);
     free(Layer1_Beta_CPU);
 
+    free(Layer2_Weights_CPU);
+    free(Layer3_Neurons_CPU);
+
     cudaFree(Layer1_Neurons_GPU);
     cudaFree(Layer1_Weights_GPU);
     cudaFree(Layer2_Neurons_GPU);
@@ -142,6 +191,9 @@ void NeuralNetwork(){
     cudaFree(Layer1_StanDev_GPU);
     cudaFree(Layer1_Gamma_GPU);
     cudaFree(Layer1_Beta_GPU);
+
+    cudaFree(Layer2_Weights_GPU);
+    cudaFree(Layer3_Neurons_GPU);
 }
 
 void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
@@ -151,14 +203,17 @@ void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
     double * Layer1_Gamma_CPU,
     double * Layer1_Beta_CPU
 ){
-    read_Input_File("data/FirstLayer/Input_File.txt", Layer1_Neurons_CPU);
-    read_File("data/FirstLayer/First_Layer_Weights.txt", Layer1_Weights_CPU);
+    read_Input_File("data/FirstLayer/InputFiles/inputNorm.txt", Layer1_Neurons_CPU);
+    read_File("data/FirstLayer/weightsSet1.txt", Layer1_Weights_CPU);
     read_File("data/FirstLayer/First_Layer_Mean.txt", Layer1_Mean_CPU);
     read_File("data/FirstLayer/First_Layer_StanDev.txt", Layer1_StanDev_CPU);
     read_File("data/FirstLayer/First_Layer_Gamma.txt", Layer1_Gamma_CPU);
     read_File("data/FirstLayer/First_Layer_Beta.txt", Layer1_Beta_CPU);
 }
 
+void Read_SecondLayer_Data(double *Layer2_Weights_CPU){
+    read_File("data/SecondLayer/Second_Layer_Weights.txt", Layer2_Weights_CPU);
+}
 
 void read_File(const char * input_FileName, double * input_values){
 
