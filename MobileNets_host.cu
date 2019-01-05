@@ -204,7 +204,7 @@ void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
     double * Layer1_Beta_CPU
 ){
     read_Input_File("data/FirstLayer/InputFiles/inputNorm.txt", Layer1_Neurons_CPU);
-    read_File("data/FirstLayer/weightsSet1.txt", Layer1_Weights_CPU);
+    read_File("data/FirstLayer/weightsNorm.txt", Layer1_Weights_CPU);
     read_File("data/FirstLayer/First_Layer_Mean.txt", Layer1_Mean_CPU);
     read_File("data/FirstLayer/First_Layer_StanDev.txt", Layer1_StanDev_CPU);
     read_File("data/FirstLayer/First_Layer_Gamma.txt", Layer1_Gamma_CPU);
@@ -212,7 +212,7 @@ void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
 }
 
 void Read_SecondLayer_Data(double *Layer2_Weights_CPU){
-    read_File("data/SecondLayer/Second_Layer_Weights.txt", Layer2_Weights_CPU);
+    read_File("data/SecondLayer/weightsNorm.txt", Layer2_Weights_CPU);
 }
 
 void read_File(const char * input_FileName, double * input_values){
