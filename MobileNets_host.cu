@@ -12,6 +12,7 @@
 
 #define SECOND_LAYER_WEIGHT_SIZE 32 * 3 * 3
 #define SECOND_LAYER_OUTPUT_SIZE 112 * 112 * 32
+#define SECOND_LAYER_CHANNELS 32
 
 // Function declarations
 void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
@@ -26,7 +27,12 @@ void NeuralNetwork();
 void read_File(const char * weightFileName, double *Layer1_Weights_CPU);
 void read_Input_File(const char * inputFileName, double *Layer1_Neurons_CPU);
 
-void Read_SecondLayer_Data(double *Layer1_Weights_CPU);
+void Read_SecondLayer_Data(double *Layer1_Weights_CPU,
+    double *Layer2_Mean_CPU,
+    double *Layer2_StanDev_CPU,
+    double *Layer2_Gamma_CPU,
+    double *Layer2_Beta_CPU
+);
 
 int main(){
     NeuralNetwork();
@@ -118,30 +124,64 @@ void NeuralNetwork(){
     
     double * Layer2_Weights_CPU = (double *) malloc(sizeof(double) * SECOND_LAYER_WEIGHT_SIZE);
     double * Layer3_Neurons_CPU = (double *) malloc(sizeof(double) * SECOND_LAYER_OUTPUT_SIZE);
+    double * Layer2_Mean_CPU = (double *) malloc(sizeof(double) * SECOND_LAYER_CHANNELS);
+    double * Layer2_StanDev_CPU = (double *) malloc(sizeof(double) * SECOND_LAYER_CHANNELS);
+    double * Layer2_Gamma_CPU = (double *) malloc(sizeof(double) * SECOND_LAYER_CHANNELS);
+    double * Layer2_Beta_CPU = (double *) malloc(sizeof(double) * SECOND_LAYER_CHANNELS);
 
-    Read_SecondLayer_Data(Layer2_Weights_CPU);
+
+    Read_SecondLayer_Data(Layer2_Weights_CPU,
+                        Layer2_Mean_CPU,
+                        Layer2_StanDev_CPU,
+                        Layer2_Gamma_CPU,
+                        Layer2_Beta_CPU
+    );
 
     double *Layer3_Neurons_GPU,
-           *Layer2_Weights_GPU;
+           *Layer2_Weights_GPU,
+           *Layer2_Mean_GPU,
+           *Layer2_StanDev_GPU,
+           *Layer2_Gamma_GPU,
+           *Layer2_Beta_GPU;;
 
     cudaMalloc((void**) &Layer2_Weights_GPU, sizeof(double) * SECOND_LAYER_WEIGHT_SIZE);
     cudaMalloc((void**) &Layer3_Neurons_GPU, sizeof(double) * SECOND_LAYER_OUTPUT_SIZE);
+    cudaMalloc((void**) &Layer2_Mean_GPU, sizeof(double) * SECOND_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer2_StanDev_GPU, sizeof(double) * SECOND_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer2_Gamma_GPU, sizeof(double) * SECOND_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer2_Beta_GPU, sizeof(double) * SECOND_LAYER_CHANNELS);
 
     cudaMemcpy(Layer2_Weights_GPU, Layer2_Weights_CPU, sizeof(double) * SECOND_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer2_Mean_GPU, Layer2_Mean_CPU, sizeof(double) * SECOND_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer2_StanDev_GPU, Layer2_StanDev_CPU, sizeof(double) * SECOND_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer2_Gamma_GPU, Layer2_Gamma_CPU, sizeof(double) * SECOND_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer2_Beta_GPU, Layer2_Beta_CPU, sizeof(double) * SECOND_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     executeSecondLayer_partA<<< gridSizeA, blockSizeA>>>(Layer2_Neurons_GPU,
                                             Layer2_Weights_GPU,
-                                            Layer3_Neurons_GPU
+                                            Layer3_Neurons_GPU,
+                                            Layer2_Mean_GPU,
+                                            Layer2_StanDev_GPU,
+                                            Layer2_Gamma_GPU,
+                                            Layer2_Beta_GPU
                                         );
 
     executeSecondLayer_partB<<< gridSizeB, blockSizeB>>>(Layer2_Neurons_GPU,
-        Layer2_Weights_GPU,
-        Layer3_Neurons_GPU
+                                            Layer2_Weights_GPU,
+                                            Layer3_Neurons_GPU,
+                                            Layer2_Mean_GPU,
+                                            Layer2_StanDev_GPU,
+                                            Layer2_Gamma_GPU,
+                                            Layer2_Beta_GPU
     );
 
     executeSecondLayer_partC<<< gridSizeC, blockSizeC>>>(Layer2_Neurons_GPU,
-        Layer2_Weights_GPU,
-        Layer3_Neurons_GPU
+                                            Layer2_Weights_GPU,
+                                            Layer3_Neurons_GPU,
+                                            Layer2_Mean_GPU,
+                                            Layer2_StanDev_GPU,
+                                            Layer2_Gamma_GPU,
+                                            Layer2_Beta_GPU
     );
 
     // Get back the data from the kernel to the host
@@ -183,6 +223,10 @@ void NeuralNetwork(){
 
     free(Layer2_Weights_CPU);
     free(Layer3_Neurons_CPU);
+    free(Layer2_Mean_CPU);
+    free(Layer2_StanDev_CPU);
+    free(Layer2_Gamma_CPU);
+    free(Layer2_Beta_CPU);
 
     cudaFree(Layer1_Neurons_GPU);
     cudaFree(Layer1_Weights_GPU);
@@ -194,6 +238,11 @@ void NeuralNetwork(){
 
     cudaFree(Layer2_Weights_GPU);
     cudaFree(Layer3_Neurons_GPU);
+    cudaFree(Layer2_Mean_GPU);
+    cudaFree(Layer2_StanDev_GPU);
+    cudaFree(Layer2_Gamma_GPU);
+    cudaFree(Layer2_Beta_GPU);
+
 }
 
 void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
@@ -211,8 +260,17 @@ void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
     read_File("data/FirstLayer/First_Layer_Beta.txt", Layer1_Beta_CPU);
 }
 
-void Read_SecondLayer_Data(double *Layer2_Weights_CPU){
+void Read_SecondLayer_Data(double *Layer2_Weights_CPU,
+    double * Layer2_Mean_CPU,
+    double * Layer2_StanDev_CPU,
+    double * Layer2_Gamma_CPU,
+    double * Layer2_Beta_CPU
+){
     read_File("data/SecondLayer/weightsNorm.txt", Layer2_Weights_CPU);
+    read_File("data/SecondLayer/Second_Layer_Mean.txt", Layer2_Mean_CPU);
+    read_File("data/SecondLayer/Second_Layer_StanDev.txt", Layer2_StanDev_CPU);
+    read_File("data/SecondLayer/Second_Layer_Gamma.txt", Layer2_Gamma_CPU);
+    read_File("data/SecondLayer/Second_Layer_Beta.txt", Layer2_Beta_CPU);
 }
 
 void read_File(const char * input_FileName, double * input_values){
