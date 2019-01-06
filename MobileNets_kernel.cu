@@ -308,7 +308,11 @@ __global__ void executeSecondLayer_partC(double *Layer2_Neurons_GPU,
 // Layer 3
 __global__ void executeThirdLayer_partA(double *Layer3_Neurons_GPU,
     double *Layer3_Weights_GPU,
-    double *Layer4_Neurons_GPU
+    double *Layer4_Neurons_GPU,
+    double *Layer3_Mean_GPU,
+    double *Layer3_StanDev_GPU,
+    double *Layer3_Gamma_GPU,
+    double *Layer3_Beta_GPU
 )
 {
     double product = 0.0;
@@ -334,12 +338,27 @@ __global__ void executeThirdLayer_partA(double *Layer3_Neurons_GPU,
         product += (Layer3_Neurons_GPU[(channel * 112 * 112) + input_Position] * Layer3_Weights_GPU[weight_Position + channel]);
     }
 
-    Layer4_Neurons_GPU[output_Position] = product;
+    double Z = (product - Layer3_Mean_GPU[filter_number]) / Layer3_StanDev_GPU[filter_number];
+    Z = (Z * Layer3_Gamma_GPU[filter_number]) + Layer3_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer4_Neurons_GPU[output_Position] = Z;
 }
 
 __global__ void executeThirdLayer_partB(double *Layer3_Neurons_GPU,
     double *Layer3_Weights_GPU,
-    double *Layer4_Neurons_GPU
+    double *Layer4_Neurons_GPU,
+    double *Layer3_Mean_GPU,
+    double *Layer3_StanDev_GPU,
+    double *Layer3_Gamma_GPU,
+    double *Layer3_Beta_GPU
 )
 {
     double product = 0.0;
@@ -364,12 +383,27 @@ __global__ void executeThirdLayer_partB(double *Layer3_Neurons_GPU,
         product += (Layer3_Neurons_GPU[(channel * 112 * 112) + input_Position] * Layer3_Weights_GPU[weight_Position + channel]);
     }
 
-    Layer4_Neurons_GPU[output_Position] = product;
+    double Z = (product - Layer3_Mean_GPU[filter_number]) / Layer3_StanDev_GPU[filter_number];
+    Z = (Z * Layer3_Gamma_GPU[filter_number]) + Layer3_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer4_Neurons_GPU[output_Position] = Z;
 }
 
 __global__ void executeThirdLayer_partC(double *Layer3_Neurons_GPU,
     double *Layer3_Weights_GPU,
-    double *Layer4_Neurons_GPU
+    double *Layer4_Neurons_GPU,
+    double *Layer3_Mean_GPU,
+    double *Layer3_StanDev_GPU,
+    double *Layer3_Gamma_GPU,
+    double *Layer3_Beta_GPU
 )
 {
     double product = 0.0;
@@ -395,5 +429,16 @@ __global__ void executeThirdLayer_partC(double *Layer3_Neurons_GPU,
         product += (Layer3_Neurons_GPU[(channel * 112 * 112) + input_Position] * Layer3_Weights_GPU[weight_Position + channel]);
     }
 
-    Layer4_Neurons_GPU[output_Position] = product;
+    double Z = (product - Layer3_Mean_GPU[filter_number]) / Layer3_StanDev_GPU[filter_number];
+    Z = (Z * Layer3_Gamma_GPU[filter_number]) + Layer3_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer4_Neurons_GPU[output_Position] = Z;
 }

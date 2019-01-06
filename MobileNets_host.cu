@@ -45,7 +45,12 @@ void Execute_Second_Layer(
     double * Layer3_Neurons_GPU
 );
 
-void Read_ThirdLayer_Data(double *Layer3_Weights_CPU);
+void Read_ThirdLayer_Data(double *Layer3_Weights_CPU,
+    double * Layer3_Mean_CPU,
+    double * Layer3_StanDev_CPU,
+    double * Layer3_Gamma_CPU,
+    double * Layer3_Beta_CPU
+);
 void Execute_Third_Layer(
     double * Layer3_Neurons_GPU,
     double * Layer4_Neurons_GPU
@@ -362,43 +367,96 @@ void Execute_Third_Layer(
     double * Layer4_Neurons_GPU
 ){
     double * Layer3_Weights_CPU = (double *) malloc(sizeof(double) * THIRD_LAYER_WEIGHT_SIZE);
-    Read_ThirdLayer_Data(Layer3_Weights_CPU);
+    double * Layer3_Mean_CPU = (double *) malloc(sizeof(double) * THIRD_LAYER_CHANNELS);
+    double * Layer3_StanDev_CPU = (double *) malloc(sizeof(double) * THIRD_LAYER_CHANNELS);
+    double * Layer3_Gamma_CPU = (double *) malloc(sizeof(double) * THIRD_LAYER_CHANNELS);
+    double * Layer3_Beta_CPU = (double *) malloc(sizeof(double) * THIRD_LAYER_CHANNELS);
 
-    double *Layer3_Weights_GPU;
+    Read_ThirdLayer_Data(Layer3_Weights_CPU,
+                Layer3_Mean_CPU,
+                Layer3_StanDev_CPU,
+                Layer3_Gamma_CPU,
+                Layer3_Beta_CPU
+    );
+
+    double *Layer3_Weights_GPU,
+           *Layer3_Mean_GPU,
+           *Layer3_StanDev_GPU,
+           *Layer3_Gamma_GPU,
+           *Layer3_Beta_GPU;;
+
     cudaMalloc((void**) &Layer3_Weights_GPU, sizeof(double) * THIRD_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer3_Mean_GPU, sizeof(double) * THIRD_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer3_StanDev_GPU, sizeof(double) * THIRD_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer3_Gamma_GPU, sizeof(double) * THIRD_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer3_Beta_GPU, sizeof(double) * THIRD_LAYER_CHANNELS);
+
     cudaMemcpy(Layer3_Weights_GPU, Layer3_Weights_CPU, sizeof(double) * THIRD_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer3_Mean_GPU, Layer3_Mean_CPU, sizeof(double) * THIRD_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer3_StanDev_GPU, Layer3_StanDev_CPU, sizeof(double) * THIRD_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer3_Gamma_GPU, Layer3_Gamma_CPU, sizeof(double) * THIRD_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer3_Beta_GPU, Layer3_Beta_CPU, sizeof(double) * THIRD_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer3_Weights_CPU);
+    free(Layer3_Mean_CPU);
+    free(Layer3_StanDev_CPU);
+    free(Layer3_Gamma_CPU);
+    free(Layer3_Beta_CPU);
     
     // Execution of the Third Layer
     dim3 gridSizeThirdLayerA(64, 3, 3);
     dim3 blockSizeThirdLayerA(32,32);
     executeThirdLayer_partA<<< gridSizeThirdLayerA, blockSizeThirdLayerA>>>(Layer3_Neurons_GPU,
                         Layer3_Weights_GPU,
-                        Layer4_Neurons_GPU
+                        Layer4_Neurons_GPU,
+                        Layer3_Mean_GPU,
+                        Layer3_StanDev_GPU,
+                        Layer3_Gamma_GPU,
+                        Layer3_Beta_GPU
     );
 
     dim3 gridSizeThirdLayerB(64, 7);
     dim3 blockSizeThirdLayerB(16, 16);
     executeThirdLayer_partB<<< gridSizeThirdLayerB, blockSizeThirdLayerB>>>(Layer3_Neurons_GPU,
                         Layer3_Weights_GPU,
-                        Layer4_Neurons_GPU
+                        Layer4_Neurons_GPU,
+                        Layer3_Mean_GPU,
+                        Layer3_StanDev_GPU,
+                        Layer3_Gamma_GPU,
+                        Layer3_Beta_GPU
     );
 
     dim3 gridSizeThirdLayerC(64, 6);
     dim3 blockSizeThirdLayerC(16, 16);
     executeThirdLayer_partC<<< gridSizeThirdLayerC, blockSizeThirdLayerC>>>(Layer3_Neurons_GPU,
                         Layer3_Weights_GPU,
-                        Layer4_Neurons_GPU
+                        Layer4_Neurons_GPU,
+                        Layer3_Mean_GPU,
+                        Layer3_StanDev_GPU,
+                        Layer3_Gamma_GPU,
+                        Layer3_Beta_GPU
     );
 
     cudaDeviceSynchronize();
 
     cudaFree(Layer3_Weights_GPU);
+    cudaFree(Layer3_Mean_GPU);
+    cudaFree(Layer3_StanDev_GPU);
+    cudaFree(Layer3_Gamma_GPU);
+    cudaFree(Layer3_Beta_GPU);
 }
 
-void Read_ThirdLayer_Data(double *Layer3_Weights_CPU){
-    read_File("data/ThirdLayer/weightsSet1.txt", Layer3_Weights_CPU);
+void Read_ThirdLayer_Data(double *Layer3_Weights_CPU,
+    double * Layer3_Mean_CPU,
+    double * Layer3_StanDev_CPU,
+    double * Layer3_Gamma_CPU,
+    double * Layer3_Beta_CPU
+){
+    read_File("data/ThirdLayer/weightsNorm.txt", Layer3_Weights_CPU);
+    read_File("data/ThirdLayer/Third_Layer_Mean.txt", Layer3_Mean_CPU);
+    read_File("data/ThirdLayer/Third_Layer_StanDev.txt", Layer3_StanDev_CPU);
+    read_File("data/ThirdLayer/Third_Layer_Gamma.txt", Layer3_Gamma_CPU);
+    read_File("data/ThirdLayer/Third_Layer_Beta.txt", Layer3_Beta_CPU);
 }
 
 void read_File(const char * input_FileName, double * input_values){
