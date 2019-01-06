@@ -14,18 +14,22 @@
 #define SECOND_LAYER_OUTPUT_SIZE 112 * 112 * 32
 #define SECOND_LAYER_CHANNELS 32
 
-// Function declarations
-void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
-     double * Layer1_Weights_CPU,
-     double * Layer1_Mean_CPU,
-     double * Layer1_StanDev_CPU,
-     double * Layer1_Gamma_CPU,
-     double * Layer1_Beta_CPU
-);
+#define THIRD_LAYER_WEIGHT_SIZE 64 * 32
+#define THIRD_LAYER_OUTPUT_SIZE 113 * 113 * 64
+#define THIRD_LAYER_CHANNELS 64
 
+// Function declarations
 void NeuralNetwork();
 void read_File(const char * weightFileName, double *Layer1_Weights_CPU);
 void read_Input_File(const char * inputFileName, double *Layer1_Neurons_CPU);
+
+void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
+    double * Layer1_Weights_CPU,
+    double * Layer1_Mean_CPU,
+    double * Layer1_StanDev_CPU,
+    double * Layer1_Gamma_CPU,
+    double * Layer1_Beta_CPU
+);
 
 void Read_SecondLayer_Data(double *Layer1_Weights_CPU,
     double *Layer2_Mean_CPU,
@@ -33,6 +37,8 @@ void Read_SecondLayer_Data(double *Layer1_Weights_CPU,
     double *Layer2_Gamma_CPU,
     double *Layer2_Beta_CPU
 );
+
+void Read_ThirdLayer_Data(double *Layer3_Weights_CPU);
 
 int main(){
     NeuralNetwork();
@@ -184,14 +190,69 @@ void NeuralNetwork(){
                                             Layer2_Beta_GPU
     );
 
-    // Get back the data from the kernel to the host
+    /* ************************************************ THIRD LAYER ******************************************************** */
+    double * Layer3_Weights_CPU = (double *) malloc(sizeof(double) * THIRD_LAYER_WEIGHT_SIZE);
+    double * Layer4_Neurons_CPU = (double *) malloc(sizeof(double) * THIRD_LAYER_OUTPUT_SIZE);
+
+    Read_ThirdLayer_Data(Layer3_Weights_CPU);
+
+    double *Layer4_Neurons_GPU,
+           *Layer3_Weights_GPU;
+
+    cudaMalloc((void**) &Layer3_Weights_GPU, sizeof(double) * THIRD_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer4_Neurons_GPU, sizeof(double) * THIRD_LAYER_OUTPUT_SIZE);
+
+    cudaMemcpy(Layer3_Weights_GPU, Layer3_Weights_CPU, sizeof(double) * THIRD_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    
+    // Execution of the Third Layer
+    dim3 gridSizeThirdLayerA(64, 3, 3);
+    dim3 blockSizeThirdLayerA(32,32);
+
+    executeThirdLayer_partA<<< gridSizeThirdLayerA, blockSizeThirdLayerA>>>(Layer3_Neurons_GPU,
+                        Layer3_Weights_GPU,
+                        Layer4_Neurons_GPU
+                    );
+
+    dim3 gridSizeThirdLayerB(64, 7);
+    dim3 blockSizeThirdLayerB(16, 16);
+
+    executeThirdLayer_partB<<< gridSizeThirdLayerB, blockSizeThirdLayerB>>>(Layer3_Neurons_GPU,
+                        Layer3_Weights_GPU,
+                        Layer4_Neurons_GPU
+                    );
+
+    dim3 gridSizeThirdLayerC(64, 6);
+    dim3 blockSizeThirdLayerC(16, 16);
+
+    executeThirdLayer_partC<<< gridSizeThirdLayerC, blockSizeThirdLayerC>>>(Layer3_Neurons_GPU,
+                        Layer3_Weights_GPU,
+                        Layer4_Neurons_GPU
+                    );
+
+    cudaDeviceSynchronize();
+
+    // Get back the data from the kernel to the host.
+
+    // Output of the Third Layer
+    cudaMemcpy(Layer4_Neurons_CPU, Layer4_Neurons_GPU, sizeof(double) * THIRD_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+    cudaDeviceSynchronize();
+
+    // Logic to save into the file to verify the results
+    FILE * fOutput = fopen("data/ThirdLayer/output.txt", "w");
+    int value = THIRD_LAYER_OUTPUT_SIZE;
+    for(int i = 0 ; i < value ; i++){
+        fprintf (fOutput, "%0.6lf\n", Layer4_Neurons_CPU[i]);
+    }
+    fclose(fOutput);
+
     cudaMemcpy(Layer3_Neurons_CPU, Layer3_Neurons_GPU, sizeof(double) * SECOND_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
 
     cudaDeviceSynchronize();
 
     // Logic to save into the file to verify the results
-    FILE * fOutput = fopen("data/SecondLayer/output.txt", "w");
-    int value = SECOND_LAYER_OUTPUT_SIZE;
+    fOutput = fopen("data/SecondLayer/output.txt", "w");
+    value = SECOND_LAYER_OUTPUT_SIZE;
     for(int i = 0 ; i < value ; i++){
         fprintf (fOutput, "%0.6lf\n", Layer3_Neurons_CPU[i]);
     }
@@ -213,6 +274,8 @@ void NeuralNetwork(){
     printf("\n\n Processing Done !!! \n\n");
 
     // Free the memory at the end
+
+    // First Layer
     free(Layer1_Neurons_CPU);
     free(Layer1_Weights_CPU);
     free(Layer2_Neurons_CPU);
@@ -221,12 +284,17 @@ void NeuralNetwork(){
     free(Layer1_Gamma_CPU);
     free(Layer1_Beta_CPU);
 
+    // Second Layer
     free(Layer2_Weights_CPU);
     free(Layer3_Neurons_CPU);
     free(Layer2_Mean_CPU);
     free(Layer2_StanDev_CPU);
     free(Layer2_Gamma_CPU);
     free(Layer2_Beta_CPU);
+
+    // Third Layer
+    free(Layer3_Weights_CPU);
+    free(Layer4_Neurons_CPU);
 
     cudaFree(Layer1_Neurons_GPU);
     cudaFree(Layer1_Weights_GPU);
@@ -243,6 +311,8 @@ void NeuralNetwork(){
     cudaFree(Layer2_Gamma_GPU);
     cudaFree(Layer2_Beta_GPU);
 
+    cudaFree(Layer3_Weights_GPU);
+    cudaFree(Layer4_Neurons_GPU);
 }
 
 void Read_First_Layer_Data(double * Layer1_Neurons_CPU,
@@ -271,6 +341,10 @@ void Read_SecondLayer_Data(double *Layer2_Weights_CPU,
     read_File("data/SecondLayer/Second_Layer_StanDev.txt", Layer2_StanDev_CPU);
     read_File("data/SecondLayer/Second_Layer_Gamma.txt", Layer2_Gamma_CPU);
     read_File("data/SecondLayer/Second_Layer_Beta.txt", Layer2_Beta_CPU);
+}
+
+void Read_ThirdLayer_Data(double *Layer3_Weights_CPU){
+    read_File("data/ThirdLayer/weightsSet1.txt", Layer3_Weights_CPU);
 }
 
 void read_File(const char * input_FileName, double * input_values){

@@ -303,3 +303,99 @@ __global__ void executeSecondLayer_partC(double *Layer2_Neurons_GPU,
     Layer3_Neurons_GPU[output_Position] = Z;
 }
 
+
+
+// Layer 3
+__global__ void executeThirdLayer_partA(double *Layer3_Neurons_GPU,
+    double *Layer3_Weights_GPU,
+    double *Layer4_Neurons_GPU
+)
+{
+    double product = 0.0;
+
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 113 * 113)   // channel to work with
+                        + (blockIdx.y * 32 * 113)    // Position in the grid row-wise
+                        + (blockIdx.z * 32)          // Position in the grid column-wise
+                        + (threadIdx.x * 113)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 32;
+
+    int input_Position = (blockIdx.y * 32 * 112) // Position in the grid row-wise
+                       + (blockIdx.z * 32)         // Position in the grid column-wise
+                       + (threadIdx.x * 112)
+                       + (threadIdx.y);
+
+    for(int channel = 0; channel < 32; channel++)       // This is the channel loop as we have 32 channels to work with
+    {
+        product += (Layer3_Neurons_GPU[(channel * 112 * 112) + input_Position] * Layer3_Weights_GPU[weight_Position + channel]);
+    }
+
+    Layer4_Neurons_GPU[output_Position] = product;
+}
+
+__global__ void executeThirdLayer_partB(double *Layer3_Neurons_GPU,
+    double *Layer3_Weights_GPU,
+    double *Layer4_Neurons_GPU
+)
+{
+    double product = 0.0;
+
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 113 * 113)   // channel to work with
+                        + (blockIdx.y * 16 * 113 + 96)  // Position in the grid row-wise and there is no column-wise position
+                        + (threadIdx.x * 113)           // Position inside the 256 (16 * 16) block
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 32;
+
+    int input_Position = (blockIdx.y * 16 * 112)         // Position in the grid row-wise
+                       + (96)                   // Position in the grid column-wise
+                       + (threadIdx.x * 112)
+                       + (threadIdx.y);
+
+    for(int channel = 0 ; channel < 32 ; channel++) // Channel loop as we have 32 input channels to work with
+    {
+        product += (Layer3_Neurons_GPU[(channel * 112 * 112) + input_Position] * Layer3_Weights_GPU[weight_Position + channel]);
+    }
+
+    Layer4_Neurons_GPU[output_Position] = product;
+}
+
+__global__ void executeThirdLayer_partC(double *Layer3_Neurons_GPU,
+    double *Layer3_Weights_GPU,
+    double *Layer4_Neurons_GPU
+)
+{
+    double product = 0.0;
+
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 113 * 113)   // channel to work with
+                        + (96 * 113)                    // Position in the grid row-wise as row is last
+                        + (blockIdx.y * 16)             // Position in the grid column-wise
+                        + (threadIdx.x * 113)           // Position inside the 256 (16 * 16) block
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 32;
+
+    int input_Position = (96 * 112)            // row-wise: the bottom part of the grid after 96th row
+                       + (blockIdx.y * 16)     // column-wise: block number in the 6 blocks of 16 * 16 threads
+                       + (threadIdx.x * 112)   // Position inside one the above block row-wise
+                       + (threadIdx.y);        // Position inside one the above block column-wise
+    
+    for(int channel = 0 ; channel < 32 ; channel++) // Channel loop as we have 32 input channels to work with
+    {
+        product += (Layer3_Neurons_GPU[(channel * 112 * 112) + input_Position] * Layer3_Weights_GPU[weight_Position + channel]);
+    }
+
+    Layer4_Neurons_GPU[output_Position] = product;
+}
+
+
