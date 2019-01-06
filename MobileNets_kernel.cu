@@ -397,5 +397,3 @@ __global__ void executeThirdLayer_partC(double *Layer3_Neurons_GPU,
 
     Layer4_Neurons_GPU[output_Position] = product;
 }
-
-
