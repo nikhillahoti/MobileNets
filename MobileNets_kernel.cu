@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+/*  ************************************************** FIRST LAYER START ********************************************************* */
 __global__ void executeFirstLayer_partA(double *Layer1_Neurons_GPU,
                             double *Layer1_Weights_GPU,
                             double *Layer2_Neurons_GPU,
@@ -52,7 +53,6 @@ __global__ void executeFirstLayer_partA(double *Layer1_Neurons_GPU,
 
     Layer2_Neurons_GPU[output_Position + outputOffset] = Z;
 }
-
 
 __global__ void executeFirstLayer_partB(double *Layer1_Neurons_GPU,
                             double *Layer1_Weights_GPU,
@@ -157,9 +157,9 @@ __global__ void executeFirstLayer_partC(double *Layer1_Neurons_GPU,
 
     Layer2_Neurons_GPU[output_Position + outputOffset] = Z;
 }
+/*  ************************************************** FIRST LAYER END ************************************************************ */
 
-
-// Second Layer
+/*  ************************************************** SECOND LAYER START ********************************************************* */
 __global__ void executeSecondLayer_partA(double *Layer2_Neurons_GPU,
                             double *Layer2_Weights_GPU,
                             double *Layer3_Neurons_GPU,
@@ -302,10 +302,9 @@ __global__ void executeSecondLayer_partC(double *Layer2_Neurons_GPU,
 
     Layer3_Neurons_GPU[output_Position] = Z;
 }
+/*  ************************************************** SECOND LAYER END ********************************************************* */
 
-
-
-// Layer 3
+/*  ************************************************** THIRD LAYER START ******************************************************** */
 __global__ void executeThirdLayer_partA(double *Layer3_Neurons_GPU,
     double *Layer3_Weights_GPU,
     double *Layer4_Neurons_GPU,
@@ -442,3 +441,191 @@ __global__ void executeThirdLayer_partC(double *Layer3_Neurons_GPU,
 
     Layer4_Neurons_GPU[output_Position] = Z;
 }
+/*  ************************************************** THIRD LAYER END ********************************************************* */
+
+/*  ************************************************** FOURTH LAYER START ****************************************************** */
+__global__ void executeFourthLayer_partA(double *Layer4_Neurons_GPU,
+    double *Layer4_Weights_GPU,
+    double *Layer5_Neurons_GPU,
+    double *Layer4_Mean_GPU,
+    double *Layer4_StanDev_GPU,
+    double *Layer4_Gamma_GPU,
+    double *Layer4_Beta_GPU
+)
+{
+    double product = 0.0;
+    int stride = 2;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 56 * 56)   // channel to work with
+                        + (threadIdx.x * 56)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (threadIdx.x * 113 * stride )
+                       + (threadIdx.y * stride);
+
+    for(int row = 0; row < 3; row++)       // This is the Row Loop
+    {
+        product += ((Layer4_Neurons_GPU[(filter_number * 113 * 113) + input_Position + (row * 113)] * Layer4_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer4_Neurons_GPU[(filter_number * 113 * 113) + input_Position + (row * 113) + 1] * Layer4_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer4_Neurons_GPU[(filter_number * 113 * 113) + input_Position + (row * 113) + 2] * Layer4_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    double Z = (product - Layer4_Mean_GPU[filter_number]) / Layer4_StanDev_GPU[filter_number];
+    Z = (Z * Layer4_Gamma_GPU[filter_number]) + Layer4_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer5_Neurons_GPU[output_Position] = Z;
+}
+
+__global__ void executeFourthLayer_partB(double *Layer4_Neurons_GPU,
+    double *Layer4_Weights_GPU,
+    double *Layer5_Neurons_GPU,
+    double *Layer4_Mean_GPU,
+    double *Layer4_StanDev_GPU,
+    double *Layer4_Gamma_GPU,
+    double *Layer4_Beta_GPU
+)
+{
+    double product = 0.0;
+    int stride = 2;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 56 * 56)   // channel to work with
+                        + (threadIdx.x * 56)
+                        + (threadIdx.y + 32);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (threadIdx.x * 113 * stride)
+                       + (threadIdx.y * stride) 
+                       + (32 * stride);
+
+    for(int row = 0; row < 3; row++)       // This is the Row Loop
+    {
+        product += ((Layer4_Neurons_GPU[(filter_number * 113 * 113) + input_Position + (row * 113)] * Layer4_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer4_Neurons_GPU[(filter_number * 113 * 113) + input_Position + (row * 113) + 1] * Layer4_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer4_Neurons_GPU[(filter_number * 113 * 113) + input_Position + (row * 113) + 2] * Layer4_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    double Z = (product - Layer4_Mean_GPU[filter_number]) / Layer4_StanDev_GPU[filter_number];
+    Z = (Z * Layer4_Gamma_GPU[filter_number]) + Layer4_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer5_Neurons_GPU[output_Position] = Z;
+}
+
+__global__ void executeFourthLayer_partC(double *Layer4_Neurons_GPU,
+    double *Layer4_Weights_GPU,
+    double *Layer5_Neurons_GPU,
+    double *Layer4_Mean_GPU,
+    double *Layer4_StanDev_GPU,
+    double *Layer4_Gamma_GPU,
+    double *Layer4_Beta_GPU
+)
+{
+    double product = 0.0;
+    int stride = 2;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 56 * 56)   // channel to work with
+                        + (56 * 32)
+                        + (threadIdx.x * 56)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (113 * 32 * stride)
+                       + (threadIdx.x * 113 * stride)
+                       + (threadIdx.y * stride);
+
+    for(int row = 0; row < 3; row++)       // This is the Row Loop
+    {
+        product += ((Layer4_Neurons_GPU[(filter_number * 113 * 113) + input_Position + (row * 113)] * Layer4_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer4_Neurons_GPU[(filter_number * 113 * 113) + input_Position + (row * 113) + 1] * Layer4_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer4_Neurons_GPU[(filter_number * 113 * 113) + input_Position + (row * 113) + 2] * Layer4_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    double Z = (product - Layer4_Mean_GPU[filter_number]) / Layer4_StanDev_GPU[filter_number];
+    Z = (Z * Layer4_Gamma_GPU[filter_number]) + Layer4_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer5_Neurons_GPU[output_Position] = Z;
+}
+
+__global__ void executeFourthLayer_partD(double *Layer4_Neurons_GPU,
+    double *Layer4_Weights_GPU,
+    double *Layer5_Neurons_GPU,
+    double *Layer4_Mean_GPU,
+    double *Layer4_StanDev_GPU,
+    double *Layer4_Gamma_GPU,
+    double *Layer4_Beta_GPU
+)
+{
+    double product = 0.0;
+    int stride = 2;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 56 * 56)   // channel to work with
+                        + (56 * 32) 
+                        + 32
+                        + (threadIdx.x * 56)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (113 * 32 * stride)
+                       + (32 * stride)
+                       + (threadIdx.x * 113 * stride)
+                       + (threadIdx.y * stride);
+
+    for(int row = 0; row < 3; row++) // This is the Row Loop
+    {
+        product += ((Layer4_Neurons_GPU[(filter_number * 113 * 113) + input_Position + (row * 113)] * Layer4_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer4_Neurons_GPU[(filter_number * 113 * 113) + input_Position + (row * 113) + 1] * Layer4_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer4_Neurons_GPU[(filter_number * 113 * 113) + input_Position + (row * 113) + 2] * Layer4_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    double Z = (product - Layer4_Mean_GPU[filter_number]) / Layer4_StanDev_GPU[filter_number];
+    Z = (Z * Layer4_Gamma_GPU[filter_number]) + Layer4_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer5_Neurons_GPU[output_Position] = Z;
+}
+
+
+/*  ************************************************** FOURTH LAYER END ****************************************************** */

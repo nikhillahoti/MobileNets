@@ -18,6 +18,10 @@
 #define THIRD_LAYER_OUTPUT_SIZE 113 * 113 * 64
 #define THIRD_LAYER_CHANNELS 64
 
+#define FOURTH_LAYER_WEIGHT_SIZE 3 * 3 * 64
+#define FOURTH_LAYER_OUTPUT_SIZE 56 * 56 * 64
+#define FOURTH_LAYER_CHANNELS 64
+
 // Function declarations
 void NeuralNetwork();
 void read_File(const char * weightFileName, double *Layer1_Weights_CPU);
@@ -54,6 +58,17 @@ void Read_ThirdLayer_Data(double *Layer3_Weights_CPU,
 void Execute_Third_Layer(
     double * Layer3_Neurons_GPU,
     double * Layer4_Neurons_GPU
+);
+
+void Read_FourthLayer_Data(double *Layer4_Weights_CPU,
+    double * Layer4_Mean_CPU,
+    double * Layer4_StanDev_CPU,
+    double * Layer4_Gamma_CPU,
+    double * Layer4_Beta_CPU
+);
+void Execute_Fourth_Layer(
+    double * Layer4_Neurons_GPU,
+    double * Layer5_Neurons_GPU
 );
 
 int main(){
@@ -147,6 +162,33 @@ void NeuralNetwork(){
 
     printf("\n Layer 3 Execution complete !!!");
     /* ************************************************ THIRD LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ FOURTH LAYER ******************************************************** */
+    double *Layer5_Neurons_GPU;
+    cudaMalloc((void**) &Layer5_Neurons_GPU, sizeof(double) * FOURTH_LAYER_OUTPUT_SIZE);
+
+    Execute_Fourth_Layer(Layer4_Neurons_GPU, Layer5_Neurons_GPU);
+
+    bool SAVE_FOURTH_LAYER_WEIGHTS = true;
+    if(SAVE_FOURTH_LAYER_WEIGHTS){
+        double * Layer5_Neurons_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer5_Neurons_CPU, Layer5_Neurons_GPU, sizeof(double) * FOURTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/FourthLayer/output.txt", "w");
+        value = FOURTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer5_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer5_Neurons_CPU);
+    }
+
+    printf("\n Layer 4 Execution complete !!!");
+    /* ************************************************ FOURTH LAYER COMPLETE *********************************************** */
 
     printf("\n\n Processing Done !!! \n\n");
 
@@ -383,7 +425,7 @@ void Execute_Third_Layer(
            *Layer3_Mean_GPU,
            *Layer3_StanDev_GPU,
            *Layer3_Gamma_GPU,
-           *Layer3_Beta_GPU;;
+           *Layer3_Beta_GPU;
 
     cudaMalloc((void**) &Layer3_Weights_GPU, sizeof(double) * THIRD_LAYER_WEIGHT_SIZE);
     cudaMalloc((void**) &Layer3_Mean_GPU, sizeof(double) * THIRD_LAYER_CHANNELS);
@@ -457,6 +499,110 @@ void Read_ThirdLayer_Data(double *Layer3_Weights_CPU,
     read_File("data/ThirdLayer/Third_Layer_StanDev.txt", Layer3_StanDev_CPU);
     read_File("data/ThirdLayer/Third_Layer_Gamma.txt", Layer3_Gamma_CPU);
     read_File("data/ThirdLayer/Third_Layer_Beta.txt", Layer3_Beta_CPU);
+}
+
+void Execute_Fourth_Layer(
+    double * Layer4_Neurons_GPU,
+    double * Layer5_Neurons_GPU
+){  
+    double * Layer4_Weights_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_WEIGHT_SIZE);
+    double * Layer4_Mean_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_CHANNELS);
+    double * Layer4_StanDev_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_CHANNELS);
+    double * Layer4_Gamma_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_CHANNELS);
+    double * Layer4_Beta_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_CHANNELS);
+
+    Read_FourthLayer_Data(Layer4_Weights_CPU,
+                    Layer4_Mean_CPU,
+                    Layer4_StanDev_CPU,
+                    Layer4_Gamma_CPU,
+                    Layer4_Beta_CPU
+    );
+    
+    double *Layer4_Weights_GPU,
+           *Layer4_Mean_GPU,
+           *Layer4_StanDev_GPU,
+           *Layer4_Gamma_GPU,
+           *Layer4_Beta_GPU;
+
+    cudaMalloc((void**) &Layer4_Weights_GPU, sizeof(double) * FOURTH_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer4_Mean_GPU, sizeof(double) * FOURTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer4_StanDev_GPU, sizeof(double) * FOURTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer4_Gamma_GPU, sizeof(double) * FOURTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer4_Beta_GPU, sizeof(double) * FOURTH_LAYER_CHANNELS);
+
+    cudaMemcpy(Layer4_Weights_GPU, Layer4_Weights_CPU, sizeof(double) * FOURTH_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer4_Mean_GPU, Layer4_Mean_CPU, sizeof(double) * FOURTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer4_StanDev_GPU, Layer4_StanDev_CPU, sizeof(double) * FOURTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer4_Gamma_GPU, Layer4_Gamma_CPU, sizeof(double) * FOURTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer4_Beta_GPU, Layer4_Beta_CPU, sizeof(double) * FOURTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+
+    free(Layer4_Weights_CPU);
+    free(Layer4_Mean_CPU);
+    free(Layer4_StanDev_CPU);
+    free(Layer4_Gamma_CPU);
+    free(Layer4_Beta_CPU);
+
+    dim3 gridSizeFourthLayer(64);
+    dim3 blockSizeFourthLayerA(32,32);
+    executeFourthLayer_partA<<< gridSizeFourthLayer, blockSizeFourthLayerA>>>(Layer4_Neurons_GPU,
+                        Layer4_Weights_GPU,
+                        Layer5_Neurons_GPU,
+                        Layer4_Mean_GPU,
+                        Layer4_StanDev_GPU,
+                        Layer4_Gamma_GPU,
+                        Layer4_Beta_GPU
+                    );
+
+    dim3 blockSizeFourthLayerB(32, 24);
+    executeFourthLayer_partB<<< gridSizeFourthLayer, blockSizeFourthLayerB>>>(Layer4_Neurons_GPU,
+                        Layer4_Weights_GPU,
+                        Layer5_Neurons_GPU,
+                        Layer4_Mean_GPU,
+                        Layer4_StanDev_GPU,
+                        Layer4_Gamma_GPU,
+                        Layer4_Beta_GPU
+                    );
+
+    
+    dim3 blockSizeFourthLayerC(24, 32);
+    executeFourthLayer_partC<<< gridSizeFourthLayer, blockSizeFourthLayerC>>>(Layer4_Neurons_GPU,
+                        Layer4_Weights_GPU,
+                        Layer5_Neurons_GPU,
+                        Layer4_Mean_GPU,
+                        Layer4_StanDev_GPU,
+                        Layer4_Gamma_GPU,
+                        Layer4_Beta_GPU
+                    );
+
+    
+    dim3 blockSizeFourthLayerD(24, 24);
+    executeFourthLayer_partD<<< gridSizeFourthLayer, blockSizeFourthLayerD>>>(Layer4_Neurons_GPU,
+                        Layer4_Weights_GPU,
+                        Layer5_Neurons_GPU,
+                        Layer4_Mean_GPU,
+                        Layer4_StanDev_GPU,
+                        Layer4_Gamma_GPU,
+                        Layer4_Beta_GPU
+                    );
+
+    cudaFree(Layer4_Weights_GPU);
+    cudaFree(Layer4_Mean_GPU);
+    cudaFree(Layer4_StanDev_GPU);
+    cudaFree(Layer4_Gamma_GPU);
+    cudaFree(Layer4_Beta_GPU);
+}
+
+void Read_FourthLayer_Data(double *Layer4_Weights_CPU,
+    double * Layer4_Mean_CPU,
+    double * Layer4_StanDev_CPU,
+    double * Layer4_Gamma_CPU,
+    double * Layer4_Beta_CPU
+){
+    read_File("data/FourthLayer/weightsNorm.txt", Layer4_Weights_CPU);
+    read_File("data/FourthLayer/Fourth_Layer_Mean.txt", Layer4_Mean_CPU);
+    read_File("data/FourthLayer/Fourth_Layer_StanDev.txt", Layer4_StanDev_CPU);
+    read_File("data/FourthLayer/Fourth_Layer_Gamma.txt", Layer4_Gamma_CPU);
+    read_File("data/FourthLayer/Fourth_Layer_Beta.txt", Layer4_Beta_CPU);
 }
 
 void read_File(const char * input_FileName, double * input_values){
