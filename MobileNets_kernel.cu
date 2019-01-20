@@ -642,12 +642,13 @@ __global__ void executeFifthLayer_partA(double *Layer5_Neurons_GPU,
 )
 {
     double product = 0.0;
+    int offset = 59;
 
     int filter_number = blockIdx.x;
 
     // Output position
-    int output_Position = (filter_number * 56 * 56)   // channel to work with
-                        + (threadIdx.x * 56)
+    int output_Position = (filter_number * 58 * 58)   // channel to work with
+                        + (threadIdx.x * 58)
                         + (threadIdx.y);
 
     int weight_Position = filter_number * 64;
@@ -671,7 +672,7 @@ __global__ void executeFifthLayer_partA(double *Layer5_Neurons_GPU,
     if(Z > 6)
         Z = 6.0; 
 
-    Layer6_Neurons_GPU[output_Position] = Z;
+    Layer6_Neurons_GPU[output_Position + offset] = Z;
 }
 
 __global__ void executeFifthLayer_partB(double *Layer5_Neurons_GPU,
@@ -685,10 +686,11 @@ __global__ void executeFifthLayer_partB(double *Layer5_Neurons_GPU,
 {
     double product = 0.0;
     int filter_number = blockIdx.x;
+    int offset = 59;
 
     // Output position
-    int output_Position = (filter_number * 56 * 56)   // channel to work with
-                        + (threadIdx.x * 56)
+    int output_Position = (filter_number * 58 * 58)   // channel to work with
+                        + (threadIdx.x * 58)
                         + (threadIdx.y + 32);
 
     int weight_Position = filter_number * 64;
@@ -713,7 +715,7 @@ __global__ void executeFifthLayer_partB(double *Layer5_Neurons_GPU,
     if(Z > 6)
         Z = 6.0; 
 
-    Layer6_Neurons_GPU[output_Position] = Z;
+    Layer6_Neurons_GPU[output_Position + offset] = Z;
 }
 
 __global__ void executeFifthLayer_partC(double *Layer5_Neurons_GPU,
@@ -727,11 +729,12 @@ __global__ void executeFifthLayer_partC(double *Layer5_Neurons_GPU,
 {
     double product = 0.0;
     int filter_number = blockIdx.x;
+    int offset = 59;
 
     // Output position
-    int output_Position = (filter_number * 56 * 56)   // channel to work with
-                        + (56 * 32)
-                        + (threadIdx.x * 56)
+    int output_Position = (filter_number * 58 * 58)   // channel to work with
+                        + (58 * 32)
+                        + (threadIdx.x * 58)
                         + (threadIdx.y);
 
     int weight_Position = filter_number * 64;
@@ -756,7 +759,7 @@ __global__ void executeFifthLayer_partC(double *Layer5_Neurons_GPU,
     if(Z > 6)
         Z = 6.0; 
 
-    Layer6_Neurons_GPU[output_Position] = Z;
+    Layer6_Neurons_GPU[output_Position + offset] = Z;
 }
 
 __global__ void executeFifthLayer_partD(double *Layer5_Neurons_GPU,
@@ -770,12 +773,13 @@ __global__ void executeFifthLayer_partD(double *Layer5_Neurons_GPU,
 {
     double product = 0.0;
     int filter_number = blockIdx.x;
+    int offset = 59;
 
     // Output position
-    int output_Position = (filter_number * 56 * 56)   // channel to work with
-                        + (56 * 32) 
+    int output_Position = (filter_number * 58 * 58)   // channel to work with
+                        + (58 * 32) 
                         + 32
-                        + (threadIdx.x * 56)
+                        + (threadIdx.x * 58)
                         + (threadIdx.y);
 
     int weight_Position = filter_number * 64;
@@ -801,7 +805,149 @@ __global__ void executeFifthLayer_partD(double *Layer5_Neurons_GPU,
     if(Z > 6)
         Z = 6.0; 
 
-    Layer6_Neurons_GPU[output_Position] = Z;
+    Layer6_Neurons_GPU[output_Position + offset] = Z;
 }
 
 /*  *************************************************** FIFTH LAYER END **************************************************** */
+
+/*  *************************************************** SIXTH LAYER START ************************************************** */
+__global__ void executeSixthLayer_partA(double *Layer6_Neurons_GPU,
+    double *Layer6_Weights_GPU,
+    double *Layer7_Neurons_GPU
+)
+    /*double *Layer5_Mean_GPU,
+    double *Layer5_StanDev_GPU,
+    double *Layer5_Gamma_GPU,
+    double *Layer5_Beta_GPU
+)*/
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 56 * 56)   // channel to work with
+                        + (threadIdx.x * 56)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (threadIdx.x * 58)
+                       + (threadIdx.y);
+
+    for(int row = 0; row < 3; row++)       // This is the Row Loop
+    {
+        product += ((Layer6_Neurons_GPU[(filter_number * 58 * 58) + input_Position + (row * 58)] * Layer6_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer6_Neurons_GPU[(filter_number * 58 * 58) + input_Position + (row * 58) + 1] * Layer6_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer6_Neurons_GPU[(filter_number * 58 * 58) + input_Position + (row * 58) + 2] * Layer6_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    Layer7_Neurons_GPU[output_Position] = product;
+}
+
+__global__ void executeSixthLayer_partB(double *Layer6_Neurons_GPU,
+    double *Layer6_Weights_GPU,
+    double *Layer7_Neurons_GPU
+)
+ /*   double *Layer5_Mean_GPU,
+    double *Layer5_StanDev_GPU,
+    double *Layer5_Gamma_GPU,
+    double *Layer5_Beta_GPU
+)*/
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 56 * 56)   // channel to work with
+                        + (threadIdx.x * 56)
+                        + (threadIdx.y + 32);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (threadIdx.x * 58)
+                       + (threadIdx.y) 
+                       + (32);
+
+    for(int row = 0; row < 3; row++)       // This is the Row Loop
+    {
+        product += ((Layer6_Neurons_GPU[(filter_number * 58 * 58) + input_Position + (row * 58)] * Layer6_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer6_Neurons_GPU[(filter_number * 58 * 58) + input_Position + (row * 58) + 1] * Layer6_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer6_Neurons_GPU[(filter_number * 58 * 58) + input_Position + (row * 58) + 2] * Layer6_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    Layer7_Neurons_GPU[output_Position] = product;
+}
+
+__global__ void executeSixthLayer_partC(double *Layer6_Neurons_GPU,
+    double *Layer6_Weights_GPU,
+    double *Layer7_Neurons_GPU
+)
+/*    double *Layer5_Mean_GPU,
+    double *Layer5_StanDev_GPU,
+    double *Layer5_Gamma_GPU,
+    double *Layer5_Beta_GPU
+)*/
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 56 * 56)   // channel to work with
+                        + (56 * 32)
+                        + (threadIdx.x * 56)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (58 * 32)
+                       + (threadIdx.x * 58)
+                       + (threadIdx.y);
+
+    for(int row = 0; row < 3; row++)       // This is the Row Loop
+    {
+        product += ((Layer6_Neurons_GPU[(filter_number * 58 * 58) + input_Position + (row * 58)] * Layer6_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer6_Neurons_GPU[(filter_number * 58 * 58) + input_Position + (row * 58) + 1] * Layer6_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer6_Neurons_GPU[(filter_number * 58 * 58) + input_Position + (row * 58) + 2] * Layer6_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    Layer7_Neurons_GPU[output_Position] = product;
+}
+
+__global__ void executeSixthLayer_partD(double *Layer6_Neurons_GPU,
+    double *Layer6_Weights_GPU,
+    double *Layer7_Neurons_GPU
+)
+    /*double *Layer5_Mean_GPU,
+    double *Layer5_StanDev_GPU,
+    double *Layer5_Gamma_GPU,
+    double *Layer5_Beta_GPU
+)*/
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 56 * 56)   // channel to work with
+                        + (56 * 32) 
+                        + 32
+                        + (threadIdx.x * 56)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (58 * 32)
+                       + (32)
+                       + (threadIdx.x * 58)
+                       + (threadIdx.y);
+
+    for(int row = 0; row < 3; row++)       // This is the Row Loop
+    {
+        product += ((Layer6_Neurons_GPU[(filter_number * 58 * 58) + input_Position + (row * 58)] * Layer6_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer6_Neurons_GPU[(filter_number * 58 * 58) + input_Position + (row * 58) + 1] * Layer6_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer6_Neurons_GPU[(filter_number * 58 * 58) + input_Position + (row * 58) + 2] * Layer6_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    Layer7_Neurons_GPU[output_Position] = product;
+}
+
+/*  *************************************************** SIXTH LAYER END **************************************************** */
