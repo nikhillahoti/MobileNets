@@ -93,7 +93,12 @@ void Execute_Fifth_Layer(
     double * Layer6_Neurons_GPU
 );
 
-void Read_SixthLayer_Data(double *Layer6_Weights_CPU);
+void Read_SixthLayer_Data(double *Layer6_Weights_CPU,
+    double * Layer6_Mean_CPU,
+    double * Layer6_StanDev_CPU,
+    double * Layer6_Gamma_CPU,
+    double * Layer6_Beta_CPU
+);
 
 void Execute_Sixth_Layer(
     double * Layer6_Neurons_GPU,
@@ -798,98 +803,102 @@ void Execute_Sixth_Layer(
     double * Layer7_Neurons_GPU
 ){  
     double * Layer6_Weights_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_WEIGHT_SIZE);
-    /*double * Layer5_Mean_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_CHANNELS);
-    double * Layer5_StanDev_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_CHANNELS);
-    double * Layer5_Gamma_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_CHANNELS);
-    double * Layer5_Beta_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_CHANNELS);*/
+    double * Layer6_Mean_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_CHANNELS);
+    double * Layer6_StanDev_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_CHANNELS);
+    double * Layer6_Gamma_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_CHANNELS);
+    double * Layer6_Beta_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_CHANNELS);
 
-    Read_SixthLayer_Data(Layer6_Weights_CPU);
-                    /*Layer5_Mean_CPU,
-                    Layer5_StanDev_CPU,
-                    Layer5_Gamma_CPU,
-                    Layer5_Beta_CPU
-                );*/
+    Read_SixthLayer_Data(Layer6_Weights_CPU,
+                    Layer6_Mean_CPU,
+                    Layer6_StanDev_CPU,
+                    Layer6_Gamma_CPU,
+                    Layer6_Beta_CPU
+                );
     
-    double *Layer6_Weights_GPU;
-           /**Layer5_Mean_GPU,
-           *Layer5_StanDev_GPU,
-           *Layer5_Gamma_GPU,
-           *Layer5_Beta_GPU;*/
+    double *Layer6_Weights_GPU,
+           *Layer6_Mean_GPU,
+           *Layer6_StanDev_GPU,
+           *Layer6_Gamma_GPU,
+           *Layer6_Beta_GPU;
 
     cudaMalloc((void**) &Layer6_Weights_GPU, sizeof(double) * SIXTH_LAYER_WEIGHT_SIZE);
-    /*cudaMalloc((void**) &Layer5_Mean_GPU, sizeof(double) * FIFTH_LAYER_CHANNELS);
-    cudaMalloc((void**) &Layer5_StanDev_GPU, sizeof(double) * FIFTH_LAYER_CHANNELS);
-    cudaMalloc((void**) &Layer5_Gamma_GPU, sizeof(double) * FIFTH_LAYER_CHANNELS);
-    cudaMalloc((void**) &Layer5_Beta_GPU, sizeof(double) * FIFTH_LAYER_CHANNELS);*/
+    cudaMalloc((void**) &Layer6_Mean_GPU, sizeof(double) * SIXTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer6_StanDev_GPU, sizeof(double) * SIXTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer6_Gamma_GPU, sizeof(double) * SIXTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer6_Beta_GPU, sizeof(double) * SIXTH_LAYER_CHANNELS);
 
     cudaMemcpy(Layer6_Weights_GPU, Layer6_Weights_CPU, sizeof(double) * SIXTH_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
-    /*cudaMemcpy(Layer5_Mean_GPU, Layer5_Mean_CPU, sizeof(double) * FIFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer5_StanDev_GPU, Layer5_StanDev_CPU, sizeof(double) * FIFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer5_Gamma_GPU, Layer5_Gamma_CPU, sizeof(double) * FIFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer5_Beta_GPU, Layer5_Beta_CPU, sizeof(double) * FIFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); */
+    cudaMemcpy(Layer6_Mean_GPU, Layer6_Mean_CPU, sizeof(double) * SIXTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer6_StanDev_GPU, Layer6_StanDev_CPU, sizeof(double) * SIXTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer6_Gamma_GPU, Layer6_Gamma_CPU, sizeof(double) * SIXTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer6_Beta_GPU, Layer6_Beta_CPU, sizeof(double) * SIXTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
 
     free(Layer6_Weights_CPU);
-    /*free(Layer5_Mean_CPU);
-    free(Layer5_StanDev_CPU);
-    free(Layer5_Gamma_CPU);
-    free(Layer5_Beta_CPU);*/
+    free(Layer6_Mean_CPU);
+    free(Layer6_StanDev_CPU);
+    free(Layer6_Gamma_CPU);
+    free(Layer6_Beta_CPU);
 
     dim3 gridSizeSixthLayer(128);
     dim3 blockSizeSixthLayerA(32,32);
     executeSixthLayer_partA<<< gridSizeSixthLayer, blockSizeSixthLayerA>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
-                        Layer7_Neurons_GPU
-    );
-      /*                  Layer5_Mean_GPU,
-                        Layer5_StanDev_GPU,
-                        Layer5_Gamma_GPU,
-                        Layer5_Beta_GPU
-                    );*/
+                        Layer7_Neurons_GPU,
+                        Layer6_Mean_GPU,
+                        Layer6_StanDev_GPU,
+                        Layer6_Gamma_GPU,
+                        Layer6_Beta_GPU
+                    );
                     
     dim3 blockSizeSixthLayerB(32, 24);
     executeSixthLayer_partB<<< gridSizeSixthLayer, blockSizeSixthLayerB>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
-                        Layer7_Neurons_GPU
-    );
-      /*                  Layer5_Mean_GPU,
-                        Layer5_StanDev_GPU,
-                        Layer5_Gamma_GPU,
-                        Layer5_Beta_GPU
-                    );*/
-
+                        Layer7_Neurons_GPU,
+                        Layer6_Mean_GPU,
+                        Layer6_StanDev_GPU,
+                        Layer6_Gamma_GPU,
+                        Layer6_Beta_GPU
+                    );
     
     dim3 blockSizeSixthLayerC(24, 32);
     executeSixthLayer_partC<<< gridSizeSixthLayer, blockSizeSixthLayerC>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
-                        Layer7_Neurons_GPU
-    );
-                        /*Layer5_Mean_GPU,
-                        Layer5_StanDev_GPU,
-                        Layer5_Gamma_GPU,
-                        Layer5_Beta_GPU
-                    );*/
+                        Layer7_Neurons_GPU,
+                        Layer6_Mean_GPU,
+                        Layer6_StanDev_GPU,
+                        Layer6_Gamma_GPU,
+                        Layer6_Beta_GPU
+                    );
 
     
     dim3 blockSizeSixthLayerD(24, 24);
     executeSixthLayer_partD<<< gridSizeSixthLayer, blockSizeSixthLayerD>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
-                        Layer7_Neurons_GPU
-    );
-                        /*Layer5_Mean_GPU,
-                        Layer5_StanDev_GPU,
-                        Layer5_Gamma_GPU,
-                        Layer5_Beta_GPU
-                    );*/
+                        Layer7_Neurons_GPU,
+                        Layer6_Mean_GPU,
+                        Layer6_StanDev_GPU,
+                        Layer6_Gamma_GPU,
+                        Layer6_Beta_GPU
+                    );
 
     cudaFree(Layer6_Weights_GPU);
-    /*cudaFree(Layer5_Mean_GPU);
-    cudaFree(Layer5_StanDev_GPU);
-    cudaFree(Layer5_Gamma_GPU);
-    cudaFree(Layer5_Beta_GPU);*/
+    cudaFree(Layer6_Mean_GPU);
+    cudaFree(Layer6_StanDev_GPU);
+    cudaFree(Layer6_Gamma_GPU);
+    cudaFree(Layer6_Beta_GPU);
 }
 
-void Read_SixthLayer_Data(double *Layer6_Weights_CPU){
+void Read_SixthLayer_Data(double *Layer6_Weights_CPU,
+    double * Layer6_Mean_CPU,
+    double * Layer6_StanDev_CPU,
+    double * Layer6_Gamma_CPU,
+    double * Layer6_Beta_CPU
+){
     read_File("data/SixthLayer/weightsNorm.txt", Layer6_Weights_CPU);
+    read_File("data/SixthLayer/Sixth_Layer_Mean.txt", Layer6_Mean_CPU);
+    read_File("data/SixthLayer/Sixth_Layer_StanDev.txt", Layer6_StanDev_CPU);
+    read_File("data/SixthLayer/Sixth_Layer_Gamma.txt", Layer6_Gamma_CPU);
+    read_File("data/SixthLayer/Sixth_Layer_Beta.txt", Layer6_Beta_CPU);
 }
 
 void read_File(const char * input_FileName, double * input_values){
