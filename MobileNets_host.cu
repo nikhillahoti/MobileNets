@@ -30,6 +30,18 @@
 #define SIXTH_LAYER_OUTPUT_SIZE 56 * 56 * 128
 #define SIXTH_LAYER_CHANNELS 128
 
+#define SEVENTH_LAYER_WEIGHT_SIZE 128 * 128
+#define SEVENTH_LAYER_OUTPUT_SIZE 57 * 57 * 128
+#define SEVENTH_LAYER_CHANNELS 128
+
+#define EIGHTH_LAYER_WEIGHT_SIZE 3 * 3 * 128
+#define EIGHTH_LAYER_OUTPUT_SIZE 28 * 28 * 128
+#define EIGHTH_LAYER_CHANNELS 128
+
+#define NINTH_LAYER_WEIGHT_SIZE  128 * 256
+#define NINTH_LAYER_OUTPUT_SIZE 28 * 28 * 256
+#define NINTH_LAYER_CHANNELS 256
+
 // Function declarations
 void NeuralNetwork();
 void read_File(const char * weightFileName, double *Layer1_Weights_CPU);
@@ -104,6 +116,44 @@ void Execute_Sixth_Layer(
     double * Layer6_Neurons_GPU,
     double * Layer7_Neurons_GPU
 );
+
+void Read_SeventhLayer_Data(double *Layer7_Weights_CPU,
+    double * Layer7_Mean_CPU,
+    double * Layer7_StanDev_CPU,
+    double * Layer7_Gamma_CPU,
+    double * Layer7_Beta_CPU
+);
+
+void Execute_Seventh_Layer(
+    double * Layer7_Neurons_GPU,
+    double * Layer8_Neurons_GPU
+);
+
+void Read_EighthLayer_Data(double *Layer8_Weights_CPU,
+    double * Layer8_Mean_CPU,
+    double * Layer8_StanDev_CPU,
+    double * Layer8_Gamma_CPU,
+    double * Layer8_Beta_CPU
+);
+
+void Execute_Eighth_Layer(
+    double * Layer8_Neurons_GPU,
+    double * Layer9_Neurons_GPU
+);
+
+void Read_NinthLayer_Data(double *Layer9_Weights_CPU,
+    double * Layer9_Mean_CPU,
+    double * Layer9_StanDev_CPU,
+    double * Layer9_Gamma_CPU,
+    double * Layer9_Beta_CPU
+);
+
+void Execute_Ninth_Layer(
+    double * Layer9_Neurons_GPU,
+    double * Layer10_Neurons_GPU
+);
+
+
 
 int main(){
     NeuralNetwork();
@@ -276,13 +326,100 @@ void NeuralNetwork(){
     }
 
     printf("\n Layer 6 Execution complete !!!");
-    /* ************************************************ FIFTH LAYER COMPLETE *********************************************** */
+    /* ************************************************ SIXTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ SEVENTH LAYER START ******************************************************** */
+    double *Layer8_Neurons_GPU;
+    cudaMalloc((void**) &Layer8_Neurons_GPU, sizeof(double) * SEVENTH_LAYER_OUTPUT_SIZE);
+
+    Execute_Seventh_Layer(Layer7_Neurons_GPU, Layer8_Neurons_GPU);
+
+    bool SAVE_SEVENTH_LAYER_WEIGHTS = true;
+    if(SAVE_SEVENTH_LAYER_WEIGHTS){
+        double * Layer8_Neurons_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer8_Neurons_CPU, Layer8_Neurons_GPU, sizeof(double) * SEVENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/SeventhLayer/output.txt", "w");
+        value = SEVENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer8_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer8_Neurons_CPU);
+    }
+
+    printf("\n Layer 7 Execution complete !!!");
+    /* ************************************************ SEVENTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ EIGHTH LAYER START ******************************************************** */
+    double *Layer9_Neurons_GPU;
+    cudaMalloc((void**) &Layer9_Neurons_GPU, sizeof(double) * EIGHTH_LAYER_OUTPUT_SIZE);
+
+    Execute_Eighth_Layer(Layer8_Neurons_GPU, Layer9_Neurons_GPU);
+
+    bool SAVE_EIGHTH_LAYER_WEIGHTS = true;
+    if(SAVE_EIGHTH_LAYER_WEIGHTS){
+        double * Layer9_Neurons_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer9_Neurons_CPU, Layer9_Neurons_GPU, sizeof(double) * EIGHTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/EighthLayer/output.txt", "w");
+        value = EIGHTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer9_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer9_Neurons_CPU);
+    }
+
+    printf("\n Layer 8 Execution complete !!!");
+    /* ************************************************ EIGHTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ NINTH LAYER START ******************************************************** */
+    double *Layer10_Neurons_GPU;
+    cudaMalloc((void**) &Layer10_Neurons_GPU, sizeof(double) * NINTH_LAYER_OUTPUT_SIZE);
+
+    Execute_Ninth_Layer(Layer9_Neurons_GPU, Layer10_Neurons_GPU);
+
+    bool SAVE_NINTH_LAYER_WEIGHTS = true;
+    if(SAVE_NINTH_LAYER_WEIGHTS){
+        double * Layer10_Neurons_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer10_Neurons_CPU, Layer10_Neurons_GPU, sizeof(double) * NINTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/NinthLayer/output.txt", "w");
+        value = NINTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer10_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer10_Neurons_CPU);
+    }
+
+    printf("\n Layer 9 Execution complete !!!");
+    /* ************************************************ NINTH LAYER COMPLETE *********************************************** */
 
     printf("\n\n Processing Done !!! \n\n");
 
     cudaFree(Layer2_Neurons_GPU);
     cudaFree(Layer3_Neurons_GPU);
     cudaFree(Layer4_Neurons_GPU);
+    cudaFree(Layer5_Neurons_GPU);
+    cudaFree(Layer6_Neurons_GPU);
+    cudaFree(Layer7_Neurons_GPU);
+    cudaFree(Layer8_Neurons_GPU);
+    cudaFree(Layer9_Neurons_GPU);
+    cudaFree(Layer10_Neurons_GPU);
 }
 
 void Execute_First_Layer(double *Layer2_Neurons_GPU)
@@ -899,6 +1036,254 @@ void Read_SixthLayer_Data(double *Layer6_Weights_CPU,
     read_File("data/SixthLayer/Sixth_Layer_StanDev.txt", Layer6_StanDev_CPU);
     read_File("data/SixthLayer/Sixth_Layer_Gamma.txt", Layer6_Gamma_CPU);
     read_File("data/SixthLayer/Sixth_Layer_Beta.txt", Layer6_Beta_CPU);
+}
+
+void Execute_Seventh_Layer(
+    double * Layer7_Neurons_GPU,
+    double * Layer8_Neurons_GPU
+){  
+    double * Layer7_Weights_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_WEIGHT_SIZE);
+    double * Layer7_Mean_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_CHANNELS);
+    double * Layer7_StanDev_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_CHANNELS);
+    double * Layer7_Gamma_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_CHANNELS);
+    double * Layer7_Beta_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_CHANNELS);
+
+    Read_SeventhLayer_Data(Layer7_Weights_CPU,
+                    Layer7_Mean_CPU,
+                    Layer7_StanDev_CPU,
+                    Layer7_Gamma_CPU,
+                    Layer7_Beta_CPU
+                );
+    
+    double *Layer7_Weights_GPU,
+           *Layer7_Mean_GPU,
+           *Layer7_StanDev_GPU,
+           *Layer7_Gamma_GPU,
+           *Layer7_Beta_GPU;
+
+    cudaMalloc((void**) &Layer7_Weights_GPU, sizeof(double) * SEVENTH_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer7_Mean_GPU, sizeof(double) * SEVENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer7_StanDev_GPU, sizeof(double) * SEVENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer7_Gamma_GPU, sizeof(double) * SEVENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer7_Beta_GPU, sizeof(double) * SEVENTH_LAYER_CHANNELS);
+
+    cudaMemcpy(Layer7_Weights_GPU, Layer7_Weights_CPU, sizeof(double) * SEVENTH_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer7_Mean_GPU, Layer7_Mean_CPU, sizeof(double) * SEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer7_StanDev_GPU, Layer7_StanDev_CPU, sizeof(double) * SEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer7_Gamma_GPU, Layer7_Gamma_CPU, sizeof(double) * SEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer7_Beta_GPU, Layer7_Beta_CPU, sizeof(double) * SEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+
+    free(Layer7_Weights_CPU);
+    free(Layer7_Mean_CPU);
+    free(Layer7_StanDev_CPU);
+    free(Layer7_Gamma_CPU);
+    free(Layer7_Beta_CPU);
+
+    dim3 gridSizeSeventhLayer(128);
+    dim3 blockSizeSeventhLayerA(32,32);
+    executeSeventhLayer_partA<<< gridSizeSeventhLayer, blockSizeSeventhLayerA>>>(Layer7_Neurons_GPU,
+                        Layer7_Weights_GPU,
+                        Layer8_Neurons_GPU,
+                        Layer7_Mean_GPU,
+                        Layer7_StanDev_GPU,
+                        Layer7_Gamma_GPU,
+                        Layer7_Beta_GPU
+                    );
+                    
+    dim3 blockSizeSeventhLayerB(32, 24);
+    executeSeventhLayer_partB<<< gridSizeSeventhLayer, blockSizeSeventhLayerB>>>(Layer7_Neurons_GPU,
+                        Layer7_Weights_GPU,
+                        Layer8_Neurons_GPU,
+                        Layer7_Mean_GPU,
+                        Layer7_StanDev_GPU,
+                        Layer7_Gamma_GPU,
+                        Layer7_Beta_GPU
+                    );
+
+    
+    dim3 blockSizeSeventhLayerC(24, 32);
+    executeSeventhLayer_partC<<< gridSizeSeventhLayer, blockSizeSeventhLayerC>>>(Layer7_Neurons_GPU,
+                        Layer7_Weights_GPU,
+                        Layer8_Neurons_GPU,
+                        Layer7_Mean_GPU,
+                        Layer7_StanDev_GPU,
+                        Layer7_Gamma_GPU,
+                        Layer7_Beta_GPU
+                    );
+    
+    dim3 blockSizeSeventhLayerD(24, 24);
+    executeSeventhLayer_partD<<< gridSizeSeventhLayer, blockSizeSeventhLayerD>>>(Layer7_Neurons_GPU,
+                        Layer7_Weights_GPU,
+                        Layer8_Neurons_GPU,
+                        Layer7_Mean_GPU,
+                        Layer7_StanDev_GPU,
+                        Layer7_Gamma_GPU,
+                        Layer7_Beta_GPU
+                    );
+
+    cudaFree(Layer7_Weights_GPU);
+    cudaFree(Layer7_Mean_GPU);
+    cudaFree(Layer7_StanDev_GPU);
+    cudaFree(Layer7_Gamma_GPU);
+    cudaFree(Layer7_Beta_GPU);
+}
+
+void Read_SeventhLayer_Data(double *Layer7_Weights_CPU,
+    double * Layer7_Mean_CPU,
+    double * Layer7_StanDev_CPU,
+    double * Layer7_Gamma_CPU,
+    double * Layer7_Beta_CPU
+){
+    read_File("data/SeventhLayer/weightsNorm.txt", Layer7_Weights_CPU);
+    read_File("data/SeventhLayer/Seventh_Layer_Mean.txt", Layer7_Mean_CPU);
+    read_File("data/SeventhLayer/Seventh_Layer_StanDev.txt", Layer7_StanDev_CPU);
+    read_File("data/SeventhLayer/Seventh_Layer_Gamma.txt", Layer7_Gamma_CPU);
+    read_File("data/SeventhLayer/Seventh_Layer_Beta.txt", Layer7_Beta_CPU);
+}
+
+void Execute_Eighth_Layer(
+    double * Layer8_Neurons_GPU,
+    double * Layer9_Neurons_GPU
+){  
+    double * Layer8_Weights_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_WEIGHT_SIZE);
+    double * Layer8_Mean_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_CHANNELS);
+    double * Layer8_StanDev_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_CHANNELS);
+    double * Layer8_Gamma_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_CHANNELS);
+    double * Layer8_Beta_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_CHANNELS);
+
+    Read_EighthLayer_Data(Layer8_Weights_CPU,
+                    Layer8_Mean_CPU,
+                    Layer8_StanDev_CPU,
+                    Layer8_Gamma_CPU,
+                    Layer8_Beta_CPU
+                );
+    
+    double *Layer8_Weights_GPU,
+           *Layer8_Mean_GPU,
+           *Layer8_StanDev_GPU,
+           *Layer8_Gamma_GPU,
+           *Layer8_Beta_GPU;
+
+    cudaMalloc((void**) &Layer8_Weights_GPU, sizeof(double) * EIGHTH_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer8_Mean_GPU, sizeof(double) * EIGHTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer8_StanDev_GPU, sizeof(double) * EIGHTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer8_Gamma_GPU, sizeof(double) * EIGHTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer8_Beta_GPU, sizeof(double) * EIGHTH_LAYER_CHANNELS);
+
+    cudaMemcpy(Layer8_Weights_GPU, Layer8_Weights_CPU, sizeof(double) * EIGHTH_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer8_Mean_GPU, Layer8_Mean_CPU, sizeof(double) * EIGHTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer8_StanDev_GPU, Layer8_StanDev_CPU, sizeof(double) * EIGHTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer8_Gamma_GPU, Layer8_Gamma_CPU, sizeof(double) * EIGHTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer8_Beta_GPU, Layer8_Beta_CPU, sizeof(double) * EIGHTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+
+    free(Layer8_Weights_CPU);
+    free(Layer8_Mean_CPU);
+    free(Layer8_StanDev_CPU);
+    free(Layer8_Gamma_CPU);
+    free(Layer8_Beta_CPU);
+
+    dim3 gridSizeEighthLayer(128);
+    dim3 blockSizeEighth(28,28);
+    executeEighthLayer<<< gridSizeEighthLayer, blockSizeEighth>>>(Layer8_Neurons_GPU,
+                        Layer8_Weights_GPU,
+                        Layer9_Neurons_GPU,
+                        Layer8_Mean_GPU,
+                        Layer8_StanDev_GPU,
+                        Layer8_Gamma_GPU,
+                        Layer8_Beta_GPU
+                    );
+                    
+    cudaFree(Layer8_Weights_GPU);
+    cudaFree(Layer8_Mean_GPU);
+    cudaFree(Layer8_StanDev_GPU);
+    cudaFree(Layer8_Gamma_GPU);
+    cudaFree(Layer8_Beta_GPU);
+}
+
+void Read_EighthLayer_Data(double *Layer8_Weights_CPU,
+    double * Layer8_Mean_CPU,
+    double * Layer8_StanDev_CPU,
+    double * Layer8_Gamma_CPU,
+    double * Layer8_Beta_CPU
+){
+    read_File("data/EighthLayer/weightsNorm.txt", Layer8_Weights_CPU);
+    read_File("data/EighthLayer/Eighth_Layer_Mean.txt", Layer8_Mean_CPU);
+    read_File("data/EighthLayer/Eighth_Layer_StanDev.txt", Layer8_StanDev_CPU);
+    read_File("data/EighthLayer/Eighth_Layer_Gamma.txt", Layer8_Gamma_CPU);
+    read_File("data/EighthLayer/Eighth_Layer_Beta.txt", Layer8_Beta_CPU);
+}
+
+
+void Execute_Ninth_Layer(
+    double * Layer9_Neurons_GPU,
+    double * Layer10_Neurons_GPU
+){  
+    double * Layer9_Weights_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_WEIGHT_SIZE);
+    double * Layer9_Mean_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_CHANNELS);
+    double * Layer9_StanDev_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_CHANNELS);
+    double * Layer9_Gamma_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_CHANNELS);
+    double * Layer9_Beta_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_CHANNELS);
+
+    Read_NinthLayer_Data(Layer9_Weights_CPU,
+                    Layer9_Mean_CPU,
+                    Layer9_StanDev_CPU,
+                    Layer9_Gamma_CPU,
+                    Layer9_Beta_CPU
+                );
+    
+    double *Layer9_Weights_GPU,
+           *Layer9_Mean_GPU,
+           *Layer9_StanDev_GPU,
+           *Layer9_Gamma_GPU,
+           *Layer9_Beta_GPU;
+
+    cudaMalloc((void**) &Layer9_Weights_GPU, sizeof(double) * NINTH_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer9_Mean_GPU, sizeof(double) * NINTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer9_StanDev_GPU, sizeof(double) * NINTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer9_Gamma_GPU, sizeof(double) * NINTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer9_Beta_GPU, sizeof(double) * NINTH_LAYER_CHANNELS);
+
+    cudaMemcpy(Layer9_Weights_GPU, Layer9_Weights_CPU, sizeof(double) * NINTH_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer9_Mean_GPU, Layer9_Mean_CPU, sizeof(double) * NINTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer9_StanDev_GPU, Layer9_StanDev_CPU, sizeof(double) * NINTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer9_Gamma_GPU, Layer9_Gamma_CPU, sizeof(double) * NINTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer9_Beta_GPU, Layer9_Beta_CPU, sizeof(double) * NINTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+
+    free(Layer9_Weights_CPU);
+    free(Layer9_Mean_CPU);
+    free(Layer9_StanDev_CPU);
+    free(Layer9_Gamma_CPU);
+    free(Layer9_Beta_CPU);
+
+    dim3 gridSizeNinthLayer(256);
+    dim3 blockSizeNinth(28,28);
+    executeNinthLayer<<< gridSizeNinthLayer, blockSizeNinth>>>(Layer9_Neurons_GPU,
+                        Layer9_Weights_GPU,
+                        Layer10_Neurons_GPU,
+                        Layer9_Mean_GPU,
+                        Layer9_StanDev_GPU,
+                        Layer9_Gamma_GPU,
+                        Layer9_Beta_GPU
+                    );
+                    
+    cudaFree(Layer9_Weights_GPU);
+    cudaFree(Layer9_Mean_GPU);
+    cudaFree(Layer9_StanDev_GPU);
+    cudaFree(Layer9_Gamma_GPU);
+    cudaFree(Layer9_Beta_GPU);
+}
+
+void Read_NinthLayer_Data(double *Layer9_Weights_CPU,
+    double * Layer9_Mean_CPU,
+    double * Layer9_StanDev_CPU,
+    double * Layer9_Gamma_CPU,
+    double * Layer9_Beta_CPU
+){
+    read_File("data/NinthLayer/weightsNorm.txt", Layer9_Weights_CPU);
+    read_File("data/NinthLayer/Ninth_Layer_Mean.txt", Layer9_Mean_CPU);
+    read_File("data/NinthLayer/Ninth_Layer_StanDev.txt", Layer9_StanDev_CPU);
+    read_File("data/NinthLayer/Ninth_Layer_Gamma.txt", Layer9_Gamma_CPU);
+    read_File("data/NinthLayer/Ninth_Layer_Beta.txt", Layer9_Beta_CPU);
 }
 
 void read_File(const char * input_FileName, double * input_values){

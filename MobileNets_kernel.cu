@@ -991,3 +991,271 @@ __global__ void executeSixthLayer_partD(double *Layer6_Neurons_GPU,
 }
 
 /*  *************************************************** SIXTH LAYER END **************************************************** */
+
+/*  *************************************************** SEVENTH LAYER START ************************************************ */
+
+__global__ void executeSeventhLayer_partA(double *Layer7_Neurons_GPU,
+    double *Layer7_Weights_GPU,
+    double *Layer8_Neurons_GPU,
+    double *Layer7_Mean_GPU,
+    double *Layer7_StanDev_GPU,
+    double *Layer7_Gamma_GPU,
+    double *Layer7_Beta_GPU
+)
+{
+    double product = 0.0;
+
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 57 * 57)   // channel to work with
+                        + (threadIdx.x * 57)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 128;
+
+    int input_Position = (threadIdx.x * 56)
+                       + (threadIdx.y);
+
+    for(int channel = 0; channel < 128; channel++)       // This is the channel loop as we have 32 channels to work with
+    {
+        product += (Layer7_Neurons_GPU[(channel * 56 * 56) + input_Position] * Layer7_Weights_GPU[weight_Position + channel]);
+    }
+
+    double Z = (product - Layer7_Mean_GPU[filter_number]) / Layer7_StanDev_GPU[filter_number];
+    Z = (Z * Layer7_Gamma_GPU[filter_number]) + Layer7_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer8_Neurons_GPU[output_Position] = Z;
+}
+
+__global__ void executeSeventhLayer_partB(double *Layer7_Neurons_GPU,
+    double *Layer7_Weights_GPU,
+    double *Layer8_Neurons_GPU,
+    double *Layer7_Mean_GPU,
+    double *Layer7_StanDev_GPU,
+    double *Layer7_Gamma_GPU,
+    double *Layer7_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 57 * 57)   // channel to work with
+                        + (threadIdx.x * 57)
+                        + (threadIdx.y + 32);
+
+    int weight_Position = filter_number * 128;
+
+    int input_Position = (threadIdx.x * 56)
+                       + (threadIdx.y) 
+                       + (32);
+
+    for(int channel = 0; channel < 128 ; channel++)       // This is the channel loop as we have 32 channels to work with
+    {
+        product += (Layer7_Neurons_GPU[(channel * 56 * 56) + input_Position] * Layer7_Weights_GPU[weight_Position + channel]);
+    }
+
+    double Z = (product - Layer7_Mean_GPU[filter_number]) / Layer7_StanDev_GPU[filter_number];
+    Z = (Z * Layer7_Gamma_GPU[filter_number]) + Layer7_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer8_Neurons_GPU[output_Position] = Z;
+}
+
+__global__ void executeSeventhLayer_partC(double *Layer7_Neurons_GPU,
+    double *Layer7_Weights_GPU,
+    double *Layer8_Neurons_GPU,
+    double *Layer7_Mean_GPU,
+    double *Layer7_StanDev_GPU,
+    double *Layer7_Gamma_GPU,
+    double *Layer7_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 57 * 57)   // channel to work with
+                        + (57 * 32)
+                        + (threadIdx.x * 57)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 128;
+
+    int input_Position = (56 * 32)
+                       + (threadIdx.x * 56)
+                       + (threadIdx.y);
+
+    for(int channel = 0; channel < 128 ; channel++)       // This is the channel loop as we have 32 channels to work with
+    {
+        product += (Layer7_Neurons_GPU[(channel * 56 * 56) + input_Position] * Layer7_Weights_GPU[weight_Position + channel]);
+    }
+
+    double Z = (product - Layer7_Mean_GPU[filter_number]) / Layer7_StanDev_GPU[filter_number];
+    Z = (Z * Layer7_Gamma_GPU[filter_number]) + Layer7_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer8_Neurons_GPU[output_Position] = Z;
+}
+
+__global__ void executeSeventhLayer_partD(double *Layer7_Neurons_GPU,
+    double *Layer7_Weights_GPU,
+    double *Layer8_Neurons_GPU,
+    double *Layer7_Mean_GPU,
+    double *Layer7_StanDev_GPU,
+    double *Layer7_Gamma_GPU,
+    double *Layer7_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 57 * 57)   // channel to work with
+                        + (57 * 32) 
+                        + 32
+                        + (threadIdx.x * 57)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 128;
+
+    int input_Position = (56 * 32)
+                       + (32)
+                       + (threadIdx.x * 56)
+                       + (threadIdx.y);
+
+    for(int channel = 0; channel < 128 ; channel++)       // This is the channel loop as we have 32 channels to work with
+    {
+        product += (Layer7_Neurons_GPU[(channel * 56 * 56) + input_Position] * Layer7_Weights_GPU[weight_Position + channel]);
+    }
+
+    double Z = (product - Layer7_Mean_GPU[filter_number]) / Layer7_StanDev_GPU[filter_number];
+    Z = (Z * Layer7_Gamma_GPU[filter_number]) + Layer7_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer8_Neurons_GPU[output_Position] = Z;
+}
+
+/*  *************************************************** SEVENTH LAYER END **************************************************** */
+
+/*  *************************************************** EIGHTH LAYER START ************************************************** */
+__global__ void executeEighthLayer(double *Layer8_Neurons_GPU,
+    double *Layer8_Weights_GPU,
+    double *Layer9_Neurons_GPU,
+    double *Layer8_Mean_GPU,
+    double *Layer8_StanDev_GPU,
+    double *Layer8_Gamma_GPU,
+    double *Layer8_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+    int stride = 2;
+
+    // Output position
+    int output_Position = (filter_number * 28 * 28)   // channel to work with
+                        + (threadIdx.x * 28)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (threadIdx.x * 57 * stride)
+                       + (threadIdx.y * stride);
+
+    for(int row = 0; row < 3; row++)       // This is the Row Loop
+    {
+        product += ((Layer8_Neurons_GPU[(filter_number * 57 * 57) + input_Position + (row * 57)] * Layer8_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer8_Neurons_GPU[(filter_number * 57 * 57) + input_Position + (row * 57) + 1] * Layer8_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer8_Neurons_GPU[(filter_number * 57 * 57) + input_Position + (row * 57) + 2] * Layer8_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    double Z = (product - Layer8_Mean_GPU[filter_number]) / Layer8_StanDev_GPU[filter_number];
+    Z = (Z * Layer8_Gamma_GPU[filter_number]) + Layer8_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer9_Neurons_GPU[output_Position] = Z;
+}
+
+/*  *************************************************** EIGHTH LAYER END **************************************************** */
+
+/*  *************************************************** NINTH LAYER START ************************************************** */
+__global__ void executeNinthLayer(double *Layer9_Neurons_GPU,
+    double *Layer9_Weights_GPU,
+    double *Layer10_Neurons_GPU,
+    double *Layer9_Mean_GPU,
+    double *Layer9_StanDev_GPU,
+    double *Layer9_Gamma_GPU,
+    double *Layer9_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 28 * 28)   // channel to work with
+                        + (threadIdx.x * 28)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 128;
+
+    int input_Position = (threadIdx.x * 28)
+                        + (threadIdx.y);
+
+    for(int channel = 0; channel < 128; channel++)       // This is the channel loop as we have 32 channels to work with
+    {
+        product += (Layer9_Neurons_GPU[(channel * 28 * 28) + input_Position] * Layer9_Weights_GPU[weight_Position + channel]);
+    }         
+
+    double Z = (product - Layer9_Mean_GPU[filter_number]) / Layer9_StanDev_GPU[filter_number];
+    Z = (Z * Layer9_Gamma_GPU[filter_number]) + Layer9_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer10_Neurons_GPU[output_Position] = Z;
+}
+
+/*  *************************************************** NINTH LAYER END **************************************************** */
+
