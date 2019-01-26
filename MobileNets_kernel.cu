@@ -1227,10 +1227,11 @@ __global__ void executeNinthLayer(double *Layer9_Neurons_GPU,
 {
     double product = 0.0;
     int filter_number = blockIdx.x;
+    int offset = 31;
 
     // Output position
-    int output_Position = (filter_number * 28 * 28)   // channel to work with
-                        + (threadIdx.x * 28)
+    int output_Position = (filter_number * 30 * 30)   // channel to work with
+                        + (threadIdx.x * 30)
                         + (threadIdx.y);
 
     int weight_Position = filter_number * 128;
@@ -1254,8 +1255,55 @@ __global__ void executeNinthLayer(double *Layer9_Neurons_GPU,
     if(Z > 6)
         Z = 6.0; 
 
-    Layer10_Neurons_GPU[output_Position] = Z;
+    Layer10_Neurons_GPU[output_Position + offset] = Z;
 }
 
 /*  *************************************************** NINTH LAYER END **************************************************** */
+
+/*  *************************************************** TENTH LAYER START ************************************************** */
+__global__ void executeTenthLayer(double *Layer10_Neurons_GPU,
+    double *Layer10_Weights_GPU,
+    double *Layer11_Neurons_GPU,
+    double *Layer10_Mean_GPU,
+    double *Layer10_StanDev_GPU,
+    double *Layer10_Gamma_GPU,
+    double *Layer10_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 28 * 28)   // channel to work with
+                        + (threadIdx.x * 28)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (threadIdx.x * 30)
+                       + (threadIdx.y);
+
+    for(int row = 0; row < 3; row++)       // This is the Row Loop
+    {
+        product += ((Layer10_Neurons_GPU[(filter_number * 30 * 30) + input_Position + (row * 30)] * Layer10_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer10_Neurons_GPU[(filter_number * 30 * 30) + input_Position + (row * 30) + 1] * Layer10_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer10_Neurons_GPU[(filter_number * 30 * 30) + input_Position + (row * 30) + 2] * Layer10_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    double Z = (product - Layer10_Mean_GPU[filter_number]) / Layer10_StanDev_GPU[filter_number];
+    Z = (Z * Layer10_Gamma_GPU[filter_number]) + Layer10_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer11_Neurons_GPU[output_Position] = Z;
+}
+
+/*  *************************************************** TENTH LAYER END **************************************************** */
+
 
