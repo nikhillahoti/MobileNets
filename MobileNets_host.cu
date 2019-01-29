@@ -2,6 +2,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include<math.h>
+#include <unistd.h>
 
 #include "MobileNets_kernel.cu"
 
@@ -45,6 +46,14 @@
 #define TENTH_LAYER_WEIGHT_SIZE  9 * 256
 #define TENTH_LAYER_OUTPUT_SIZE 28 * 28 * 256
 #define TENTH_LAYER_CHANNELS 256
+
+#define ELEVENTH_LAYER_WEIGHT_SIZE  256 * 256
+#define ELEVENTH_LAYER_OUTPUT_SIZE 29 * 29 * 256
+#define ELEVENTH_LAYER_CHANNELS 256
+
+#define TWELFTH_LAYER_WEIGHT_SIZE  9 * 256
+#define TWELFTH_LAYER_OUTPUT_SIZE 14 * 14 * 256
+#define TWELFTH_LAYER_CHANNELS 256
 
 // Function declarations
 void NeuralNetwork();
@@ -167,6 +176,30 @@ void Read_TenthLayer_Data(double *Layer10_Weights_CPU,
 void Execute_Tenth_Layer(
     double * Layer10_Neurons_GPU,
     double * Layer11_Neurons_GPU
+);
+
+void Read_EleventhLayer_Data(double *Layer11_Weights_CPU,
+    double * Layer11_Mean_CPU,
+    double * Layer11_StanDev_CPU,
+    double * Layer11_Gamma_CPU,
+    double * Layer11_Beta_CPU
+);
+
+void Execute_Eleventh_Layer(
+    double * Layer11_Neurons_GPU,
+    double * Layer12_Neurons_GPU
+);
+
+void Read_TwelvethLayer_Data(double *Layer12_Weights_CPU,
+    double * Layer12_Mean_CPU,
+    double * Layer12_StanDev_CPU,
+    double * Layer12_Gamma_CPU,
+    double * Layer12_Beta_CPU
+);
+
+void Execute_Twelveth_Layer(
+    double * Layer12_Neurons_GPU,
+    double * Layer13_Neurons_GPU
 );
 
 int main(){
@@ -402,7 +435,7 @@ void NeuralNetwork(){
 
     Execute_Ninth_Layer(Layer9_Neurons_GPU, Layer10_Neurons_GPU);
 
-    bool SAVE_NINTH_LAYER_WEIGHTS = true;
+    bool SAVE_NINTH_LAYER_WEIGHTS = false;
     if(SAVE_NINTH_LAYER_WEIGHTS){
         double * Layer10_Neurons_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer10_Neurons_CPU, Layer10_Neurons_GPU, sizeof(double) * NINTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -429,7 +462,7 @@ void NeuralNetwork(){
 
     Execute_Tenth_Layer(Layer10_Neurons_GPU, Layer11_Neurons_GPU);
 
-    bool SAVE_TENTH_LAYER_WEIGHTS = true;
+    bool SAVE_TENTH_LAYER_WEIGHTS = false;
     if(SAVE_TENTH_LAYER_WEIGHTS){
         double * Layer11_Neurons_CPU = (double *) malloc(sizeof(double) * TENTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer11_Neurons_CPU, Layer11_Neurons_GPU, sizeof(double) * TENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -450,8 +483,34 @@ void NeuralNetwork(){
     printf("\n Layer 10 Execution complete !!!");
     /* ************************************************ TENTH LAYER COMPLETE *********************************************** */
 
-    printf("\n\n Processing Done !!! \n\n");
+    /* ************************************************ ELEVENTH LAYER START ******************************************************** */
+    double *Layer12_Neurons_GPU;
+    cudaMalloc((void**) &Layer12_Neurons_GPU, sizeof(double) * ELEVENTH_LAYER_OUTPUT_SIZE);
 
+    Execute_Eleventh_Layer(Layer11_Neurons_GPU, Layer12_Neurons_GPU);
+
+    bool SAVE_ELEVENTH_LAYER_WEIGHTS = false;
+    if(SAVE_ELEVENTH_LAYER_WEIGHTS){
+        double * Layer12_Neurons_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer12_Neurons_CPU, Layer12_Neurons_GPU, sizeof(double) * ELEVENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/EleventhLayer/output.txt", "w");
+        value = ELEVENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer12_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer12_Neurons_CPU);
+    }
+
+    printf("\n Layer 11 Execution complete !!!");
+    /* ************************************************ ELEVENTH LAYER COMPLETE *********************************************** */
+
+    // Deallocate Memory
     cudaFree(Layer2_Neurons_GPU);
     cudaFree(Layer3_Neurons_GPU);
     cudaFree(Layer4_Neurons_GPU);
@@ -462,6 +521,42 @@ void NeuralNetwork(){
     cudaFree(Layer9_Neurons_GPU);
     cudaFree(Layer10_Neurons_GPU);
     cudaFree(Layer11_Neurons_GPU);
+
+    cudaDeviceSynchronize();
+
+    /* ************************************************ TWELVETH LAYER START ******************************************************** */
+    double *Layer13_Neurons_GPU;
+    cudaMalloc((void**) &Layer13_Neurons_GPU, sizeof(double) * TWELFTH_LAYER_OUTPUT_SIZE);
+
+    Execute_Twelveth_Layer(Layer12_Neurons_GPU, Layer13_Neurons_GPU);
+
+    bool SAVE_TWELVETH_LAYER_WEIGHTS = true;
+    if(SAVE_TWELVETH_LAYER_WEIGHTS){
+        double * Layer13_Neurons_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer13_Neurons_CPU, Layer13_Neurons_GPU, sizeof(double) * TWELFTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/TwelvethLayer/output.txt", "w");
+        value = TWELFTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer13_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer13_Neurons_CPU);
+    }
+
+    printf("\n Layer 12 Execution complete !!!");
+    /* ************************************************ TWELVETH LAYER COMPLETE *********************************************** */
+
+
+    printf("\n\n Processing Done !!! \n\n");
+
+    
+    cudaFree(Layer12_Neurons_GPU);
+    //cudaFree(Layer13_Neurons_GPU);
 }
 
 void Execute_First_Layer(double *Layer2_Neurons_GPU)
@@ -1398,6 +1493,150 @@ void Read_TenthLayer_Data(double *Layer10_Weights_CPU,
     read_File("data/TenthLayer/Tenth_Layer_StanDev.txt", Layer10_StanDev_CPU);
     read_File("data/TenthLayer/Tenth_Layer_Gamma.txt", Layer10_Gamma_CPU);
     read_File("data/TenthLayer/Tenth_Layer_Beta.txt", Layer10_Beta_CPU);
+}
+
+void Execute_Eleventh_Layer(
+    double * Layer11_Neurons_GPU,
+    double * Layer12_Neurons_GPU
+){  
+    double * Layer11_Weights_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_WEIGHT_SIZE);
+    double * Layer11_Mean_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_CHANNELS);
+    double * Layer11_StanDev_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_CHANNELS);
+    double * Layer11_Gamma_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_CHANNELS);
+    double * Layer11_Beta_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_CHANNELS);
+
+    Read_EleventhLayer_Data(Layer11_Weights_CPU,
+                    Layer11_Mean_CPU,
+                    Layer11_StanDev_CPU,
+                    Layer11_Gamma_CPU,
+                    Layer11_Beta_CPU
+                );
+    
+    double *Layer11_Weights_GPU,
+           *Layer11_Mean_GPU,
+           *Layer11_StanDev_GPU,
+           *Layer11_Gamma_GPU,
+           *Layer11_Beta_GPU;
+
+    cudaMalloc((void**) &Layer11_Weights_GPU, sizeof(double) * ELEVENTH_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer11_Mean_GPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer11_StanDev_GPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer11_Gamma_GPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer11_Beta_GPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS);
+
+    cudaMemcpy(Layer11_Weights_GPU, Layer11_Weights_CPU, sizeof(double) * ELEVENTH_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer11_Mean_GPU, Layer11_Mean_CPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer11_StanDev_GPU, Layer11_StanDev_CPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer11_Gamma_GPU, Layer11_Gamma_CPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer11_Beta_GPU, Layer11_Beta_CPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+
+    free(Layer11_Weights_CPU);
+    free(Layer11_Mean_CPU);
+    free(Layer11_StanDev_CPU);
+    free(Layer11_Gamma_CPU);
+    free(Layer11_Beta_CPU);
+
+    dim3 gridSizeEleventhLayer(256);
+    dim3 blockSizeEleventh(28,28);
+    executeEleventhLayer<<< gridSizeEleventhLayer, blockSizeEleventh>>>(Layer11_Neurons_GPU,
+                        Layer11_Weights_GPU,
+                        Layer12_Neurons_GPU,
+                        Layer11_Mean_GPU,
+                        Layer11_StanDev_GPU,
+                        Layer11_Gamma_GPU,
+                        Layer11_Beta_GPU
+                    );
+                    
+    cudaFree(Layer11_Weights_GPU);
+    cudaFree(Layer11_Mean_GPU);
+    cudaFree(Layer11_StanDev_GPU);
+    cudaFree(Layer11_Gamma_GPU);
+    cudaFree(Layer11_Beta_GPU);
+}
+
+void Read_EleventhLayer_Data(double *Layer11_Weights_CPU,
+    double * Layer11_Mean_CPU,
+    double * Layer11_StanDev_CPU,
+    double * Layer11_Gamma_CPU,
+    double * Layer11_Beta_CPU
+){
+    read_File("data/EleventhLayer/weightsNorm.txt", Layer11_Weights_CPU);
+    read_File("data/EleventhLayer/Eleventh_Layer_Mean.txt", Layer11_Mean_CPU);
+    read_File("data/EleventhLayer/Eleventh_Layer_StanDev.txt", Layer11_StanDev_CPU);
+    read_File("data/EleventhLayer/Eleventh_Layer_Gamma.txt", Layer11_Gamma_CPU);
+    read_File("data/EleventhLayer/Eleventh_Layer_Beta.txt", Layer11_Beta_CPU);
+}
+
+void Execute_Twelveth_Layer(
+    double * Layer12_Neurons_GPU,
+    double * Layer13_Neurons_GPU
+){  
+    double * Layer12_Weights_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_WEIGHT_SIZE);
+    double * Layer12_Mean_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_CHANNELS);
+    double * Layer12_StanDev_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_CHANNELS);
+    double * Layer12_Gamma_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_CHANNELS);
+    double * Layer12_Beta_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_CHANNELS);
+
+    Read_TwelvethLayer_Data(Layer12_Weights_CPU,
+                    Layer12_Mean_CPU,
+                    Layer12_StanDev_CPU,
+                    Layer12_Gamma_CPU,
+                    Layer12_Beta_CPU
+                );
+    
+    double *Layer12_Weights_GPU,
+           *Layer12_Mean_GPU,
+           *Layer12_StanDev_GPU,
+           *Layer12_Gamma_GPU,
+           *Layer12_Beta_GPU;
+
+    cudaMalloc((void**) &Layer12_Weights_GPU, sizeof(double) * TWELFTH_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer12_Mean_GPU, sizeof(double) * TWELFTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer12_StanDev_GPU, sizeof(double) * TWELFTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer12_Gamma_GPU, sizeof(double) * TWELFTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer12_Beta_GPU, sizeof(double) * TWELFTH_LAYER_CHANNELS);
+
+    cudaMemcpy(Layer12_Weights_GPU, Layer12_Weights_CPU, sizeof(double) * TWELFTH_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer12_Mean_GPU, Layer12_Mean_CPU, sizeof(double) * TWELFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer12_StanDev_GPU, Layer12_StanDev_CPU, sizeof(double) * TWELFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer12_Gamma_GPU, Layer12_Gamma_CPU, sizeof(double) * TWELFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer12_Beta_GPU, Layer12_Beta_CPU, sizeof(double) * TWELFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+
+    free(Layer12_Weights_CPU);
+    free(Layer12_Mean_CPU);
+    free(Layer12_StanDev_CPU);
+    free(Layer12_Gamma_CPU);
+    free(Layer12_Beta_CPU);
+
+    dim3 gridSizeTwelvethLayer(256);
+    dim3 blockSizeTwelveth(14,14);
+    executeTwelfthLayer<<< gridSizeTwelvethLayer, blockSizeTwelveth>>>(Layer12_Neurons_GPU,
+                        Layer12_Weights_GPU,
+                        Layer13_Neurons_GPU,
+                        Layer12_Mean_GPU,
+                        Layer12_StanDev_GPU,
+                        Layer12_Gamma_GPU,
+                        Layer12_Beta_GPU
+                    );
+                    
+    cudaFree(Layer12_Weights_GPU);
+    cudaFree(Layer12_Mean_GPU);
+    cudaFree(Layer12_StanDev_GPU);
+    cudaFree(Layer12_Gamma_GPU);
+    cudaFree(Layer12_Beta_GPU);
+}
+
+void Read_TwelvethLayer_Data(double *Layer12_Weights_CPU,
+    double * Layer12_Mean_CPU,
+    double * Layer12_StanDev_CPU,
+    double * Layer12_Gamma_CPU,
+    double * Layer12_Beta_CPU
+){
+    read_File("data/TwelvethLayer/weightsNorm.txt", Layer12_Weights_CPU);
+    read_File("data/TwelvethLayer/Twelveth_Layer_Mean.txt", Layer12_Mean_CPU);
+    read_File("data/TwelvethLayer/Twelveth_Layer_StanDev.txt", Layer12_StanDev_CPU);
+    read_File("data/TwelvethLayer/Twelveth_Layer_Gamma.txt", Layer12_Gamma_CPU);
+    read_File("data/TwelvethLayer/Twelveth_Layer_Beta.txt", Layer12_Beta_CPU);
 }
 
 void read_File(const char * input_FileName, double * input_values){
