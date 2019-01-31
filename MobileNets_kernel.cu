@@ -1397,3 +1397,46 @@ __global__ void executeTwelfthLayer(double *Layer12_Neurons_GPU,
 
 /*  *************************************************** TWELFTH LAYER END **************************************************** */
 
+/*  *************************************************** THIRTEENTH LAYER START ************************************************** */
+__global__ void executeThirteenthLayer(double *Layer13_Neurons_GPU,
+    double *Layer13_Weights_GPU,
+    double *Layer14_Neurons_GPU,
+    double *Layer13_Mean_GPU,
+    double *Layer13_StanDev_GPU,
+    double *Layer13_Gamma_GPU,
+    double *Layer13_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 14 * 14)   // channel to work with
+                        + (threadIdx.x * 14)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 256;
+
+    int input_Position = (threadIdx.x * 14)
+                        + (threadIdx.y);
+
+    for(int channel = 0; channel < 256; channel++)       // This is the channel loop as we have 32 channels to work with
+    {
+        product += (Layer13_Neurons_GPU[(channel * 14 * 14) + input_Position] * Layer13_Weights_GPU[weight_Position + channel]);
+    }         
+
+    double Z = (product - Layer13_Mean_GPU[filter_number]) / Layer13_StanDev_GPU[filter_number];
+    Z = (Z * Layer13_Gamma_GPU[filter_number]) + Layer13_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer14_Neurons_GPU[output_Position] = Z;
+}
+
+/*  *************************************************** THIRTEENTH LAYER END **************************************************** */
