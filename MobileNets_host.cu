@@ -56,8 +56,16 @@
 #define TWELFTH_LAYER_CHANNELS 256
 
 #define THIRTEENTH_LAYER_WEIGHT_SIZE  512 * 256
-#define THIRTEENTH_LAYER_OUTPUT_SIZE 14 * 14 * 512
+#define THIRTEENTH_LAYER_OUTPUT_SIZE 16 * 16 * 512
 #define THIRTEENTH_LAYER_CHANNELS 512
+
+#define FOURTEENTH_LAYER_WEIGHT_SIZE  512 * 9
+#define FOURTEENTH_LAYER_OUTPUT_SIZE 14 * 14 * 512
+#define FOURTEENTH_LAYER_CHANNELS 512
+
+#define FIFTEENTH_LAYER_WEIGHT_SIZE  512 * 512
+#define FIFTEENTH_LAYER_OUTPUT_SIZE 14 * 14 * 512
+#define FIFTEENTH_LAYER_CHANNELS 512
 
 // Function declarations
 void NeuralNetwork();
@@ -216,6 +224,30 @@ void Read_ThirteenthLayer_Data(double *Layer13_Weights_CPU,
 void Execute_Thirteenth_Layer(
     double * Layer13_Neurons_GPU,
     double * Layer14_Neurons_GPU
+);
+
+void Read_FourteenthLayer_Data(double *Layer14_Weights_CPU,
+    double * Layer14_Mean_CPU,
+    double * Layer14_StanDev_CPU,
+    double * Layer14_Gamma_CPU,
+    double * Layer14_Beta_CPU
+);
+
+void Execute_Fourteenth_Layer(
+    double * Layer14_Neurons_GPU,
+    double * Layer15_Neurons_GPU
+);
+
+void Read_FifteenthLayer_Data(double *Layer15_Weights_CPU,
+    double * Layer15_Mean_CPU,
+    double * Layer15_StanDev_CPU,
+    double * Layer15_Gamma_CPU,
+    double * Layer15_Beta_CPU
+);
+
+void Execute_Fifteenth_Layer(
+    double * Layer15_Neurons_GPU,
+    double * Layer16_Neurons_GPU
 );
 
 int main(){
@@ -552,13 +584,13 @@ void NeuralNetwork(){
     printf("\n Layer 12 Execution complete !!!");
     /* ************************************************ TWELVETH LAYER COMPLETE *********************************************** */
 
-    /* ************************************************ TWELVETH LAYER START ******************************************************** */
+    /* ************************************************ THIRTEENTH LAYER START ******************************************************** */
     double *Layer14_Neurons_GPU;
     cudaMalloc((void**) &Layer14_Neurons_GPU, sizeof(double) * THIRTEENTH_LAYER_OUTPUT_SIZE);
 
     Execute_Thirteenth_Layer(Layer13_Neurons_GPU, Layer14_Neurons_GPU);
 
-    bool SAVE_THIRTEENTH_LAYER_WEIGHTS = true;
+    bool SAVE_THIRTEENTH_LAYER_WEIGHTS = false;
     if(SAVE_THIRTEENTH_LAYER_WEIGHTS){
         double * Layer14_Neurons_CPU = (double *) malloc(sizeof(double) * THIRTEENTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer14_Neurons_CPU, Layer14_Neurons_GPU, sizeof(double) * THIRTEENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -577,11 +609,65 @@ void NeuralNetwork(){
     }
     cudaFree(Layer13_Neurons_GPU);
     printf("\n Layer 13 Execution complete !!!");
-    /* ************************************************ TWELVETH LAYER COMPLETE *********************************************** */
+    /* ************************************************ THIRTEENTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ FOURTEENTH LAYER START ******************************************************** */
+    double *Layer15_Neurons_GPU;
+    cudaMalloc((void**) &Layer15_Neurons_GPU, sizeof(double) * FOURTEENTH_LAYER_OUTPUT_SIZE);
+
+    Execute_Fourteenth_Layer(Layer14_Neurons_GPU, Layer15_Neurons_GPU);
+
+    bool SAVE_FOURTEENTH_LAYER_WEIGHTS = false;
+    if(SAVE_FOURTEENTH_LAYER_WEIGHTS){
+        double * Layer15_Neurons_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer15_Neurons_CPU, Layer15_Neurons_GPU, sizeof(double) * FOURTEENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/FourteenthLayer/output.txt", "w");
+        value = FOURTEENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer15_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer15_Neurons_CPU);
+    }
+    cudaFree(Layer14_Neurons_GPU);
+    printf("\n Layer 14 Execution complete !!!");
+    /* ************************************************ FOURTEENTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ FIFTEENTH LAYER START ******************************************************** */
+    double *Layer16_Neurons_GPU;
+    cudaMalloc((void**) &Layer16_Neurons_GPU, sizeof(double) * FIFTEENTH_LAYER_OUTPUT_SIZE);
+
+    Execute_Fifteenth_Layer(Layer15_Neurons_GPU, Layer16_Neurons_GPU);
+
+    bool SAVE_FIFTEENTH_LAYER_WEIGHTS = true;
+    if(SAVE_FIFTEENTH_LAYER_WEIGHTS){
+        double * Layer16_Neurons_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer16_Neurons_CPU, Layer16_Neurons_GPU, sizeof(double) * FIFTEENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/FifteenthLayer/output.txt", "w");
+        value = FIFTEENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer16_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer16_Neurons_CPU);
+    }
+    cudaFree(Layer15_Neurons_GPU);
+    printf("\n Layer 15 Execution complete !!!");
+    /* ************************************************ FIFTEENTH LAYER COMPLETE *********************************************** */
 
     printf("\n\n Processing Done !!! \n\n");
 
-    cudaFree(Layer14_Neurons_GPU);
+    cudaFree(Layer16_Neurons_GPU);
 }
 
 void Execute_First_Layer(double *Layer2_Neurons_GPU)
@@ -635,7 +721,7 @@ void Execute_First_Layer(double *Layer2_Neurons_GPU)
     dim3 gridSizeA(32, 3, 3);
     dim3 blockSizeA(32,32);
 
-    executeFirstLayer_partA<<< gridSizeA, blockSizeA>>>(Layer1_Neurons_GPU,
+    executeFirstLayer_CONV3D_partA<<< gridSizeA, blockSizeA>>>(Layer1_Neurons_GPU,
                         Layer1_Weights_GPU,
                         Layer2_Neurons_GPU,
                         Layer1_Mean_GPU,
@@ -647,7 +733,7 @@ void Execute_First_Layer(double *Layer2_Neurons_GPU)
     dim3 gridSizeB(32, 7);
     dim3 blockSizeB(16, 16);
 
-    executeFirstLayer_partB<<< gridSizeB, blockSizeB>>>(Layer1_Neurons_GPU,
+    executeFirstLayer_CONV3D_partB<<< gridSizeB, blockSizeB>>>(Layer1_Neurons_GPU,
                         Layer1_Weights_GPU,
                         Layer2_Neurons_GPU,
                         Layer1_Mean_GPU,
@@ -659,7 +745,7 @@ void Execute_First_Layer(double *Layer2_Neurons_GPU)
     dim3 gridSizeC(32, 6);
     dim3 blockSizeC(16, 16);
 
-    executeFirstLayer_partC<<< gridSizeC, blockSizeC>>>(Layer1_Neurons_GPU,
+    executeFirstLayer_CONV3D_partC<<< gridSizeC, blockSizeC>>>(Layer1_Neurons_GPU,
                         Layer1_Weights_GPU,
                         Layer2_Neurons_GPU,
                         Layer1_Mean_GPU,
@@ -740,7 +826,7 @@ void Execute_Second_Layer(
 
     dim3 gridSizeA(32, 3, 3);
     dim3 blockSizeA(32,32);
-    executeSecondLayer_partA<<< gridSizeA, blockSizeA>>>(Layer2_Neurons_GPU,
+    executeSecondLayer_DSC_partA<<< gridSizeA, blockSizeA>>>(Layer2_Neurons_GPU,
                                             Layer2_Weights_GPU,
                                             Layer3_Neurons_GPU,
                                             Layer2_Mean_GPU,
@@ -751,7 +837,7 @@ void Execute_Second_Layer(
 
     dim3 gridSizeB(32, 7);
     dim3 blockSizeB(16, 16);
-    executeSecondLayer_partB<<< gridSizeB, blockSizeB>>>(Layer2_Neurons_GPU,
+    executeSecondLayer_DSC_partB<<< gridSizeB, blockSizeB>>>(Layer2_Neurons_GPU,
                                             Layer2_Weights_GPU,
                                             Layer3_Neurons_GPU,
                                             Layer2_Mean_GPU,
@@ -762,7 +848,7 @@ void Execute_Second_Layer(
 
     dim3 gridSizeC(32, 6);
     dim3 blockSizeC(16, 16);
-    executeSecondLayer_partC<<< gridSizeC, blockSizeC>>>(Layer2_Neurons_GPU,
+    executeSecondLayer_DSC_partC<<< gridSizeC, blockSizeC>>>(Layer2_Neurons_GPU,
                                             Layer2_Weights_GPU,
                                             Layer3_Neurons_GPU,
                                             Layer2_Mean_GPU,
@@ -835,7 +921,7 @@ void Execute_Third_Layer(
     // Execution of the Third Layer
     dim3 gridSizeThirdLayerA(64, 3, 3);
     dim3 blockSizeThirdLayerA(32,32);
-    executeThirdLayer_partA<<< gridSizeThirdLayerA, blockSizeThirdLayerA>>>(Layer3_Neurons_GPU,
+    executeThirdLayer_PSC_partA<<< gridSizeThirdLayerA, blockSizeThirdLayerA>>>(Layer3_Neurons_GPU,
                         Layer3_Weights_GPU,
                         Layer4_Neurons_GPU,
                         Layer3_Mean_GPU,
@@ -846,7 +932,7 @@ void Execute_Third_Layer(
 
     dim3 gridSizeThirdLayerB(64, 7);
     dim3 blockSizeThirdLayerB(16, 16);
-    executeThirdLayer_partB<<< gridSizeThirdLayerB, blockSizeThirdLayerB>>>(Layer3_Neurons_GPU,
+    executeThirdLayer_PSC_partB<<< gridSizeThirdLayerB, blockSizeThirdLayerB>>>(Layer3_Neurons_GPU,
                         Layer3_Weights_GPU,
                         Layer4_Neurons_GPU,
                         Layer3_Mean_GPU,
@@ -857,7 +943,7 @@ void Execute_Third_Layer(
 
     dim3 gridSizeThirdLayerC(64, 6);
     dim3 blockSizeThirdLayerC(16, 16);
-    executeThirdLayer_partC<<< gridSizeThirdLayerC, blockSizeThirdLayerC>>>(Layer3_Neurons_GPU,
+    executeThirdLayer_PSC_partC<<< gridSizeThirdLayerC, blockSizeThirdLayerC>>>(Layer3_Neurons_GPU,
                         Layer3_Weights_GPU,
                         Layer4_Neurons_GPU,
                         Layer3_Mean_GPU,
@@ -931,7 +1017,7 @@ void Execute_Fourth_Layer(
 
     dim3 gridSizeFourthLayer(64);
     dim3 blockSizeFourthLayerA(32,32);
-    executeFourthLayer_partA<<< gridSizeFourthLayer, blockSizeFourthLayerA>>>(Layer4_Neurons_GPU,
+    executeFourthLayer_DSC_partA<<< gridSizeFourthLayer, blockSizeFourthLayerA>>>(Layer4_Neurons_GPU,
                         Layer4_Weights_GPU,
                         Layer5_Neurons_GPU,
                         Layer4_Mean_GPU,
@@ -941,7 +1027,7 @@ void Execute_Fourth_Layer(
                     );
 
     dim3 blockSizeFourthLayerB(32, 24);
-    executeFourthLayer_partB<<< gridSizeFourthLayer, blockSizeFourthLayerB>>>(Layer4_Neurons_GPU,
+    executeFourthLayer_DSC_partB<<< gridSizeFourthLayer, blockSizeFourthLayerB>>>(Layer4_Neurons_GPU,
                         Layer4_Weights_GPU,
                         Layer5_Neurons_GPU,
                         Layer4_Mean_GPU,
@@ -952,7 +1038,7 @@ void Execute_Fourth_Layer(
 
     
     dim3 blockSizeFourthLayerC(24, 32);
-    executeFourthLayer_partC<<< gridSizeFourthLayer, blockSizeFourthLayerC>>>(Layer4_Neurons_GPU,
+    executeFourthLayer_DSC_partC<<< gridSizeFourthLayer, blockSizeFourthLayerC>>>(Layer4_Neurons_GPU,
                         Layer4_Weights_GPU,
                         Layer5_Neurons_GPU,
                         Layer4_Mean_GPU,
@@ -963,7 +1049,7 @@ void Execute_Fourth_Layer(
 
     
     dim3 blockSizeFourthLayerD(24, 24);
-    executeFourthLayer_partD<<< gridSizeFourthLayer, blockSizeFourthLayerD>>>(Layer4_Neurons_GPU,
+    executeFourthLayer_DSC_partD<<< gridSizeFourthLayer, blockSizeFourthLayerD>>>(Layer4_Neurons_GPU,
                         Layer4_Weights_GPU,
                         Layer5_Neurons_GPU,
                         Layer4_Mean_GPU,
@@ -1035,7 +1121,7 @@ void Execute_Fifth_Layer(
 
     dim3 gridSizeFifthLayer(128);
     dim3 blockSizeFifthLayerA(32,32);
-    executeFifthLayer_partA<<< gridSizeFifthLayer, blockSizeFifthLayerA>>>(Layer5_Neurons_GPU,
+    executeFifthLayer_PSC_partA<<< gridSizeFifthLayer, blockSizeFifthLayerA>>>(Layer5_Neurons_GPU,
                         Layer5_Weights_GPU,
                         Layer6_Neurons_GPU,
                         Layer5_Mean_GPU,
@@ -1045,7 +1131,7 @@ void Execute_Fifth_Layer(
                     );
                     
     dim3 blockSizeFifthLayerB(32, 24);
-    executeFifthLayer_partB<<< gridSizeFifthLayer, blockSizeFifthLayerB>>>(Layer5_Neurons_GPU,
+    executeFifthLayer_PSC_partB<<< gridSizeFifthLayer, blockSizeFifthLayerB>>>(Layer5_Neurons_GPU,
                         Layer5_Weights_GPU,
                         Layer6_Neurons_GPU,
                         Layer5_Mean_GPU,
@@ -1056,7 +1142,7 @@ void Execute_Fifth_Layer(
 
     
     dim3 blockSizeFifthLayerC(24, 32);
-    executeFifthLayer_partC<<< gridSizeFifthLayer, blockSizeFifthLayerC>>>(Layer5_Neurons_GPU,
+    executeFifthLayer_PSC_partC<<< gridSizeFifthLayer, blockSizeFifthLayerC>>>(Layer5_Neurons_GPU,
                         Layer5_Weights_GPU,
                         Layer6_Neurons_GPU,
                         Layer5_Mean_GPU,
@@ -1067,7 +1153,7 @@ void Execute_Fifth_Layer(
 
     
     dim3 blockSizeFifthLayerD(24, 24);
-    executeFifthLayer_partD<<< gridSizeFifthLayer, blockSizeFifthLayerD>>>(Layer5_Neurons_GPU,
+    executeFifthLayer_PSC_partD<<< gridSizeFifthLayer, blockSizeFifthLayerD>>>(Layer5_Neurons_GPU,
                         Layer5_Weights_GPU,
                         Layer6_Neurons_GPU,
                         Layer5_Mean_GPU,
@@ -1140,7 +1226,7 @@ void Execute_Sixth_Layer(
 
     dim3 gridSizeSixthLayer(128);
     dim3 blockSizeSixthLayerA(32,32);
-    executeSixthLayer_partA<<< gridSizeSixthLayer, blockSizeSixthLayerA>>>(Layer6_Neurons_GPU,
+    executeSixthLayer_DSC_partA<<< gridSizeSixthLayer, blockSizeSixthLayerA>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
                         Layer7_Neurons_GPU,
                         Layer6_Mean_GPU,
@@ -1150,7 +1236,7 @@ void Execute_Sixth_Layer(
                     );
                     
     dim3 blockSizeSixthLayerB(32, 24);
-    executeSixthLayer_partB<<< gridSizeSixthLayer, blockSizeSixthLayerB>>>(Layer6_Neurons_GPU,
+    executeSixthLayer_DSC_partB<<< gridSizeSixthLayer, blockSizeSixthLayerB>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
                         Layer7_Neurons_GPU,
                         Layer6_Mean_GPU,
@@ -1160,7 +1246,7 @@ void Execute_Sixth_Layer(
                     );
     
     dim3 blockSizeSixthLayerC(24, 32);
-    executeSixthLayer_partC<<< gridSizeSixthLayer, blockSizeSixthLayerC>>>(Layer6_Neurons_GPU,
+    executeSixthLayer_DSC_partC<<< gridSizeSixthLayer, blockSizeSixthLayerC>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
                         Layer7_Neurons_GPU,
                         Layer6_Mean_GPU,
@@ -1171,7 +1257,7 @@ void Execute_Sixth_Layer(
 
     
     dim3 blockSizeSixthLayerD(24, 24);
-    executeSixthLayer_partD<<< gridSizeSixthLayer, blockSizeSixthLayerD>>>(Layer6_Neurons_GPU,
+    executeSixthLayer_DSC_partD<<< gridSizeSixthLayer, blockSizeSixthLayerD>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
                         Layer7_Neurons_GPU,
                         Layer6_Mean_GPU,
@@ -1243,7 +1329,7 @@ void Execute_Seventh_Layer(
 
     dim3 gridSizeSeventhLayer(128);
     dim3 blockSizeSeventhLayerA(32,32);
-    executeSeventhLayer_partA<<< gridSizeSeventhLayer, blockSizeSeventhLayerA>>>(Layer7_Neurons_GPU,
+    executeSeventhLayer_PSC_partA<<< gridSizeSeventhLayer, blockSizeSeventhLayerA>>>(Layer7_Neurons_GPU,
                         Layer7_Weights_GPU,
                         Layer8_Neurons_GPU,
                         Layer7_Mean_GPU,
@@ -1253,7 +1339,7 @@ void Execute_Seventh_Layer(
                     );
                     
     dim3 blockSizeSeventhLayerB(32, 24);
-    executeSeventhLayer_partB<<< gridSizeSeventhLayer, blockSizeSeventhLayerB>>>(Layer7_Neurons_GPU,
+    executeSeventhLayer_PSC_partB<<< gridSizeSeventhLayer, blockSizeSeventhLayerB>>>(Layer7_Neurons_GPU,
                         Layer7_Weights_GPU,
                         Layer8_Neurons_GPU,
                         Layer7_Mean_GPU,
@@ -1264,7 +1350,7 @@ void Execute_Seventh_Layer(
 
     
     dim3 blockSizeSeventhLayerC(24, 32);
-    executeSeventhLayer_partC<<< gridSizeSeventhLayer, blockSizeSeventhLayerC>>>(Layer7_Neurons_GPU,
+    executeSeventhLayer_PSC_partC<<< gridSizeSeventhLayer, blockSizeSeventhLayerC>>>(Layer7_Neurons_GPU,
                         Layer7_Weights_GPU,
                         Layer8_Neurons_GPU,
                         Layer7_Mean_GPU,
@@ -1274,7 +1360,7 @@ void Execute_Seventh_Layer(
                     );
     
     dim3 blockSizeSeventhLayerD(24, 24);
-    executeSeventhLayer_partD<<< gridSizeSeventhLayer, blockSizeSeventhLayerD>>>(Layer7_Neurons_GPU,
+    executeSeventhLayer_PSC_partD<<< gridSizeSeventhLayer, blockSizeSeventhLayerD>>>(Layer7_Neurons_GPU,
                         Layer7_Weights_GPU,
                         Layer8_Neurons_GPU,
                         Layer7_Mean_GPU,
@@ -1346,7 +1432,7 @@ void Execute_Eighth_Layer(
 
     dim3 gridSizeEighthLayer(128);
     dim3 blockSizeEighth(28,28);
-    executeEighthLayer<<< gridSizeEighthLayer, blockSizeEighth>>>(Layer8_Neurons_GPU,
+    executeEighthLayer_DSC<<< gridSizeEighthLayer, blockSizeEighth>>>(Layer8_Neurons_GPU,
                         Layer8_Weights_GPU,
                         Layer9_Neurons_GPU,
                         Layer8_Mean_GPU,
@@ -1419,7 +1505,7 @@ void Execute_Ninth_Layer(
 
     dim3 gridSizeNinthLayer(256);
     dim3 blockSizeNinth(28,28);
-    executeNinthLayer<<< gridSizeNinthLayer, blockSizeNinth>>>(Layer9_Neurons_GPU,
+    executeNinthLayer_PSC<<< gridSizeNinthLayer, blockSizeNinth>>>(Layer9_Neurons_GPU,
                         Layer9_Weights_GPU,
                         Layer10_Neurons_GPU,
                         Layer9_Mean_GPU,
@@ -1491,7 +1577,7 @@ void Execute_Tenth_Layer(
 
     dim3 gridSizeTenthLayer(256);
     dim3 blockSizeTenth(28,28);
-    executeTenthLayer<<< gridSizeTenthLayer, blockSizeTenth>>>(Layer10_Neurons_GPU,
+    executeTenthLayer_DSC<<< gridSizeTenthLayer, blockSizeTenth>>>(Layer10_Neurons_GPU,
                         Layer10_Weights_GPU,
                         Layer11_Neurons_GPU,
                         Layer10_Mean_GPU,
@@ -1563,7 +1649,7 @@ void Execute_Eleventh_Layer(
 
     dim3 gridSizeEleventhLayer(256);
     dim3 blockSizeEleventh(28,28);
-    executeEleventhLayer<<< gridSizeEleventhLayer, blockSizeEleventh>>>(Layer11_Neurons_GPU,
+    executeEleventhLayer_PSC<<< gridSizeEleventhLayer, blockSizeEleventh>>>(Layer11_Neurons_GPU,
                         Layer11_Weights_GPU,
                         Layer12_Neurons_GPU,
                         Layer11_Mean_GPU,
@@ -1635,7 +1721,7 @@ void Execute_Twelveth_Layer(
 
     dim3 gridSizeTwelvethLayer(256);
     dim3 blockSizeTwelveth(14,14);
-    executeTwelfthLayer<<< gridSizeTwelvethLayer, blockSizeTwelveth>>>(Layer12_Neurons_GPU,
+    executeTwelfthLayer_DSC<<< gridSizeTwelvethLayer, blockSizeTwelveth>>>(Layer12_Neurons_GPU,
                         Layer12_Weights_GPU,
                         Layer13_Neurons_GPU,
                         Layer12_Mean_GPU,
@@ -1707,7 +1793,7 @@ void Execute_Thirteenth_Layer(
 
     dim3 gridSizeThirteenthLayer(512);
     dim3 blockSizeThirteenth(14,14);
-    executeThirteenthLayer<<< gridSizeThirteenthLayer, blockSizeThirteenth>>>(Layer13_Neurons_GPU,
+    executeThirteenthLayer_PSC<<< gridSizeThirteenthLayer, blockSizeThirteenth>>>(Layer13_Neurons_GPU,
                         Layer13_Weights_GPU,
                         Layer14_Neurons_GPU,
                         Layer13_Mean_GPU,
@@ -1735,6 +1821,151 @@ void Read_ThirteenthLayer_Data(double *Layer13_Weights_CPU,
     read_File("data/ThirteenthLayer/Thirteenth_Layer_Gamma.txt", Layer13_Gamma_CPU);
     read_File("data/ThirteenthLayer/Thirteenth_Layer_Beta.txt", Layer13_Beta_CPU);
 }
+
+void Execute_Fourteenth_Layer(
+    double * Layer14_Neurons_GPU,
+    double * Layer15_Neurons_GPU
+){  
+    double * Layer14_Weights_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_WEIGHT_SIZE);
+    double * Layer14_Mean_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
+    double * Layer14_StanDev_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
+    double * Layer14_Gamma_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
+    double * Layer14_Beta_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
+
+    Read_FourteenthLayer_Data(Layer14_Weights_CPU,
+                    Layer14_Mean_CPU,
+                    Layer14_StanDev_CPU,
+                    Layer14_Gamma_CPU,
+                    Layer14_Beta_CPU
+                );
+    
+    double *Layer14_Weights_GPU,
+           *Layer14_Mean_GPU,
+           *Layer14_StanDev_GPU,
+           *Layer14_Gamma_GPU,
+           *Layer14_Beta_GPU;
+
+    cudaMalloc((void**) &Layer14_Weights_GPU, sizeof(double) * FOURTEENTH_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer14_Mean_GPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer14_StanDev_GPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer14_Gamma_GPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer14_Beta_GPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
+
+    cudaMemcpy(Layer14_Weights_GPU, Layer14_Weights_CPU, sizeof(double) * FOURTEENTH_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer14_Mean_GPU, Layer14_Mean_CPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer14_StanDev_GPU, Layer14_StanDev_CPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer14_Gamma_GPU, Layer14_Gamma_CPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer14_Beta_GPU, Layer14_Beta_CPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+
+    free(Layer14_Weights_CPU);
+    free(Layer14_Mean_CPU);
+    free(Layer14_StanDev_CPU);
+    free(Layer14_Gamma_CPU);
+    free(Layer14_Beta_CPU);
+
+    dim3 gridSizeFourteenthLayer(512);
+    dim3 blockSizeFourteenth(14,14);
+    executeFourteenthLayer<<< gridSizeFourteenthLayer, blockSizeFourteenth>>>(Layer14_Neurons_GPU,
+                        Layer14_Weights_GPU,
+                        Layer15_Neurons_GPU,
+                        Layer14_Mean_GPU,
+                        Layer14_StanDev_GPU,
+                        Layer14_Gamma_GPU,
+                        Layer14_Beta_GPU
+                    );
+                    
+    cudaFree(Layer14_Weights_GPU);
+    cudaFree(Layer14_Mean_GPU);
+    cudaFree(Layer14_StanDev_GPU);
+    cudaFree(Layer14_Gamma_GPU);
+    cudaFree(Layer14_Beta_GPU);
+}
+
+void Read_FourteenthLayer_Data(double *Layer14_Weights_CPU,
+    double * Layer14_Mean_CPU,
+    double * Layer14_StanDev_CPU,
+    double * Layer14_Gamma_CPU,
+    double * Layer14_Beta_CPU
+){
+    read_File("data/FourteenthLayer/weightsNorm.txt", Layer14_Weights_CPU);
+    read_File("data/FourteenthLayer/Fourteenth_Layer_Mean.txt", Layer14_Mean_CPU);
+    read_File("data/FourteenthLayer/Fourteenth_Layer_StanDev.txt", Layer14_StanDev_CPU);
+    read_File("data/FourteenthLayer/Fourteenth_Layer_Gamma.txt", Layer14_Gamma_CPU);
+    read_File("data/FourteenthLayer/Fourteenth_Layer_Beta.txt", Layer14_Beta_CPU);
+}
+
+void Execute_Fifteenth_Layer(
+    double * Layer15_Neurons_GPU,
+    double * Layer16_Neurons_GPU
+){  
+    double * Layer15_Weights_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_WEIGHT_SIZE);
+    double * Layer15_Mean_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
+    double * Layer15_StanDev_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
+    double * Layer15_Gamma_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
+    double * Layer15_Beta_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
+
+    Read_FifteenthLayer_Data(Layer15_Weights_CPU,
+                    Layer15_Mean_CPU,
+                    Layer15_StanDev_CPU,
+                    Layer15_Gamma_CPU,
+                    Layer15_Beta_CPU
+                );
+    
+    double *Layer15_Weights_GPU,
+           *Layer15_Mean_GPU,
+           *Layer15_StanDev_GPU,
+           *Layer15_Gamma_GPU,
+           *Layer15_Beta_GPU;
+
+    cudaMalloc((void**) &Layer15_Weights_GPU, sizeof(double) * FIFTEENTH_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer15_Mean_GPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer15_StanDev_GPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer15_Gamma_GPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer15_Beta_GPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
+
+    cudaMemcpy(Layer15_Weights_GPU, Layer15_Weights_CPU, sizeof(double) * FIFTEENTH_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer15_Mean_GPU, Layer15_Mean_CPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer15_StanDev_GPU, Layer15_StanDev_CPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer15_Gamma_GPU, Layer15_Gamma_CPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer15_Beta_GPU, Layer15_Beta_CPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+
+    free(Layer15_Weights_CPU);
+    free(Layer15_Mean_CPU);
+    free(Layer15_StanDev_CPU);
+    free(Layer15_Gamma_CPU);
+    free(Layer15_Beta_CPU);
+
+    dim3 gridSizeFifteenthLayer(512);
+    dim3 blockSizeFifteenth(14,14);
+    executeFifteenthLayer_PSC<<< gridSizeFifteenthLayer, blockSizeFifteenth>>>(Layer15_Neurons_GPU,
+                        Layer15_Weights_GPU,
+                        Layer16_Neurons_GPU,
+                        Layer15_Mean_GPU,
+                        Layer15_StanDev_GPU,
+                        Layer15_Gamma_GPU,
+                        Layer15_Beta_GPU
+                    );
+                    
+    cudaFree(Layer15_Weights_GPU);
+    cudaFree(Layer15_Mean_GPU);
+    cudaFree(Layer15_StanDev_GPU);
+    cudaFree(Layer15_Gamma_GPU);
+    cudaFree(Layer15_Beta_GPU);
+}
+
+void Read_FifteenthLayer_Data(double *Layer15_Weights_CPU,
+    double * Layer15_Mean_CPU,
+    double * Layer15_StanDev_CPU,
+    double * Layer15_Gamma_CPU,
+    double * Layer15_Beta_CPU
+){
+    read_File("data/FifteenthLayer/weightsNorm.txt", Layer15_Weights_CPU);
+    read_File("data/FifteenthLayer/Fifteenth_Layer_Mean.txt", Layer15_Mean_CPU);
+    read_File("data/FifteenthLayer/Fifteenth_Layer_StanDev.txt", Layer15_StanDev_CPU);
+    read_File("data/FifteenthLayer/Fifteenth_Layer_Gamma.txt", Layer15_Gamma_CPU);
+    read_File("data/FifteenthLayer/Fifteenth_Layer_Beta.txt", Layer15_Beta_CPU);
+}
+
 
 void read_File(const char * input_FileName, double * input_values){
 
