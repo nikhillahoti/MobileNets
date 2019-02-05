@@ -1524,7 +1524,7 @@ __global__ void executeThirteenthLayer_PSC(double *Layer13_Neurons_GPU,
     Weight: 3 * 3 * 512 with a Stride of 1
     Output: 14 * 14 * 512  (Handling padding for next layer)
 */
-__global__ void executeFourteenthLayer(double *Layer14_Neurons_GPU,
+__global__ void executeFourteenthLayer_DSC(double *Layer14_Neurons_GPU,
     double *Layer14_Weights_GPU,
     double *Layer15_Neurons_GPU,
     double *Layer14_Mean_GPU,
@@ -1587,11 +1587,11 @@ __global__ void executeFifteenthLayer_PSC(double *Layer15_Neurons_GPU,
 {
     double product = 0.0;
     int filter_number = blockIdx.x;
-    //int offset = 17;
+    int offset = 17;
 
     // Output position
-    int output_Position = (filter_number * 14 * 14)   // channel to work with
-                        + (threadIdx.x * 14)
+    int output_Position = (filter_number * 16 * 16)   // channel to work with
+                        + (threadIdx.x * 16)
                         + (threadIdx.y);
 
     int weight_Position = filter_number * 512;
@@ -1615,8 +1615,110 @@ __global__ void executeFifteenthLayer_PSC(double *Layer15_Neurons_GPU,
     if(Z > 6)
         Z = 6.0; 
 
-    Layer16_Neurons_GPU[output_Position] = Z;
+    Layer16_Neurons_GPU[output_Position + offset] = Z;
 }
 
 /*  *************************************************** FIFTEENTH LAYER END **************************************************** */
 
+/*  *************************************************** SIXTEENTH LAYER START ************************************************** */
+/*
+    Layer 16: Depthwise Separable Convolution Layer
+    Input: 16 * 16 * 512 
+    Weight: 3 * 3 * 512 with a Stride of 1
+    Output: 14 * 14 * 512  (Handling padding for next layer)
+*/
+__global__ void executeSixteenthLayer_DSC(double *Layer16_Neurons_GPU,
+    double *Layer16_Weights_GPU,
+    double *Layer17_Neurons_GPU,
+    double *Layer16_Mean_GPU,
+    double *Layer16_StanDev_GPU,
+    double *Layer16_Gamma_GPU,
+    double *Layer16_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 14 * 14)   // channel to work with
+                        + (threadIdx.x * 14)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (threadIdx.x * 16)
+                       + (threadIdx.y);
+
+    for(int row = 0; row < 3; row++)       // This is the Row Loop
+    {
+        product += ((Layer16_Neurons_GPU[(filter_number * 16 * 16) + input_Position + (row * 16)] * Layer16_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer16_Neurons_GPU[(filter_number * 16 * 16) + input_Position + (row * 16) + 1] * Layer16_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer16_Neurons_GPU[(filter_number * 16 * 16) + input_Position + (row * 16) + 2] * Layer16_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    double Z = (product - Layer16_Mean_GPU[filter_number]) / Layer16_StanDev_GPU[filter_number];
+    Z = (Z * Layer16_Gamma_GPU[filter_number]) + Layer16_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer17_Neurons_GPU[output_Position] = Z;
+}
+
+/*  *************************************************** SIXTEENTH LAYER END **************************************************** */
+
+/*  *************************************************** SEVENTEENTH LAYER START ************************************************** */
+/*
+    Layer 17: Pointwise Separable Convolution Layer
+    Input: 14 * 14 * 512 
+    Weight: 1 * 1 * 512 * 512 with a Stride of 1
+    Output: 16 * 16 * 512  (Handling padding for next layer)
+*/
+__global__ void executeSeventeenthLayer_PSC(double *Layer17_Neurons_GPU,
+    double *Layer17_Weights_GPU,
+    double *Layer18_Neurons_GPU,
+    double *Layer17_Mean_GPU,
+    double *Layer17_StanDev_GPU,
+    double *Layer17_Gamma_GPU,
+    double *Layer17_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+    int offset = 17;
+
+    // Output position
+    int output_Position = (filter_number * 16 * 16)   // channel to work with
+                        + (threadIdx.x * 16)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 512;
+
+    int input_Position = (threadIdx.x * 14)
+                        + (threadIdx.y);
+
+    for(int channel = 0; channel < 512 ; channel++)       // This is the channel loop as we have 32 channels to work with
+    {
+        product += (Layer17_Neurons_GPU[(channel * 14 * 14) + input_Position] * Layer17_Weights_GPU[weight_Position + channel]);
+    }         
+
+    double Z = (product - Layer17_Mean_GPU[filter_number]) / Layer17_StanDev_GPU[filter_number];
+    Z = (Z * Layer17_Gamma_GPU[filter_number]) + Layer17_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer18_Neurons_GPU[output_Position + offset] = Z;
+}
+
+/*  *************************************************** SEVENTEENTH LAYER END **************************************************** */
