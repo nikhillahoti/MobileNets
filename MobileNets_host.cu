@@ -67,13 +67,17 @@
 #define FIFTEENTH_LAYER_OUTPUT_SIZE 16 * 16 * 512
 #define FIFTEENTH_LAYER_CHANNELS 512
 
-#define SIXTEENTH_LAYER_WEIGHT_SIZE  512 * 512
-#define SIXTEENTH_LAYER_OUTPUT_SIZE 16 * 16 * 512
+#define SIXTEENTH_LAYER_WEIGHT_SIZE  512 * 9
+#define SIXTEENTH_LAYER_OUTPUT_SIZE 14 * 14 * 512
 #define SIXTEENTH_LAYER_CHANNELS 512
 
 #define SEVENTEENTH_LAYER_WEIGHT_SIZE  512 * 512
 #define SEVENTEENTH_LAYER_OUTPUT_SIZE 16 * 16 * 512
 #define SEVENTEENTH_LAYER_CHANNELS 512
+
+#define EIGHTEENTH_LAYER_WEIGHT_SIZE  512 * 9
+#define EIGHTEENTH_LAYER_OUTPUT_SIZE 14 * 14 * 512
+#define EIGHTEENTH_LAYER_CHANNELS 512
 
 // Function declarations
 void NeuralNetwork();
@@ -280,6 +284,18 @@ void Read_SeventeenthLayer_Data(double *Layer17_Weights_CPU,
 void Execute_Seventeenth_Layer(
     double * Layer17_Neurons_GPU,
     double * Layer18_Neurons_GPU
+);
+
+void Read_EighteenthLayer_Data(double *Layer18_Weights_CPU,
+    double * Layer18_Mean_CPU,
+    double * Layer18_StanDev_CPU,
+    double * Layer18_Gamma_CPU,
+    double * Layer18_Beta_CPU
+);
+
+void Execute_Eighteenth_Layer(
+    double * Layer18_Neurons_GPU,
+    double * Layer19_Neurons_GPU
 );
 
 int main(){
@@ -676,7 +692,7 @@ void NeuralNetwork(){
 
     Execute_Fifteenth_Layer(Layer15_Neurons_GPU, Layer16_Neurons_GPU);
 
-    bool SAVE_FIFTEENTH_LAYER_WEIGHTS = true;
+    bool SAVE_FIFTEENTH_LAYER_WEIGHTS = false;
     if(SAVE_FIFTEENTH_LAYER_WEIGHTS){
         double * Layer16_Neurons_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer16_Neurons_CPU, Layer16_Neurons_GPU, sizeof(double) * FIFTEENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -703,7 +719,7 @@ void NeuralNetwork(){
 
     Execute_Sixteenth_Layer(Layer16_Neurons_GPU, Layer17_Neurons_GPU);
 
-    bool SAVE_SIXTEENTH_LAYER_WEIGHTS = true;
+    bool SAVE_SIXTEENTH_LAYER_WEIGHTS = false;
     if(SAVE_SIXTEENTH_LAYER_WEIGHTS){
         double * Layer17_Neurons_CPU = (double *) malloc(sizeof(double) * SIXTEENTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer17_Neurons_CPU, Layer17_Neurons_GPU, sizeof(double) * SIXTEENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -730,7 +746,7 @@ void NeuralNetwork(){
 
     Execute_Seventeenth_Layer(Layer17_Neurons_GPU, Layer18_Neurons_GPU);
 
-    bool SAVE_SEVENTEENTH_LAYER_WEIGHTS = true;
+    bool SAVE_SEVENTEENTH_LAYER_WEIGHTS = false;
     if(SAVE_SEVENTEENTH_LAYER_WEIGHTS){
         double * Layer18_Neurons_CPU = (double *) malloc(sizeof(double) * SEVENTEENTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer18_Neurons_CPU, Layer18_Neurons_GPU, sizeof(double) * SEVENTEENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -750,10 +766,37 @@ void NeuralNetwork(){
     cudaFree(Layer17_Neurons_GPU);
     printf("\n Layer 17 Execution complete !!!");
     /* ************************************************ SEVENTEENTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ EIGHTEENTH LAYER START ******************************************************** */
+    double *Layer19_Neurons_GPU;
+    cudaMalloc((void**) &Layer19_Neurons_GPU, sizeof(double) * EIGHTEENTH_LAYER_OUTPUT_SIZE);
+
+    Execute_Eighteenth_Layer(Layer18_Neurons_GPU, Layer19_Neurons_GPU);
+
+    bool SAVE_EIGHTEENTH_LAYER_WEIGHTS = true;
+    if(SAVE_EIGHTEENTH_LAYER_WEIGHTS){
+        double * Layer19_Neurons_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer19_Neurons_CPU, Layer19_Neurons_GPU, sizeof(double) * EIGHTEENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/EighteenthLayer/output.txt", "w");
+        value = EIGHTEENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer19_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer19_Neurons_CPU);
+    }
+    cudaFree(Layer18_Neurons_GPU);
+    printf("\n Layer 18 Execution complete !!!");
+    /* ************************************************ EIGHTEENTH LAYER COMPLETE *********************************************** */
     
     printf("\n\n Processing Done !!! \n\n");
 
-    cudaFree(Layer18_Neurons_GPU);
+    cudaFree(Layer19_Neurons_GPU);
 }
 
 void Execute_First_Layer(double *Layer2_Neurons_GPU)
@@ -2095,7 +2138,7 @@ void Execute_Sixteenth_Layer(
 
     dim3 gridSizeSixteenthLayer(512);
     dim3 blockSizeSixteenth(14,14);
-    executeFourteenthLayer_DSC<<< gridSizeSixteenthLayer, blockSizeSixteenth>>>(Layer16_Neurons_GPU,
+    executeSixteenthLayer_DSC<<< gridSizeSixteenthLayer, blockSizeSixteenth>>>(Layer16_Neurons_GPU,
                         Layer16_Weights_GPU,
                         Layer17_Neurons_GPU,
                         Layer16_Mean_GPU,
@@ -2196,6 +2239,77 @@ void Read_SeventeenthLayer_Data(double *Layer17_Weights_CPU,
     read_File("data/SeventeenthLayer/Seventeenth_Layer_Beta.txt", Layer17_Beta_CPU);
 }
 
+void Execute_Eighteenth_Layer(
+    double * Layer18_Neurons_GPU,
+    double * Layer19_Neurons_GPU
+){  
+    double * Layer18_Weights_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_WEIGHT_SIZE);
+    double * Layer18_Mean_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
+    double * Layer18_StanDev_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
+    double * Layer18_Gamma_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
+    double * Layer18_Beta_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
+
+    Read_EighteenthLayer_Data(Layer18_Weights_CPU,
+                    Layer18_Mean_CPU,
+                    Layer18_StanDev_CPU,
+                    Layer18_Gamma_CPU,
+                    Layer18_Beta_CPU
+                );
+    
+    double *Layer18_Weights_GPU,
+           *Layer18_Mean_GPU,
+           *Layer18_StanDev_GPU,
+           *Layer18_Gamma_GPU,
+           *Layer18_Beta_GPU;
+
+    cudaMalloc((void**) &Layer18_Weights_GPU, sizeof(double) * EIGHTEENTH_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer18_Mean_GPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer18_StanDev_GPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer18_Gamma_GPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer18_Beta_GPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
+
+    cudaMemcpy(Layer18_Weights_GPU, Layer18_Weights_CPU, sizeof(double) * EIGHTEENTH_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer18_Mean_GPU, Layer18_Mean_CPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer18_StanDev_GPU, Layer18_StanDev_CPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer18_Gamma_GPU, Layer18_Gamma_CPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer18_Beta_GPU, Layer18_Beta_CPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+
+    free(Layer18_Weights_CPU);
+    free(Layer18_Mean_CPU);
+    free(Layer18_StanDev_CPU);
+    free(Layer18_Gamma_CPU);
+    free(Layer18_Beta_CPU);
+
+    dim3 gridSizeEighteenthLayer(512);
+    dim3 blockSizeEighteenth(14,14);
+    executeEighteenthLayer_DSC<<< gridSizeEighteenthLayer, blockSizeEighteenth>>>(Layer18_Neurons_GPU,
+                        Layer18_Weights_GPU,
+                        Layer19_Neurons_GPU,
+                        Layer18_Mean_GPU,
+                        Layer18_StanDev_GPU,
+                        Layer18_Gamma_GPU,
+                        Layer18_Beta_GPU
+                    );
+                    
+    cudaFree(Layer18_Weights_GPU);
+    cudaFree(Layer18_Mean_GPU);
+    cudaFree(Layer18_StanDev_GPU);
+    cudaFree(Layer18_Gamma_GPU);
+    cudaFree(Layer18_Beta_GPU);
+}
+
+void Read_EighteenthLayer_Data(double *Layer18_Weights_CPU,
+    double * Layer18_Mean_CPU,
+    double * Layer18_StanDev_CPU,
+    double * Layer18_Gamma_CPU,
+    double * Layer18_Beta_CPU
+){
+    read_File("data/EighteenthLayer/weightsNorm.txt", Layer18_Weights_CPU);
+    read_File("data/EighteenthLayer/Eighteenth_Layer_Mean.txt", Layer18_Mean_CPU);
+    read_File("data/EighteenthLayer/Eighteenth_Layer_StanDev.txt", Layer18_StanDev_CPU);
+    read_File("data/EighteenthLayer/Eighteenth_Layer_Gamma.txt", Layer18_Gamma_CPU);
+    read_File("data/EighteenthLayer/Eighteenth_Layer_Beta.txt", Layer18_Beta_CPU);
+}
 
 void read_File(const char * input_FileName, double * input_values){
 

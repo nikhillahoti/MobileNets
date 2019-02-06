@@ -1722,3 +1722,55 @@ __global__ void executeSeventeenthLayer_PSC(double *Layer17_Neurons_GPU,
 }
 
 /*  *************************************************** SEVENTEENTH LAYER END **************************************************** */
+
+/*  *************************************************** EIGHTEENTH LAYER START ************************************************** */
+/*
+    Layer 18: Depthwise Separable Convolution Layer
+    Input: 16 * 16 * 512 
+    Weight: 3 * 3 * 512 with a Stride of 1
+    Output: 14 * 14 * 512  (Handling padding for next layer)
+*/
+__global__ void executeEighteenthLayer_DSC(double *Layer18_Neurons_GPU,
+    double *Layer18_Weights_GPU,
+    double *Layer19_Neurons_GPU,
+    double *Layer18_Mean_GPU,
+    double *Layer18_StanDev_GPU,
+    double *Layer18_Gamma_GPU,
+    double *Layer18_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 14 * 14)   // channel to work with
+                        + (threadIdx.x * 14)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (threadIdx.x * 16)
+                       + (threadIdx.y);
+
+    for(int row = 0; row < 3; row++)       // This is the Row Loop
+    {
+        product += ((Layer18_Neurons_GPU[(filter_number * 16 * 16) + input_Position + (row * 16)] * Layer18_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer18_Neurons_GPU[(filter_number * 16 * 16) + input_Position + (row * 16) + 1] * Layer18_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer18_Neurons_GPU[(filter_number * 16 * 16) + input_Position + (row * 16) + 2] * Layer18_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    double Z = (product - Layer18_Mean_GPU[filter_number]) / Layer18_StanDev_GPU[filter_number];
+    Z = (Z * Layer18_Gamma_GPU[filter_number]) + Layer18_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer19_Neurons_GPU[output_Position] = Z;
+}
+
+/*  *************************************************** EIGHTEENTH LAYER END **************************************************** */
