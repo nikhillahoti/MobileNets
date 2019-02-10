@@ -1875,4 +1875,55 @@ __global__ void executeTwentyLayer_DSC(double *Layer20_Neurons_GPU,
 
     Layer21_Neurons_GPU[output_Position] = Z;
 }
-/*  *************************************************** EIGHTEENTH LAYER END **************************************************** */
+/*  *************************************************** TWENTY LAYER END **************************************************** */
+
+/*  *************************************************** TWENTYONE LAYER START ************************************************** */
+/*
+    Layer 21: Pointwise Separable Convolution Layer
+    Input: 14 * 14 * 512 
+    Weight: 1 * 1 * 512 * 512 with a Stride of 1
+    Output: 14 * 14 * 512  (Handling padding for next layer)
+*/
+__global__ void executeTwentyOneLayer_PSC(double *Layer21_Neurons_GPU,
+    double *Layer21_Weights_GPU,
+    double *Layer22_Neurons_GPU,
+    double *Layer21_Mean_GPU,
+    double *Layer21_StanDev_GPU,
+    double *Layer21_Gamma_GPU,
+    double *Layer21_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+    int offset = 17;
+
+    // Output position
+    int output_Position = (filter_number * 16 * 16)   // channel to work with
+                        + (threadIdx.x * 16)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 512;
+
+    int input_Position = (threadIdx.x * 14)
+                        + (threadIdx.y);
+
+    for(int channel = 0; channel < 512 ; channel++)       // This is the channel loop as we have 32 channels to work with
+    {
+        product += (Layer21_Neurons_GPU[(channel * 14 * 14) + input_Position] * Layer21_Weights_GPU[weight_Position + channel]);
+    }         
+
+    double Z = (product - Layer21_Mean_GPU[filter_number]) / Layer21_StanDev_GPU[filter_number];
+    Z = (Z * Layer21_Gamma_GPU[filter_number]) + Layer21_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer22_Neurons_GPU[output_Position + offset] = Z;
+}
+
+/*  *************************************************** TWENTYONE LAYER END **************************************************** */

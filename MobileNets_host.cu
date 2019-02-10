@@ -87,6 +87,14 @@
 #define TWENTY_LAYER_OUTPUT_SIZE 14 * 14 * 512
 #define TWENTY_LAYER_CHANNELS 512
 
+#define TWENTYONE_LAYER_WEIGHT_SIZE  512 * 512
+#define TWENTYONE_LAYER_OUTPUT_SIZE 16 * 16 * 512
+#define TWENTYONE_LAYER_CHANNELS 512
+
+#define TWENTYTWO_LAYER_WEIGHT_SIZE  512 * 9
+#define TWENTYTWO_LAYER_OUTPUT_SIZE 14 * 14 * 512
+#define TWENTYTWO_LAYER_CHANNELS 512
+
 // Function declarations
 void NeuralNetwork();
 void read_File(const char * weightFileName, double *Layer1_Weights_CPU);
@@ -328,6 +336,30 @@ void Read_TwentyLayer_Data(double *Layer20_Weights_CPU,
 void Execute_Twenty_Layer(
     double * Layer20_Neurons_GPU,
     double * Layer21_Neurons_GPU
+);
+
+void Read_TwentyOneLayer_Data(double *Layer21_Weights_CPU,
+    double * Layer21_Mean_CPU,
+    double * Layer21_StanDev_CPU,
+    double * Layer21_Gamma_CPU,
+    double * Layer21_Beta_CPU
+);
+
+void Execute_TwentyOne_Layer(
+    double * Layer21_Neurons_GPU,
+    double * Layer22_Neurons_GPU
+);
+
+void Read_TwentyTwoLayer_Data(double *Layer22_Weights_CPU,
+    double * Layer22_Mean_CPU,
+    double * Layer22_StanDev_CPU,
+    double * Layer22_Gamma_CPU,
+    double * Layer22_Beta_CPU
+);
+
+void Execute_TwentyTwo_Layer(
+    double * Layer22_Neurons_GPU,
+    double * Layer23_Neurons_GPU
 );
 
 int main(){
@@ -859,7 +891,7 @@ void NeuralNetwork(){
 
     Execute_Twenty_Layer(Layer20_Neurons_GPU, Layer21_Neurons_GPU);
 
-    bool SAVE_TWENTY_LAYER_WEIGHTS = true;
+    bool SAVE_TWENTY_LAYER_WEIGHTS = false;
     if(SAVE_TWENTY_LAYER_WEIGHTS){
         double * Layer21_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTY_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer21_Neurons_CPU, Layer21_Neurons_GPU, sizeof(double) * TWENTY_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -880,9 +912,36 @@ void NeuralNetwork(){
     printf("\n Layer 20 Execution complete !!!");
     /* ************************************************ TWENTY LAYER COMPLETE *********************************************** */
 
+    /* ************************************************ TWENTYONE LAYER START ******************************************************** */
+    double *Layer22_Neurons_GPU;
+    cudaMalloc((void**) &Layer22_Neurons_GPU, sizeof(double) * TWENTYONE_LAYER_OUTPUT_SIZE);
+
+    Execute_TwentyOne_Layer(Layer21_Neurons_GPU, Layer22_Neurons_GPU);
+
+    bool SAVE_TWENTYONE_LAYER_WEIGHTS = true;
+    if(SAVE_TWENTYONE_LAYER_WEIGHTS){
+        double * Layer22_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYONE_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer22_Neurons_CPU, Layer22_Neurons_GPU, sizeof(double) * TWENTYONE_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/TwentyOneLayer/output.txt", "w");
+        value = TWENTYONE_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer22_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer22_Neurons_CPU);
+    }
+    cudaFree(Layer21_Neurons_GPU);
+    printf("\n Layer 21 Execution complete !!!");
+    /* ************************************************ TWENTYONE LAYER COMPLETE *********************************************** */
+
     printf("\n\n Processing Done !!! \n\n");
 
-    cudaFree(Layer21_Neurons_GPU);
+    cudaFree(Layer22_Neurons_GPU);
 }
 
 void Execute_First_Layer(double *Layer2_Neurons_GPU)
@@ -2539,6 +2598,78 @@ void Read_TwentyLayer_Data(double *Layer20_Weights_CPU,
     read_File("data/TwentyLayer/Twenty_Layer_StanDev.txt", Layer20_StanDev_CPU);
     read_File("data/TwentyLayer/Twenty_Layer_Gamma.txt", Layer20_Gamma_CPU);
     read_File("data/TwentyLayer/Twenty_Layer_Beta.txt", Layer20_Beta_CPU);
+}
+
+void Execute_TwentyOne_Layer(
+    double * Layer21_Neurons_GPU,
+    double * Layer22_Neurons_GPU
+){  
+    double * Layer21_Weights_CPU = (double *) malloc(sizeof(double) * TWENTYONE_LAYER_WEIGHT_SIZE);
+    double * Layer21_Mean_CPU = (double *) malloc(sizeof(double) * TWENTYONE_LAYER_CHANNELS);
+    double * Layer21_StanDev_CPU = (double *) malloc(sizeof(double) * TWENTYONE_LAYER_CHANNELS);
+    double * Layer21_Gamma_CPU = (double *) malloc(sizeof(double) * TWENTYONE_LAYER_CHANNELS);
+    double * Layer21_Beta_CPU = (double *) malloc(sizeof(double) * TWENTYONE_LAYER_CHANNELS);
+
+    Read_TwentyOneLayer_Data(Layer21_Weights_CPU,
+                    Layer21_Mean_CPU,
+                    Layer21_StanDev_CPU,
+                    Layer21_Gamma_CPU,
+                    Layer21_Beta_CPU
+                );
+    
+    double *Layer21_Weights_GPU,
+           *Layer21_Mean_GPU,
+           *Layer21_StanDev_GPU,
+           *Layer21_Gamma_GPU,
+           *Layer21_Beta_GPU;
+
+    cudaMalloc((void**) &Layer21_Weights_GPU, sizeof(double) * TWENTYONE_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer21_Mean_GPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer21_StanDev_GPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer21_Gamma_GPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer21_Beta_GPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS);
+
+    cudaMemcpy(Layer21_Weights_GPU, Layer21_Weights_CPU, sizeof(double) * TWENTYONE_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer21_Mean_GPU, Layer21_Mean_CPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer21_StanDev_GPU, Layer21_StanDev_CPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer21_Gamma_GPU, Layer21_Gamma_CPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer21_Beta_GPU, Layer21_Beta_CPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+
+    free(Layer21_Weights_CPU);
+    free(Layer21_Mean_CPU);
+    free(Layer21_StanDev_CPU);
+    free(Layer21_Gamma_CPU);
+    free(Layer21_Beta_CPU);
+
+    dim3 gridSizeTwentyOneLayer(512);
+    dim3 blockSizeTwentyOne(14,14);
+    executeTwentyOneLayer_PSC<<< gridSizeTwentyOneLayer, blockSizeTwentyOne>>>(Layer21_Neurons_GPU,
+                        Layer21_Weights_GPU,
+                        Layer22_Neurons_GPU,
+                        Layer21_Mean_GPU,
+                        Layer21_StanDev_GPU,
+                        Layer21_Gamma_GPU,
+                        Layer21_Beta_GPU
+                    );
+                    
+    cudaFree(Layer21_Weights_GPU);
+    cudaFree(Layer21_Mean_GPU);
+    cudaFree(Layer21_StanDev_GPU);
+    cudaFree(Layer21_Gamma_GPU);
+    cudaFree(Layer21_Beta_GPU);
+}
+
+void Read_TwentyOneLayer_Data(double *Layer21_Weights_CPU,
+    double * Layer21_Mean_CPU,
+    double * Layer21_StanDev_CPU,
+    double * Layer21_Gamma_CPU,
+    double * Layer21_Beta_CPU
+){
+    read_File("data/TwentyOneLayer/weightsNorm.txt", Layer21_Weights_CPU);
+    read_File("data/TwentyOneLayer/TwentyOne_Layer_Mean.txt", Layer21_Mean_CPU);
+    read_File("data/TwentyOneLayer/TwentyOne_Layer_StanDev.txt", Layer21_StanDev_CPU);
+    read_File("data/TwentyOneLayer/TwentyOne_Layer_Gamma.txt", Layer21_Gamma_CPU);
+    read_File("data/TwentyOneLayer/TwentyOne_Layer_Beta.txt", Layer21_Beta_CPU);
 }
 
 void read_File(const char * input_FileName, double * input_values){
