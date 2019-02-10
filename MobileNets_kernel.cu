@@ -1927,3 +1927,103 @@ __global__ void executeTwentyOneLayer_PSC(double *Layer21_Neurons_GPU,
 }
 
 /*  *************************************************** TWENTYONE LAYER END **************************************************** */
+
+/*  *************************************************** TWENTYTWO LAYER START ************************************************** */
+/*
+    Layer 22: Depthwise Separable Convolution Layer
+    Input: 16 * 16 * 512 
+    Weight: 3 * 3 * 512 with a Stride of 1
+    Output: 14 * 14 * 512  (Handling padding for next layer)
+*/
+__global__ void executeTwentyTwoLayer_DSC(double *Layer22_Neurons_GPU,
+    double *Layer22_Weights_GPU,
+    double *Layer23_Neurons_GPU,
+    double *Layer22_Mean_GPU,
+    double *Layer22_StanDev_GPU,
+    double *Layer22_Gamma_GPU,
+    double *Layer22_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 14 * 14)   // channel to work with
+                        + (threadIdx.x * 14)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 9;
+
+    int input_Position = (threadIdx.x * 16)
+                       + (threadIdx.y);
+
+    for(int row = 0; row < 3; row++)       // This is the Row Loop
+    {
+        product += ((Layer22_Neurons_GPU[(filter_number * 16 * 16) + input_Position + (row * 16)] * Layer22_Weights_GPU[weight_Position + (row * 3)])
+                + (Layer22_Neurons_GPU[(filter_number * 16 * 16) + input_Position + (row * 16) + 1] * Layer22_Weights_GPU[weight_Position + (row * 3) + 1])
+                + (Layer22_Neurons_GPU[(filter_number * 16 * 16) + input_Position + (row * 16) + 2] * Layer22_Weights_GPU[weight_Position + (row * 3) + 2]));
+    }
+
+    double Z = (product - Layer22_Mean_GPU[filter_number]) / Layer22_StanDev_GPU[filter_number];
+    Z = (Z * Layer22_Gamma_GPU[filter_number]) + Layer22_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer23_Neurons_GPU[output_Position] = Z;
+}
+/*  *************************************************** TWENTYTWO LAYER END **************************************************** */
+
+/*  *************************************************** TWENTYTHREE LAYER START ************************************************** */
+/*
+    Layer 23: Pointwise Separable Convolution Layer
+    Input: 14 * 14 * 512 
+    Weight: 1 * 1 * 512 * 512 with a Stride of 1
+    Output: 14 * 14 * 512  (Handling padding for next layer)
+*/
+__global__ void executeTwentyThreeLayer_PSC(double *Layer23_Neurons_GPU,
+    double *Layer23_Weights_GPU,
+    double *Layer24_Neurons_GPU,
+    double *Layer23_Mean_GPU,
+    double *Layer23_StanDev_GPU,
+    double *Layer23_Gamma_GPU,
+    double *Layer23_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 14 * 14)   // channel to work with
+                        + (threadIdx.x * 14)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 512;
+
+    int input_Position = (threadIdx.x * 14)
+                        + (threadIdx.y);
+
+    for(int channel = 0; channel < 512 ; channel++)       // This is the channel loop as we have 32 channels to work with
+    {
+        product += (Layer23_Neurons_GPU[(channel * 14 * 14) + input_Position] * Layer23_Weights_GPU[weight_Position + channel]);
+    }         
+
+    double Z = (product - Layer23_Mean_GPU[filter_number]) / Layer23_StanDev_GPU[filter_number];
+    Z = (Z * Layer23_Gamma_GPU[filter_number]) + Layer23_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer24_Neurons_GPU[output_Position] = Z;
+}
+/*  *************************************************** TWENTYTHREE LAYER END **************************************************** */
