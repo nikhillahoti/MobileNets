@@ -96,8 +96,12 @@
 #define TWENTYTWO_LAYER_CHANNELS 512
 
 #define TWENTYTHREE_LAYER_WEIGHT_SIZE  512 * 512
-#define TWENTYTHREE_LAYER_OUTPUT_SIZE 14 * 14 * 512
+#define TWENTYTHREE_LAYER_OUTPUT_SIZE 15 * 15 * 512
 #define TWENTYTHREE_LAYER_CHANNELS 512
+
+#define TWENTYFOUR_LAYER_WEIGHT_SIZE  9 * 512
+#define TWENTYFOUR_LAYER_OUTPUT_SIZE 7 * 7 * 512
+#define TWENTYFOUR_LAYER_CHANNELS 512
 
 // Function declarations
 void NeuralNetwork();
@@ -376,6 +380,18 @@ void Read_TwentyThreeLayer_Data(double *Layer23_Weights_CPU,
 void Execute_TwentyThree_Layer(
     double * Layer23_Neurons_GPU,
     double * Layer24_Neurons_GPU
+);
+
+void Read_TwentyFourLayer_Data(double *Layer24_Weights_CPU,
+    double * Layer24_Mean_CPU,
+    double * Layer24_StanDev_CPU,
+    double * Layer24_Gamma_CPU,
+    double * Layer24_Beta_CPU
+);
+
+void Execute_TwentyFour_Layer(
+    double * Layer24_Neurons_GPU,
+    double * Layer25_Neurons_GPU
 );
 
 int main(){
@@ -1009,9 +1025,36 @@ void NeuralNetwork(){
     printf("\n Layer 23 Execution complete !!!");
     /* ************************************************ TWENTYTHREE LAYER COMPLETE *********************************************** */
 
+    /* ************************************************ TWENTYFOUR LAYER START ******************************************************** */
+    double *Layer25_Neurons_GPU;
+    cudaMalloc((void**) &Layer25_Neurons_GPU, sizeof(double) * TWENTYFOUR_LAYER_OUTPUT_SIZE);
+
+    Execute_TwentyFour_Layer(Layer24_Neurons_GPU, Layer25_Neurons_GPU);
+
+    bool SAVE_TWENTYFOUR_LAYER_WEIGHTS = true;
+    if(SAVE_TWENTYFOUR_LAYER_WEIGHTS){
+        double * Layer25_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYFOUR_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer25_Neurons_CPU, Layer25_Neurons_GPU, sizeof(double) * TWENTYFOUR_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/TwentyFourLayer/output.txt", "w");
+        value = TWENTYFOUR_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer25_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer25_Neurons_CPU);
+    }
+    cudaFree(Layer24_Neurons_GPU);
+    printf("\n Layer 24 Execution complete !!!");
+    /* ************************************************ TWENTYFOUR LAYER COMPLETE *********************************************** */
+
     printf("\n\n Processing Done !!! \n\n");
 
-    cudaFree(Layer24_Neurons_GPU);
+    cudaFree(Layer25_Neurons_GPU);
 }
 
 void Execute_First_Layer(double *Layer2_Neurons_GPU)
@@ -2885,6 +2928,79 @@ void Read_TwentyThreeLayer_Data(double *Layer23_Weights_CPU,
     read_File("data/TwentyThreeLayer/TwentyThree_Layer_Gamma.txt", Layer23_Gamma_CPU);
     read_File("data/TwentyThreeLayer/TwentyThree_Layer_Beta.txt", Layer23_Beta_CPU);
 }
+
+void Execute_TwentyFour_Layer(
+    double * Layer24_Neurons_GPU,
+    double * Layer25_Neurons_GPU
+){  
+    double * Layer24_Weights_CPU = (double *) malloc(sizeof(double) * TWENTYFOUR_LAYER_WEIGHT_SIZE);
+    double * Layer24_Mean_CPU = (double *) malloc(sizeof(double) * TWENTYFOUR_LAYER_CHANNELS);
+    double * Layer24_StanDev_CPU = (double *) malloc(sizeof(double) * TWENTYFOUR_LAYER_CHANNELS);
+    double * Layer24_Gamma_CPU = (double *) malloc(sizeof(double) * TWENTYFOUR_LAYER_CHANNELS);
+    double * Layer24_Beta_CPU = (double *) malloc(sizeof(double) * TWENTYFOUR_LAYER_CHANNELS);
+
+    Read_TwentyFourLayer_Data(Layer24_Weights_CPU,
+                    Layer24_Mean_CPU,
+                    Layer24_StanDev_CPU,
+                    Layer24_Gamma_CPU,
+                    Layer24_Beta_CPU
+                );
+    
+    double *Layer24_Weights_GPU,
+           *Layer24_Mean_GPU,
+           *Layer24_StanDev_GPU,
+           *Layer24_Gamma_GPU,
+           *Layer24_Beta_GPU;
+
+    cudaMalloc((void**) &Layer24_Weights_GPU, sizeof(double) * TWENTYFOUR_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer24_Mean_GPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer24_StanDev_GPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer24_Gamma_GPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer24_Beta_GPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS);
+
+    cudaMemcpy(Layer24_Weights_GPU, Layer24_Weights_CPU, sizeof(double) * TWENTYFOUR_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer24_Mean_GPU, Layer24_Mean_CPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer24_StanDev_GPU, Layer24_StanDev_CPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer24_Gamma_GPU, Layer24_Gamma_CPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer24_Beta_GPU, Layer24_Beta_CPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+
+    free(Layer24_Weights_CPU);
+    free(Layer24_Mean_CPU);
+    free(Layer24_StanDev_CPU);
+    free(Layer24_Gamma_CPU);
+    free(Layer24_Beta_CPU);
+
+    dim3 gridSizeTwentyFourLayer(512);
+    dim3 blockSizeTwentyFour(7,7);
+    executeTwentyFourLayer_DSC<<< gridSizeTwentyFourLayer, blockSizeTwentyFour>>>(Layer24_Neurons_GPU,
+                        Layer24_Weights_GPU,
+                        Layer25_Neurons_GPU,
+                        Layer24_Mean_GPU,
+                        Layer24_StanDev_GPU,
+                        Layer24_Gamma_GPU,
+                        Layer24_Beta_GPU
+                    );
+                    
+    cudaFree(Layer24_Weights_GPU);
+    cudaFree(Layer24_Mean_GPU);
+    cudaFree(Layer24_StanDev_GPU);
+    cudaFree(Layer24_Gamma_GPU);
+    cudaFree(Layer24_Beta_GPU);
+}
+
+void Read_TwentyFourLayer_Data(double *Layer24_Weights_CPU,
+    double * Layer24_Mean_CPU,
+    double * Layer24_StanDev_CPU,
+    double * Layer24_Gamma_CPU,
+    double * Layer24_Beta_CPU
+){
+    read_File("data/TwentyFourLayer/weightsNorm.txt", Layer24_Weights_CPU);
+    read_File("data/TwentyFourLayer/TwentyFour_Layer_Mean.txt", Layer24_Mean_CPU);
+    read_File("data/TwentyFourLayer/TwentyFour_Layer_StanDev.txt", Layer24_StanDev_CPU);
+    read_File("data/TwentyFourLayer/TwentyFour_Layer_Gamma.txt", Layer24_Gamma_CPU);
+    read_File("data/TwentyFourLayer/TwentyFour_Layer_Beta.txt", Layer24_Beta_CPU);
+}
+
 
 void read_File(const char * input_FileName, double * input_values){
 
