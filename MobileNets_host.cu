@@ -111,6 +111,10 @@
 #define TWENTYSIX_LAYER_OUTPUT_SIZE 7 * 7 * 1024
 #define TWENTYSIX_LAYER_CHANNELS 1024
 
+#define TWENTYSEVEN_LAYER_WEIGHT_SIZE  1024 * 1024
+#define TWENTYSEVEN_LAYER_OUTPUT_SIZE 7 * 7 * 1024
+#define TWENTYSEVEN_LAYER_CHANNELS 1024
+
 // Function declarations
 void NeuralNetwork();
 void read_File(const char * weightFileName, double *Layer1_Weights_CPU);
@@ -424,6 +428,18 @@ void Read_TwentySixLayer_Data(double *Layer26_Weights_CPU,
 void Execute_TwentySix_Layer(
     double * Layer26_Neurons_GPU,
     double * Layer27_Neurons_GPU
+);
+
+void Read_TwentySevenLayer_Data(double *Layer27_Weights_CPU,
+    double * Layer27_Mean_CPU,
+    double * Layer27_StanDev_CPU,
+    double * Layer27_Gamma_CPU,
+    double * Layer27_Beta_CPU
+);
+
+void Execute_TwentySeven_Layer(
+    double * Layer27_Neurons_GPU,
+    double * Layer28_Neurons_GPU
 );
 
 int main(){
@@ -1138,9 +1154,36 @@ void NeuralNetwork(){
     printf("\n Layer 26 Execution complete !!!");
     /* ************************************************ TWENTYSIX LAYER COMPLETE *********************************************** */
 
+    /* ************************************************ TWENTYSEVEN LAYER START ******************************************************** */
+    double *Layer28_Neurons_GPU;
+    cudaMalloc((void**) &Layer28_Neurons_GPU, sizeof(double) * TWENTYSEVEN_LAYER_OUTPUT_SIZE);
+
+    Execute_TwentySeven_Layer(Layer27_Neurons_GPU, Layer28_Neurons_GPU);
+
+    bool SAVE_TWENTYSEVEN_LAYER_WEIGHTS = true;
+    if(SAVE_TWENTYSEVEN_LAYER_WEIGHTS){
+        double * Layer28_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer28_Neurons_CPU, Layer28_Neurons_GPU, sizeof(double) * TWENTYSEVEN_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/TwentySevenLayer/output.txt", "w");
+        value = TWENTYSEVEN_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer28_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer28_Neurons_CPU);
+    }
+    cudaFree(Layer27_Neurons_GPU);
+    printf("\n Layer 27 Execution complete !!!");
+    /* ************************************************ TWENTYSEVEN LAYER COMPLETE *********************************************** */
+
     printf("\n\n Processing Done !!! \n\n");
 
-    cudaFree(Layer27_Neurons_GPU);
+    cudaFree(Layer28_Neurons_GPU);
 }
 
 void Execute_First_Layer(double *Layer2_Neurons_GPU)
@@ -3230,6 +3273,79 @@ void Read_TwentySixLayer_Data(double *Layer26_Weights_CPU,
     read_File("data/TwentySixLayer/TwentySix_Layer_Gamma.txt", Layer26_Gamma_CPU);
     read_File("data/TwentySixLayer/TwentySix_Layer_Beta.txt", Layer26_Beta_CPU);
 }
+
+void Execute_TwentySeven_Layer(
+    double * Layer27_Neurons_GPU,
+    double * Layer28_Neurons_GPU
+){  
+    double * Layer27_Weights_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_WEIGHT_SIZE);
+    double * Layer27_Mean_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS);
+    double * Layer27_StanDev_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS);
+    double * Layer27_Gamma_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS);
+    double * Layer27_Beta_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS);
+
+    Read_TwentySevenLayer_Data(Layer27_Weights_CPU,
+                    Layer27_Mean_CPU,
+                    Layer27_StanDev_CPU,
+                    Layer27_Gamma_CPU,
+                    Layer27_Beta_CPU
+                );
+    
+    double *Layer27_Weights_GPU,
+           *Layer27_Mean_GPU,
+           *Layer27_StanDev_GPU,
+           *Layer27_Gamma_GPU,
+           *Layer27_Beta_GPU;
+
+    cudaMalloc((void**) &Layer27_Weights_GPU, sizeof(double) * TWENTYSEVEN_LAYER_WEIGHT_SIZE);
+    cudaMalloc((void**) &Layer27_Mean_GPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer27_StanDev_GPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer27_Gamma_GPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS);
+    cudaMalloc((void**) &Layer27_Beta_GPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS);
+
+    cudaMemcpy(Layer27_Weights_GPU, Layer27_Weights_CPU, sizeof(double) * TWENTYSEVEN_LAYER_WEIGHT_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer27_Mean_GPU, Layer27_Mean_CPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer27_StanDev_GPU, Layer27_StanDev_CPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer27_Gamma_GPU, Layer27_Gamma_CPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS, cudaMemcpyHostToDevice);
+    cudaMemcpy(Layer27_Beta_GPU, Layer27_Beta_CPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+
+    free(Layer27_Weights_CPU);
+    free(Layer27_Mean_CPU);
+    free(Layer27_StanDev_CPU);
+    free(Layer27_Gamma_CPU);
+    free(Layer27_Beta_CPU);
+
+    dim3 gridSizeTwentySevenLayer(1024);
+    dim3 blockSizeTwentySeven(7,7);
+    executeTwentySevenLayer_PSC<<< gridSizeTwentySevenLayer, blockSizeTwentySeven>>>(Layer27_Neurons_GPU,
+                        Layer27_Weights_GPU,
+                        Layer28_Neurons_GPU,
+                        Layer27_Mean_GPU,
+                        Layer27_StanDev_GPU,
+                        Layer27_Gamma_GPU,
+                        Layer27_Beta_GPU
+                    );
+                    
+    cudaFree(Layer27_Weights_GPU);
+    cudaFree(Layer27_Mean_GPU);
+    cudaFree(Layer27_StanDev_GPU);
+    cudaFree(Layer27_Gamma_GPU);
+    cudaFree(Layer27_Beta_GPU);
+}
+
+void Read_TwentySevenLayer_Data(double *Layer27_Weights_CPU,
+    double * Layer27_Mean_CPU,
+    double * Layer27_StanDev_CPU,
+    double * Layer27_Gamma_CPU,
+    double * Layer27_Beta_CPU
+){
+    read_File("data/TwentySevenLayer/weightsNorm.txt", Layer27_Weights_CPU);
+    read_File("data/TwentySevenLayer/TwentySeven_Layer_Mean.txt", Layer27_Mean_CPU);
+    read_File("data/TwentySevenLayer/TwentySeven_Layer_StanDev.txt", Layer27_StanDev_CPU);
+    read_File("data/TwentySevenLayer/TwentySeven_Layer_Gamma.txt", Layer27_Gamma_CPU);
+    read_File("data/TwentySevenLayer/TwentySeven_Layer_Beta.txt", Layer27_Beta_CPU);
+}
+
 
 void read_File(const char * input_FileName, double * input_values){
 

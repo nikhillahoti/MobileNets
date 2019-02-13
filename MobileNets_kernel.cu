@@ -2180,3 +2180,53 @@ __global__ void executeTwentySixLayer_DSC(double *Layer26_Neurons_GPU,
     Layer27_Neurons_GPU[output_Position] = Z;
 }
 /*  *************************************************** TWENTYSIX LAYER END **************************************************** */
+
+/*  *************************************************** TWENTYSEVEN LAYER START ************************************************** */
+/*
+    Layer 27: Pointwise Separable Convolution Layer
+    Input: 7 * 7 * 1024 
+    Weight: 1 * 1 * 1024 * 1024 with a Stride of 1
+    Output: 7 * 7 * 1024 
+*/
+__global__ void executeTwentySevenLayer_PSC(double *Layer27_Neurons_GPU,
+    double *Layer27_Weights_GPU,
+    double *Layer28_Neurons_GPU,
+    double *Layer27_Mean_GPU,
+    double *Layer27_StanDev_GPU,
+    double *Layer27_Gamma_GPU,
+    double *Layer27_Beta_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * 7 * 7)   // channel to work with
+                        + (threadIdx.x * 7)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * 1024;
+
+    int input_Position = (threadIdx.x * 7)
+                        + (threadIdx.y);
+
+    for(int channel = 0; channel < 1024 ; channel++)      
+    {
+        product += (Layer27_Neurons_GPU[(channel * 7 * 7) + input_Position] * Layer27_Weights_GPU[weight_Position + channel]);
+    }         
+
+    double Z = (product - Layer27_Mean_GPU[filter_number]) / Layer27_StanDev_GPU[filter_number];
+    Z = (Z * Layer27_Gamma_GPU[filter_number]) + Layer27_Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+        Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+        Z = 6.0; 
+
+    Layer28_Neurons_GPU[output_Position] = Z;
+}
+/*  *************************************************** TWENTYSEVEN LAYER END **************************************************** */
+
