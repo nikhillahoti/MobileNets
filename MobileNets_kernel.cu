@@ -2230,3 +2230,29 @@ __global__ void executeTwentySevenLayer_PSC(double *Layer27_Neurons_GPU,
 }
 /*  *************************************************** TWENTYSEVEN LAYER END **************************************************** */
 
+/*  *************************************************** TWENTYEIGHT LAYER START ************************************************** */
+/*
+    Layer 28: Global Average Pooling Layer
+    Input: 7 * 7 * 1024 
+    Weight: None 
+    Output: 1 * 1 * 1024 
+*/
+__global__ void executeTwentyEightLayer_AvgPooling(double *Layer28_Neurons_GPU,
+    double *Layer29_Neurons_GPU
+)
+{
+    double sum = 0.0;
+    int filter_number = threadIdx.x * 32 + threadIdx.y;
+
+    // Output position
+    int output_Position = filter_number;
+
+    int input_Position_start = filter_number * 49;
+    for(int row = 0 ; row < 7 ; row++) 
+        for(int col = 0 ; col < 7 ; col++) 
+            sum += Layer28_Neurons_GPU[input_Position_start + row * 7 + col];
+          
+    sum = sum / 49;
+    Layer29_Neurons_GPU[output_Position] = sum;
+}
+/*  *************************************************** TWENTYEIGHT LAYER END **************************************************** */

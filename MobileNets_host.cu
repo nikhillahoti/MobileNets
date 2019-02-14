@@ -115,6 +115,9 @@
 #define TWENTYSEVEN_LAYER_OUTPUT_SIZE 7 * 7 * 1024
 #define TWENTYSEVEN_LAYER_CHANNELS 1024
 
+// Global Average Pooling Layer
+#define TWENTYEIGHT_LAYER_OUTPUT_SIZE 1024
+
 // Function declarations
 void NeuralNetwork();
 void read_File(const char * weightFileName, double *Layer1_Weights_CPU);
@@ -440,6 +443,12 @@ void Read_TwentySevenLayer_Data(double *Layer27_Weights_CPU,
 void Execute_TwentySeven_Layer(
     double * Layer27_Neurons_GPU,
     double * Layer28_Neurons_GPU
+);
+
+// Global Average Pooling Layer
+void Execute_TwentyEight_Layer(
+    double * Layer28_Neurons_GPU,
+    double * Layer29_Neurons_GPU
 );
 
 int main(){
@@ -1079,7 +1088,7 @@ void NeuralNetwork(){
 
     Execute_TwentyFour_Layer(Layer24_Neurons_GPU, Layer25_Neurons_GPU);
 
-    bool SAVE_TWENTYFOUR_LAYER_WEIGHTS = true;
+    bool SAVE_TWENTYFOUR_LAYER_WEIGHTS = false;
     if(SAVE_TWENTYFOUR_LAYER_WEIGHTS){
         double * Layer25_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYFOUR_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer25_Neurons_CPU, Layer25_Neurons_GPU, sizeof(double) * TWENTYFOUR_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1106,7 +1115,7 @@ void NeuralNetwork(){
 
     Execute_TwentyFive_Layer(Layer25_Neurons_GPU, Layer26_Neurons_GPU);
 
-    bool SAVE_TWENTYFIVE_LAYER_WEIGHTS = true;
+    bool SAVE_TWENTYFIVE_LAYER_WEIGHTS = false;
     if(SAVE_TWENTYFIVE_LAYER_WEIGHTS){
         double * Layer26_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYFIVE_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer26_Neurons_CPU, Layer26_Neurons_GPU, sizeof(double) * TWENTYFIVE_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1133,7 +1142,7 @@ void NeuralNetwork(){
 
     Execute_TwentySix_Layer(Layer26_Neurons_GPU, Layer27_Neurons_GPU);
 
-    bool SAVE_TWENTYSIX_LAYER_WEIGHTS = true;
+    bool SAVE_TWENTYSIX_LAYER_WEIGHTS = false;
     if(SAVE_TWENTYSIX_LAYER_WEIGHTS){
         double * Layer27_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYSIX_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer27_Neurons_CPU, Layer27_Neurons_GPU, sizeof(double) * TWENTYSIX_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1160,7 +1169,7 @@ void NeuralNetwork(){
 
     Execute_TwentySeven_Layer(Layer27_Neurons_GPU, Layer28_Neurons_GPU);
 
-    bool SAVE_TWENTYSEVEN_LAYER_WEIGHTS = true;
+    bool SAVE_TWENTYSEVEN_LAYER_WEIGHTS = false;
     if(SAVE_TWENTYSEVEN_LAYER_WEIGHTS){
         double * Layer28_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer28_Neurons_CPU, Layer28_Neurons_GPU, sizeof(double) * TWENTYSEVEN_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1181,9 +1190,36 @@ void NeuralNetwork(){
     printf("\n Layer 27 Execution complete !!!");
     /* ************************************************ TWENTYSEVEN LAYER COMPLETE *********************************************** */
 
+    /* ************************************************ TWENTYEIGHT LAYER START ******************************************************** */
+    double *Layer29_Neurons_GPU;
+    cudaMalloc((void**) &Layer29_Neurons_GPU, sizeof(double) * TWENTYEIGHT_LAYER_OUTPUT_SIZE);
+
+    Execute_TwentyEight_Layer(Layer28_Neurons_GPU, Layer29_Neurons_GPU);
+
+    bool SAVE_TWENTYEIGHT_LAYER_WEIGHTS = true;
+    if(SAVE_TWENTYEIGHT_LAYER_WEIGHTS){
+        double * Layer29_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYEIGHT_LAYER_OUTPUT_SIZE);
+        cudaMemcpy(Layer29_Neurons_CPU, Layer29_Neurons_GPU, sizeof(double) * TWENTYEIGHT_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+
+        cudaDeviceSynchronize();
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/TwentyEightLayer/output.txt", "w");
+        value = TWENTYEIGHT_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer29_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer29_Neurons_CPU);
+    }
+    cudaFree(Layer28_Neurons_GPU);
+    printf("\n Layer 28 Execution complete !!!");
+    /* ************************************************ TWENTYEIGHT LAYER COMPLETE *********************************************** */
+
     printf("\n\n Processing Done !!! \n\n");
 
-    cudaFree(Layer28_Neurons_GPU);
+    cudaFree(Layer29_Neurons_GPU);
 }
 
 void Execute_First_Layer(double *Layer2_Neurons_GPU)
@@ -3346,6 +3382,16 @@ void Read_TwentySevenLayer_Data(double *Layer27_Weights_CPU,
     read_File("data/TwentySevenLayer/TwentySeven_Layer_Beta.txt", Layer27_Beta_CPU);
 }
 
+void Execute_TwentyEight_Layer(
+    double * Layer28_Neurons_GPU,
+    double * Layer29_Neurons_GPU
+){
+    dim3 gridSizeTwentyEightLayer(1);
+    dim3 blockSizeTwentyEight(32,32);
+
+    executeTwentyEightLayer_AvgPooling<<< gridSizeTwentyEightLayer, blockSizeTwentyEight>>>(Layer28_Neurons_GPU,
+        Layer29_Neurons_GPU);
+}
 
 void read_File(const char * input_FileName, double * input_values){
 
