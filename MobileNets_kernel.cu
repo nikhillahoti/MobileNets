@@ -2256,3 +2256,37 @@ __global__ void executeTwentyEightLayer_AvgPooling(double *Layer28_Neurons_GPU,
     Layer29_Neurons_GPU[output_Position] = sum;
 }
 /*  *************************************************** TWENTYEIGHT LAYER END **************************************************** */
+
+/*  *************************************************** TWENTYNINE LAYER START ************************************************** */
+/*
+    Layer 29: Fully Connected Layer
+    Input: 1 * 1 * 1024 
+    Weight: 1000 * 1024 
+    Bias: 1000 
+    Output: 1000 
+*/
+__global__ void executeTwentyNineLayer_FullyConnected(double *Layer29_Neurons_GPU,
+    double *Layer30_Neurons_GPU,
+    double *Layer29_Weights_GPU,
+    double *Layer29_Bias_GPU
+)
+{
+    double product = 0.0;
+    int filter_number = threadIdx.x;
+
+    // Output position
+    int output_Position = filter_number;
+
+    int weight_Position = filter_number * 1024;
+
+    for(int channel = 0; channel < 1024 ; channel++)      
+    {
+        product += ((Layer29_Neurons_GPU[channel] * Layer29_Weights_GPU[weight_Position + channel]));
+    }         
+    
+    //Adding Bias to the output
+    product += Layer29_Bias_GPU[filter_number];
+
+    Layer30_Neurons_GPU[output_Position] = product;
+}
+/*  *************************************************** TWENTYNINE LAYER END **************************************************** */
