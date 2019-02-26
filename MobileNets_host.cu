@@ -1183,7 +1183,7 @@ void NeuralNetwork(){
 
     Execute_TwentySeven_Layer(Layer27_Neurons_GPU, Layer28_Neurons_GPU);
 
-    bool SAVE_TWENTYSEVEN_LAYER_WEIGHTS = false;
+    bool SAVE_TWENTYSEVEN_LAYER_WEIGHTS = true;
     if(SAVE_TWENTYSEVEN_LAYER_WEIGHTS){
         double * Layer28_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer28_Neurons_CPU, Layer28_Neurons_GPU, sizeof(double) * TWENTYSEVEN_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1210,7 +1210,7 @@ void NeuralNetwork(){
 
     Execute_TwentyEight_Layer(Layer28_Neurons_GPU, Layer29_Neurons_GPU);
 
-    bool SAVE_TWENTYEIGHT_LAYER_WEIGHTS = false;
+    bool SAVE_TWENTYEIGHT_LAYER_WEIGHTS = true;
     if(SAVE_TWENTYEIGHT_LAYER_WEIGHTS){
         double * Layer29_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYEIGHT_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer29_Neurons_CPU, Layer29_Neurons_GPU, sizeof(double) * TWENTYEIGHT_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1244,6 +1244,13 @@ void NeuralNetwork(){
 
         cudaDeviceSynchronize();
 
+        fOutput = fopen("data/TwentyNineLayer/output_w.txt", "w");
+        value = TWENTYNINE_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer30_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
         // Logic to save into the file to verify the results
         fOutput = fopen("data/TwentyNineLayer/output.txt", "w");
         value = TWENTYNINE_LAYER_OUTPUT_SIZE;
@@ -1253,7 +1260,7 @@ void NeuralNetwork(){
         }
 
         for(int i = 0 ; i < value ; i++){
-            Layer30_Neurons_CPU[i] = exp(Layer30_Neurons_CPU[i]) / sum;
+            Layer30_Neurons_CPU[i] = (exp(Layer30_Neurons_CPU[i]) / sum);
         }
 
         for(int i = 0 ; i < value ; i++){
@@ -1375,7 +1382,7 @@ void Read_First_Layer_Data(
     double * Layer1_Gamma_CPU,
     double * Layer1_Beta_CPU
 ){
-    read_Input_File("data/FirstLayer/InputFiles/inputNorm.txt", Layer1_Neurons_CPU);
+    read_Input_File("data/FirstLayer/InputFiles/inputsNorm.txt", Layer1_Neurons_CPU);
     read_File("data/FirstLayer/weightsNorm.txt", Layer1_Weights_CPU);
     read_File("data/FirstLayer/First_Layer_Mean.txt", Layer1_Mean_CPU);
     read_File("data/FirstLayer/First_Layer_StanDev.txt", Layer1_StanDev_CPU);
@@ -3536,5 +3543,6 @@ void read_Input_File(const char * inputFileName, double * Layer1_Neurons_CPU){
             }
         }
     }
+    read = 0;
     fclose(fp);
 }

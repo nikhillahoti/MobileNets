@@ -2281,7 +2281,7 @@ __global__ void executeTwentyNineLayer_FullyConnected(double *Layer29_Neurons_GP
 
     for(int channel = 0; channel < 1024 ; channel++)      
     {
-        product += ((Layer29_Neurons_GPU[channel] * Layer29_Weights_GPU[weight_Position + channel]));
+        product += (Layer29_Neurons_GPU[channel] * Layer29_Weights_GPU[weight_Position + channel]);
     }         
     
     //Adding Bias to the output
