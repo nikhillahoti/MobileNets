@@ -474,7 +474,7 @@ void NeuralNetwork(){
     int value;
 
     /* ************************************************ FIRST LAYER ******************************************************** */
-    double *Layer2_Neurons_GPU = NULL; 
+    double *Layer2_Neurons_GPU = NULL;
     cudaMalloc((void**) &Layer2_Neurons_GPU, sizeof(double) * FIRST_LAYER_OUTPUT_SIZE);
 
     Execute_First_Layer(Layer2_Neurons_GPU);
@@ -482,7 +482,7 @@ void NeuralNetwork(){
     // Saving output of the first layer: Initially Not Saved
     bool SAVE_FIRST_LAYER_WEIGHTS = false;
     if(SAVE_FIRST_LAYER_WEIGHTS){
-        
+
         double *Layer2_Neurons_CPU = (double *) malloc(sizeof(double) * FIRST_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer2_Neurons_CPU, Layer2_Neurons_GPU, sizeof(double) * FIRST_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
 
@@ -507,9 +507,9 @@ void NeuralNetwork(){
 
     Execute_Second_Layer(Layer2_Neurons_GPU, Layer3_Neurons_GPU);
 
-    bool SAVE_SECOND_LAYER_WEIGHTS = false;
+    bool SAVE_SECOND_LAYER_WEIGHTS = true;
     if(SAVE_SECOND_LAYER_WEIGHTS){
-        
+
         double * Layer3_Neurons_CPU = (double *) malloc(sizeof(double) * SECOND_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer3_Neurons_CPU, Layer3_Neurons_GPU, sizeof(double) * SECOND_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
 
@@ -562,7 +562,7 @@ void NeuralNetwork(){
 
     Execute_Fourth_Layer(Layer4_Neurons_GPU, Layer5_Neurons_GPU);
 
-    bool SAVE_FOURTH_LAYER_WEIGHTS = false;
+    bool SAVE_FOURTH_LAYER_WEIGHTS = true;
     if(SAVE_FOURTH_LAYER_WEIGHTS){
         double * Layer5_Neurons_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer5_Neurons_CPU, Layer5_Neurons_GPU, sizeof(double) * FOURTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -987,7 +987,7 @@ void NeuralNetwork(){
     cudaFree(Layer19_Neurons_GPU);
     printf("\n Layer 19 Execution complete !!!");
     /* ************************************************ NINETEENTH LAYER COMPLETE *********************************************** */
-    
+
     /* ************************************************ TWENTY LAYER START ******************************************************** */
     double *Layer21_Neurons_GPU;
     cudaMalloc((void**) &Layer21_Neurons_GPU, sizeof(double) * TWENTY_LAYER_OUTPUT_SIZE);
@@ -1290,7 +1290,7 @@ void Execute_First_Layer(double *Layer2_Neurons_GPU)
 
     Read_First_Layer_Data(
         Layer1_Neurons_CPU,
-        Layer1_Weights_CPU,        
+        Layer1_Weights_CPU,
         Layer1_Mean_CPU,
         Layer1_StanDev_CPU,
         Layer1_Gamma_CPU,
@@ -1338,7 +1338,7 @@ void Execute_First_Layer(double *Layer2_Neurons_GPU)
                         Layer1_Gamma_GPU,
                         Layer1_Beta_GPU
                     );
-    
+
     dim3 gridSizeB(32, 7);
     dim3 blockSizeB(16, 16);
 
@@ -1408,7 +1408,7 @@ void Execute_Second_Layer(
                         Layer2_Gamma_CPU,
                         Layer2_Beta_CPU
     );
-    
+
     double *Layer2_Weights_GPU,
            *Layer2_Mean_GPU,
            *Layer2_StanDev_GPU,
@@ -1466,7 +1466,7 @@ void Execute_Second_Layer(
                                             Layer2_Beta_GPU
     );
 
-    cudaFree(Layer2_Weights_GPU);    
+    cudaFree(Layer2_Weights_GPU);
     cudaFree(Layer2_Mean_GPU);
     cudaFree(Layer2_StanDev_GPU);
     cudaFree(Layer2_Gamma_GPU);
@@ -1526,7 +1526,7 @@ void Execute_Third_Layer(
     free(Layer3_StanDev_CPU);
     free(Layer3_Gamma_CPU);
     free(Layer3_Beta_CPU);
-    
+
     // Execution of the Third Layer
     dim3 gridSizeThirdLayerA(64, 3, 3);
     dim3 blockSizeThirdLayerA(32,32);
@@ -1586,7 +1586,7 @@ void Read_ThirdLayer_Data(double *Layer3_Weights_CPU,
 void Execute_Fourth_Layer(
     double * Layer4_Neurons_GPU,
     double * Layer5_Neurons_GPU
-){  
+){
     double * Layer4_Weights_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_WEIGHT_SIZE);
     double * Layer4_Mean_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_CHANNELS);
     double * Layer4_StanDev_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_CHANNELS);
@@ -1599,7 +1599,7 @@ void Execute_Fourth_Layer(
                     Layer4_Gamma_CPU,
                     Layer4_Beta_CPU
     );
-    
+
     double *Layer4_Weights_GPU,
            *Layer4_Mean_GPU,
            *Layer4_StanDev_GPU,
@@ -1645,7 +1645,7 @@ void Execute_Fourth_Layer(
                         Layer4_Beta_GPU
                     );
 
-    
+
     dim3 blockSizeFourthLayerC(24, 32);
     executeFourthLayer_DSC_partC<<< gridSizeFourthLayer, blockSizeFourthLayerC>>>(Layer4_Neurons_GPU,
                         Layer4_Weights_GPU,
@@ -1656,7 +1656,7 @@ void Execute_Fourth_Layer(
                         Layer4_Beta_GPU
                     );
 
-    
+
     dim3 blockSizeFourthLayerD(24, 24);
     executeFourthLayer_DSC_partD<<< gridSizeFourthLayer, blockSizeFourthLayerD>>>(Layer4_Neurons_GPU,
                         Layer4_Weights_GPU,
@@ -1690,7 +1690,7 @@ void Read_FourthLayer_Data(double *Layer4_Weights_CPU,
 void Execute_Fifth_Layer(
     double * Layer5_Neurons_GPU,
     double * Layer6_Neurons_GPU
-){  
+){
     double * Layer5_Weights_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_WEIGHT_SIZE);
     double * Layer5_Mean_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_CHANNELS);
     double * Layer5_StanDev_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_CHANNELS);
@@ -1703,7 +1703,7 @@ void Execute_Fifth_Layer(
                     Layer5_Gamma_CPU,
                     Layer5_Beta_CPU
                 );
-    
+
     double *Layer5_Weights_GPU,
            *Layer5_Mean_GPU,
            *Layer5_StanDev_GPU,
@@ -1720,7 +1720,7 @@ void Execute_Fifth_Layer(
     cudaMemcpy(Layer5_Mean_GPU, Layer5_Mean_CPU, sizeof(double) * FIFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer5_StanDev_GPU, Layer5_StanDev_CPU, sizeof(double) * FIFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer5_Gamma_GPU, Layer5_Gamma_CPU, sizeof(double) * FIFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer5_Beta_GPU, Layer5_Beta_CPU, sizeof(double) * FIFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer5_Beta_GPU, Layer5_Beta_CPU, sizeof(double) * FIFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer5_Weights_CPU);
     free(Layer5_Mean_CPU);
@@ -1738,7 +1738,7 @@ void Execute_Fifth_Layer(
                         Layer5_Gamma_GPU,
                         Layer5_Beta_GPU
                     );
-                    
+
     dim3 blockSizeFifthLayerB(32, 24);
     executeFifthLayer_PSC_partB<<< gridSizeFifthLayer, blockSizeFifthLayerB>>>(Layer5_Neurons_GPU,
                         Layer5_Weights_GPU,
@@ -1749,7 +1749,7 @@ void Execute_Fifth_Layer(
                         Layer5_Beta_GPU
                     );
 
-    
+
     dim3 blockSizeFifthLayerC(24, 32);
     executeFifthLayer_PSC_partC<<< gridSizeFifthLayer, blockSizeFifthLayerC>>>(Layer5_Neurons_GPU,
                         Layer5_Weights_GPU,
@@ -1760,7 +1760,7 @@ void Execute_Fifth_Layer(
                         Layer5_Beta_GPU
                     );
 
-    
+
     dim3 blockSizeFifthLayerD(24, 24);
     executeFifthLayer_PSC_partD<<< gridSizeFifthLayer, blockSizeFifthLayerD>>>(Layer5_Neurons_GPU,
                         Layer5_Weights_GPU,
@@ -1795,7 +1795,7 @@ void Read_FifthLayer_Data(double *Layer5_Weights_CPU,
 void Execute_Sixth_Layer(
     double * Layer6_Neurons_GPU,
     double * Layer7_Neurons_GPU
-){  
+){
     double * Layer6_Weights_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_WEIGHT_SIZE);
     double * Layer6_Mean_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_CHANNELS);
     double * Layer6_StanDev_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_CHANNELS);
@@ -1808,7 +1808,7 @@ void Execute_Sixth_Layer(
                     Layer6_Gamma_CPU,
                     Layer6_Beta_CPU
                 );
-    
+
     double *Layer6_Weights_GPU,
            *Layer6_Mean_GPU,
            *Layer6_StanDev_GPU,
@@ -1825,7 +1825,7 @@ void Execute_Sixth_Layer(
     cudaMemcpy(Layer6_Mean_GPU, Layer6_Mean_CPU, sizeof(double) * SIXTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer6_StanDev_GPU, Layer6_StanDev_CPU, sizeof(double) * SIXTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer6_Gamma_GPU, Layer6_Gamma_CPU, sizeof(double) * SIXTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer6_Beta_GPU, Layer6_Beta_CPU, sizeof(double) * SIXTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer6_Beta_GPU, Layer6_Beta_CPU, sizeof(double) * SIXTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer6_Weights_CPU);
     free(Layer6_Mean_CPU);
@@ -1843,7 +1843,7 @@ void Execute_Sixth_Layer(
                         Layer6_Gamma_GPU,
                         Layer6_Beta_GPU
                     );
-                    
+
     dim3 blockSizeSixthLayerB(32, 24);
     executeSixthLayer_DSC_partB<<< gridSizeSixthLayer, blockSizeSixthLayerB>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
@@ -1853,7 +1853,7 @@ void Execute_Sixth_Layer(
                         Layer6_Gamma_GPU,
                         Layer6_Beta_GPU
                     );
-    
+
     dim3 blockSizeSixthLayerC(24, 32);
     executeSixthLayer_DSC_partC<<< gridSizeSixthLayer, blockSizeSixthLayerC>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
@@ -1864,7 +1864,7 @@ void Execute_Sixth_Layer(
                         Layer6_Beta_GPU
                     );
 
-    
+
     dim3 blockSizeSixthLayerD(24, 24);
     executeSixthLayer_DSC_partD<<< gridSizeSixthLayer, blockSizeSixthLayerD>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
@@ -1898,7 +1898,7 @@ void Read_SixthLayer_Data(double *Layer6_Weights_CPU,
 void Execute_Seventh_Layer(
     double * Layer7_Neurons_GPU,
     double * Layer8_Neurons_GPU
-){  
+){
     double * Layer7_Weights_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_WEIGHT_SIZE);
     double * Layer7_Mean_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_CHANNELS);
     double * Layer7_StanDev_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_CHANNELS);
@@ -1911,7 +1911,7 @@ void Execute_Seventh_Layer(
                     Layer7_Gamma_CPU,
                     Layer7_Beta_CPU
                 );
-    
+
     double *Layer7_Weights_GPU,
            *Layer7_Mean_GPU,
            *Layer7_StanDev_GPU,
@@ -1928,7 +1928,7 @@ void Execute_Seventh_Layer(
     cudaMemcpy(Layer7_Mean_GPU, Layer7_Mean_CPU, sizeof(double) * SEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer7_StanDev_GPU, Layer7_StanDev_CPU, sizeof(double) * SEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer7_Gamma_GPU, Layer7_Gamma_CPU, sizeof(double) * SEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer7_Beta_GPU, Layer7_Beta_CPU, sizeof(double) * SEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer7_Beta_GPU, Layer7_Beta_CPU, sizeof(double) * SEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer7_Weights_CPU);
     free(Layer7_Mean_CPU);
@@ -1946,7 +1946,7 @@ void Execute_Seventh_Layer(
                         Layer7_Gamma_GPU,
                         Layer7_Beta_GPU
                     );
-                    
+
     dim3 blockSizeSeventhLayerB(32, 24);
     executeSeventhLayer_PSC_partB<<< gridSizeSeventhLayer, blockSizeSeventhLayerB>>>(Layer7_Neurons_GPU,
                         Layer7_Weights_GPU,
@@ -1957,7 +1957,7 @@ void Execute_Seventh_Layer(
                         Layer7_Beta_GPU
                     );
 
-    
+
     dim3 blockSizeSeventhLayerC(24, 32);
     executeSeventhLayer_PSC_partC<<< gridSizeSeventhLayer, blockSizeSeventhLayerC>>>(Layer7_Neurons_GPU,
                         Layer7_Weights_GPU,
@@ -1967,7 +1967,7 @@ void Execute_Seventh_Layer(
                         Layer7_Gamma_GPU,
                         Layer7_Beta_GPU
                     );
-    
+
     dim3 blockSizeSeventhLayerD(24, 24);
     executeSeventhLayer_PSC_partD<<< gridSizeSeventhLayer, blockSizeSeventhLayerD>>>(Layer7_Neurons_GPU,
                         Layer7_Weights_GPU,
@@ -2001,7 +2001,7 @@ void Read_SeventhLayer_Data(double *Layer7_Weights_CPU,
 void Execute_Eighth_Layer(
     double * Layer8_Neurons_GPU,
     double * Layer9_Neurons_GPU
-){  
+){
     double * Layer8_Weights_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_WEIGHT_SIZE);
     double * Layer8_Mean_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_CHANNELS);
     double * Layer8_StanDev_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_CHANNELS);
@@ -2014,7 +2014,7 @@ void Execute_Eighth_Layer(
                     Layer8_Gamma_CPU,
                     Layer8_Beta_CPU
                 );
-    
+
     double *Layer8_Weights_GPU,
            *Layer8_Mean_GPU,
            *Layer8_StanDev_GPU,
@@ -2031,7 +2031,7 @@ void Execute_Eighth_Layer(
     cudaMemcpy(Layer8_Mean_GPU, Layer8_Mean_CPU, sizeof(double) * EIGHTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer8_StanDev_GPU, Layer8_StanDev_CPU, sizeof(double) * EIGHTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer8_Gamma_GPU, Layer8_Gamma_CPU, sizeof(double) * EIGHTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer8_Beta_GPU, Layer8_Beta_CPU, sizeof(double) * EIGHTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer8_Beta_GPU, Layer8_Beta_CPU, sizeof(double) * EIGHTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer8_Weights_CPU);
     free(Layer8_Mean_CPU);
@@ -2049,7 +2049,7 @@ void Execute_Eighth_Layer(
                         Layer8_Gamma_GPU,
                         Layer8_Beta_GPU
                     );
-                    
+
     cudaFree(Layer8_Weights_GPU);
     cudaFree(Layer8_Mean_GPU);
     cudaFree(Layer8_StanDev_GPU);
@@ -2074,7 +2074,7 @@ void Read_EighthLayer_Data(double *Layer8_Weights_CPU,
 void Execute_Ninth_Layer(
     double * Layer9_Neurons_GPU,
     double * Layer10_Neurons_GPU
-){  
+){
     double * Layer9_Weights_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_WEIGHT_SIZE);
     double * Layer9_Mean_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_CHANNELS);
     double * Layer9_StanDev_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_CHANNELS);
@@ -2087,7 +2087,7 @@ void Execute_Ninth_Layer(
                     Layer9_Gamma_CPU,
                     Layer9_Beta_CPU
                 );
-    
+
     double *Layer9_Weights_GPU,
            *Layer9_Mean_GPU,
            *Layer9_StanDev_GPU,
@@ -2104,7 +2104,7 @@ void Execute_Ninth_Layer(
     cudaMemcpy(Layer9_Mean_GPU, Layer9_Mean_CPU, sizeof(double) * NINTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer9_StanDev_GPU, Layer9_StanDev_CPU, sizeof(double) * NINTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer9_Gamma_GPU, Layer9_Gamma_CPU, sizeof(double) * NINTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer9_Beta_GPU, Layer9_Beta_CPU, sizeof(double) * NINTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer9_Beta_GPU, Layer9_Beta_CPU, sizeof(double) * NINTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer9_Weights_CPU);
     free(Layer9_Mean_CPU);
@@ -2122,7 +2122,7 @@ void Execute_Ninth_Layer(
                         Layer9_Gamma_GPU,
                         Layer9_Beta_GPU
                     );
-                    
+
     cudaFree(Layer9_Weights_GPU);
     cudaFree(Layer9_Mean_GPU);
     cudaFree(Layer9_StanDev_GPU);
@@ -2146,7 +2146,7 @@ void Read_NinthLayer_Data(double *Layer9_Weights_CPU,
 void Execute_Tenth_Layer(
     double * Layer10_Neurons_GPU,
     double * Layer11_Neurons_GPU
-){  
+){
     double * Layer10_Weights_CPU = (double *) malloc(sizeof(double) * TENTH_LAYER_WEIGHT_SIZE);
     double * Layer10_Mean_CPU = (double *) malloc(sizeof(double) * TENTH_LAYER_CHANNELS);
     double * Layer10_StanDev_CPU = (double *) malloc(sizeof(double) * TENTH_LAYER_CHANNELS);
@@ -2159,7 +2159,7 @@ void Execute_Tenth_Layer(
                     Layer10_Gamma_CPU,
                     Layer10_Beta_CPU
                 );
-    
+
     double *Layer10_Weights_GPU,
            *Layer10_Mean_GPU,
            *Layer10_StanDev_GPU,
@@ -2176,7 +2176,7 @@ void Execute_Tenth_Layer(
     cudaMemcpy(Layer10_Mean_GPU, Layer10_Mean_CPU, sizeof(double) * TENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer10_StanDev_GPU, Layer10_StanDev_CPU, sizeof(double) * TENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer10_Gamma_GPU, Layer10_Gamma_CPU, sizeof(double) * TENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer10_Beta_GPU, Layer10_Beta_CPU, sizeof(double) * TENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer10_Beta_GPU, Layer10_Beta_CPU, sizeof(double) * TENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer10_Weights_CPU);
     free(Layer10_Mean_CPU);
@@ -2194,7 +2194,7 @@ void Execute_Tenth_Layer(
                         Layer10_Gamma_GPU,
                         Layer10_Beta_GPU
                     );
-                    
+
     cudaFree(Layer10_Weights_GPU);
     cudaFree(Layer10_Mean_GPU);
     cudaFree(Layer10_StanDev_GPU);
@@ -2218,7 +2218,7 @@ void Read_TenthLayer_Data(double *Layer10_Weights_CPU,
 void Execute_Eleventh_Layer(
     double * Layer11_Neurons_GPU,
     double * Layer12_Neurons_GPU
-){  
+){
     double * Layer11_Weights_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_WEIGHT_SIZE);
     double * Layer11_Mean_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_CHANNELS);
     double * Layer11_StanDev_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_CHANNELS);
@@ -2231,7 +2231,7 @@ void Execute_Eleventh_Layer(
                     Layer11_Gamma_CPU,
                     Layer11_Beta_CPU
                 );
-    
+
     double *Layer11_Weights_GPU,
            *Layer11_Mean_GPU,
            *Layer11_StanDev_GPU,
@@ -2248,7 +2248,7 @@ void Execute_Eleventh_Layer(
     cudaMemcpy(Layer11_Mean_GPU, Layer11_Mean_CPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer11_StanDev_GPU, Layer11_StanDev_CPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer11_Gamma_GPU, Layer11_Gamma_CPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer11_Beta_GPU, Layer11_Beta_CPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer11_Beta_GPU, Layer11_Beta_CPU, sizeof(double) * ELEVENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer11_Weights_CPU);
     free(Layer11_Mean_CPU);
@@ -2266,7 +2266,7 @@ void Execute_Eleventh_Layer(
                         Layer11_Gamma_GPU,
                         Layer11_Beta_GPU
                     );
-                    
+
     cudaFree(Layer11_Weights_GPU);
     cudaFree(Layer11_Mean_GPU);
     cudaFree(Layer11_StanDev_GPU);
@@ -2290,7 +2290,7 @@ void Read_EleventhLayer_Data(double *Layer11_Weights_CPU,
 void Execute_Twelveth_Layer(
     double * Layer12_Neurons_GPU,
     double * Layer13_Neurons_GPU
-){  
+){
     double * Layer12_Weights_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_WEIGHT_SIZE);
     double * Layer12_Mean_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_CHANNELS);
     double * Layer12_StanDev_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_CHANNELS);
@@ -2303,7 +2303,7 @@ void Execute_Twelveth_Layer(
                     Layer12_Gamma_CPU,
                     Layer12_Beta_CPU
                 );
-    
+
     double *Layer12_Weights_GPU,
            *Layer12_Mean_GPU,
            *Layer12_StanDev_GPU,
@@ -2320,7 +2320,7 @@ void Execute_Twelveth_Layer(
     cudaMemcpy(Layer12_Mean_GPU, Layer12_Mean_CPU, sizeof(double) * TWELFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer12_StanDev_GPU, Layer12_StanDev_CPU, sizeof(double) * TWELFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer12_Gamma_GPU, Layer12_Gamma_CPU, sizeof(double) * TWELFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer12_Beta_GPU, Layer12_Beta_CPU, sizeof(double) * TWELFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer12_Beta_GPU, Layer12_Beta_CPU, sizeof(double) * TWELFTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer12_Weights_CPU);
     free(Layer12_Mean_CPU);
@@ -2338,7 +2338,7 @@ void Execute_Twelveth_Layer(
                         Layer12_Gamma_GPU,
                         Layer12_Beta_GPU
                     );
-                    
+
     cudaFree(Layer12_Weights_GPU);
     cudaFree(Layer12_Mean_GPU);
     cudaFree(Layer12_StanDev_GPU);
@@ -2362,7 +2362,7 @@ void Read_TwelvethLayer_Data(double *Layer12_Weights_CPU,
 void Execute_Thirteenth_Layer(
     double * Layer13_Neurons_GPU,
     double * Layer14_Neurons_GPU
-){  
+){
     double * Layer13_Weights_CPU = (double *) malloc(sizeof(double) * THIRTEENTH_LAYER_WEIGHT_SIZE);
     double * Layer13_Mean_CPU = (double *) malloc(sizeof(double) * THIRTEENTH_LAYER_CHANNELS);
     double * Layer13_StanDev_CPU = (double *) malloc(sizeof(double) * THIRTEENTH_LAYER_CHANNELS);
@@ -2375,7 +2375,7 @@ void Execute_Thirteenth_Layer(
                     Layer13_Gamma_CPU,
                     Layer13_Beta_CPU
                 );
-    
+
     double *Layer13_Weights_GPU,
            *Layer13_Mean_GPU,
            *Layer13_StanDev_GPU,
@@ -2392,7 +2392,7 @@ void Execute_Thirteenth_Layer(
     cudaMemcpy(Layer13_Mean_GPU, Layer13_Mean_CPU, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer13_StanDev_GPU, Layer13_StanDev_CPU, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer13_Gamma_GPU, Layer13_Gamma_CPU, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer13_Beta_GPU, Layer13_Beta_CPU, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer13_Beta_GPU, Layer13_Beta_CPU, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer13_Weights_CPU);
     free(Layer13_Mean_CPU);
@@ -2410,7 +2410,7 @@ void Execute_Thirteenth_Layer(
                         Layer13_Gamma_GPU,
                         Layer13_Beta_GPU
                     );
-                    
+
     cudaFree(Layer13_Weights_GPU);
     cudaFree(Layer13_Mean_GPU);
     cudaFree(Layer13_StanDev_GPU);
@@ -2434,7 +2434,7 @@ void Read_ThirteenthLayer_Data(double *Layer13_Weights_CPU,
 void Execute_Fourteenth_Layer(
     double * Layer14_Neurons_GPU,
     double * Layer15_Neurons_GPU
-){  
+){
     double * Layer14_Weights_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_WEIGHT_SIZE);
     double * Layer14_Mean_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
     double * Layer14_StanDev_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
@@ -2447,7 +2447,7 @@ void Execute_Fourteenth_Layer(
                     Layer14_Gamma_CPU,
                     Layer14_Beta_CPU
                 );
-    
+
     double *Layer14_Weights_GPU,
            *Layer14_Mean_GPU,
            *Layer14_StanDev_GPU,
@@ -2464,7 +2464,7 @@ void Execute_Fourteenth_Layer(
     cudaMemcpy(Layer14_Mean_GPU, Layer14_Mean_CPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer14_StanDev_GPU, Layer14_StanDev_CPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer14_Gamma_GPU, Layer14_Gamma_CPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer14_Beta_GPU, Layer14_Beta_CPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer14_Beta_GPU, Layer14_Beta_CPU, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer14_Weights_CPU);
     free(Layer14_Mean_CPU);
@@ -2482,7 +2482,7 @@ void Execute_Fourteenth_Layer(
                         Layer14_Gamma_GPU,
                         Layer14_Beta_GPU
                     );
-                    
+
     cudaFree(Layer14_Weights_GPU);
     cudaFree(Layer14_Mean_GPU);
     cudaFree(Layer14_StanDev_GPU);
@@ -2506,7 +2506,7 @@ void Read_FourteenthLayer_Data(double *Layer14_Weights_CPU,
 void Execute_Fifteenth_Layer(
     double * Layer15_Neurons_GPU,
     double * Layer16_Neurons_GPU
-){  
+){
     double * Layer15_Weights_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_WEIGHT_SIZE);
     double * Layer15_Mean_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
     double * Layer15_StanDev_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
@@ -2519,7 +2519,7 @@ void Execute_Fifteenth_Layer(
                     Layer15_Gamma_CPU,
                     Layer15_Beta_CPU
                 );
-    
+
     double *Layer15_Weights_GPU,
            *Layer15_Mean_GPU,
            *Layer15_StanDev_GPU,
@@ -2536,7 +2536,7 @@ void Execute_Fifteenth_Layer(
     cudaMemcpy(Layer15_Mean_GPU, Layer15_Mean_CPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer15_StanDev_GPU, Layer15_StanDev_CPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer15_Gamma_GPU, Layer15_Gamma_CPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer15_Beta_GPU, Layer15_Beta_CPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer15_Beta_GPU, Layer15_Beta_CPU, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer15_Weights_CPU);
     free(Layer15_Mean_CPU);
@@ -2554,7 +2554,7 @@ void Execute_Fifteenth_Layer(
                         Layer15_Gamma_GPU,
                         Layer15_Beta_GPU
                     );
-                    
+
     cudaFree(Layer15_Weights_GPU);
     cudaFree(Layer15_Mean_GPU);
     cudaFree(Layer15_StanDev_GPU);
@@ -2578,7 +2578,7 @@ void Read_FifteenthLayer_Data(double *Layer15_Weights_CPU,
 void Execute_Sixteenth_Layer(
     double * Layer16_Neurons_GPU,
     double * Layer17_Neurons_GPU
-){  
+){
     double * Layer16_Weights_CPU = (double *) malloc(sizeof(double) * SIXTEENTH_LAYER_WEIGHT_SIZE);
     double * Layer16_Mean_CPU = (double *) malloc(sizeof(double) * SIXTEENTH_LAYER_CHANNELS);
     double * Layer16_StanDev_CPU = (double *) malloc(sizeof(double) * SIXTEENTH_LAYER_CHANNELS);
@@ -2591,7 +2591,7 @@ void Execute_Sixteenth_Layer(
                     Layer16_Gamma_CPU,
                     Layer16_Beta_CPU
                 );
-    
+
     double *Layer16_Weights_GPU,
            *Layer16_Mean_GPU,
            *Layer16_StanDev_GPU,
@@ -2608,7 +2608,7 @@ void Execute_Sixteenth_Layer(
     cudaMemcpy(Layer16_Mean_GPU, Layer16_Mean_CPU, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer16_StanDev_GPU, Layer16_StanDev_CPU, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer16_Gamma_GPU, Layer16_Gamma_CPU, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer16_Beta_GPU, Layer16_Beta_CPU, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer16_Beta_GPU, Layer16_Beta_CPU, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer16_Weights_CPU);
     free(Layer16_Mean_CPU);
@@ -2626,7 +2626,7 @@ void Execute_Sixteenth_Layer(
                         Layer16_Gamma_GPU,
                         Layer16_Beta_GPU
                     );
-                    
+
     cudaFree(Layer16_Weights_GPU);
     cudaFree(Layer16_Mean_GPU);
     cudaFree(Layer16_StanDev_GPU);
@@ -2650,7 +2650,7 @@ void Read_SixteenthLayer_Data(double *Layer16_Weights_CPU,
 void Execute_Seventeenth_Layer(
     double * Layer17_Neurons_GPU,
     double * Layer18_Neurons_GPU
-){  
+){
     double * Layer17_Weights_CPU = (double *) malloc(sizeof(double) * SEVENTEENTH_LAYER_WEIGHT_SIZE);
     double * Layer17_Mean_CPU = (double *) malloc(sizeof(double) * SEVENTEENTH_LAYER_CHANNELS);
     double * Layer17_StanDev_CPU = (double *) malloc(sizeof(double) * SEVENTEENTH_LAYER_CHANNELS);
@@ -2663,7 +2663,7 @@ void Execute_Seventeenth_Layer(
                     Layer17_Gamma_CPU,
                     Layer17_Beta_CPU
                 );
-    
+
     double *Layer17_Weights_GPU,
            *Layer17_Mean_GPU,
            *Layer17_StanDev_GPU,
@@ -2680,7 +2680,7 @@ void Execute_Seventeenth_Layer(
     cudaMemcpy(Layer17_Mean_GPU, Layer17_Mean_CPU, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer17_StanDev_GPU, Layer17_StanDev_CPU, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer17_Gamma_GPU, Layer17_Gamma_CPU, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer17_Beta_GPU, Layer17_Beta_CPU, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer17_Beta_GPU, Layer17_Beta_CPU, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer17_Weights_CPU);
     free(Layer17_Mean_CPU);
@@ -2698,7 +2698,7 @@ void Execute_Seventeenth_Layer(
                         Layer17_Gamma_GPU,
                         Layer17_Beta_GPU
                     );
-                    
+
     cudaFree(Layer17_Weights_GPU);
     cudaFree(Layer17_Mean_GPU);
     cudaFree(Layer17_StanDev_GPU);
@@ -2722,7 +2722,7 @@ void Read_SeventeenthLayer_Data(double *Layer17_Weights_CPU,
 void Execute_Eighteenth_Layer(
     double * Layer18_Neurons_GPU,
     double * Layer19_Neurons_GPU
-){  
+){
     double * Layer18_Weights_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_WEIGHT_SIZE);
     double * Layer18_Mean_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
     double * Layer18_StanDev_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
@@ -2735,7 +2735,7 @@ void Execute_Eighteenth_Layer(
                     Layer18_Gamma_CPU,
                     Layer18_Beta_CPU
                 );
-    
+
     double *Layer18_Weights_GPU,
            *Layer18_Mean_GPU,
            *Layer18_StanDev_GPU,
@@ -2752,7 +2752,7 @@ void Execute_Eighteenth_Layer(
     cudaMemcpy(Layer18_Mean_GPU, Layer18_Mean_CPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer18_StanDev_GPU, Layer18_StanDev_CPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer18_Gamma_GPU, Layer18_Gamma_CPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer18_Beta_GPU, Layer18_Beta_CPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer18_Beta_GPU, Layer18_Beta_CPU, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer18_Weights_CPU);
     free(Layer18_Mean_CPU);
@@ -2770,7 +2770,7 @@ void Execute_Eighteenth_Layer(
                         Layer18_Gamma_GPU,
                         Layer18_Beta_GPU
                     );
-                    
+
     cudaFree(Layer18_Weights_GPU);
     cudaFree(Layer18_Mean_GPU);
     cudaFree(Layer18_StanDev_GPU);
@@ -2794,7 +2794,7 @@ void Read_EighteenthLayer_Data(double *Layer18_Weights_CPU,
 void Execute_Nineteenth_Layer(
     double * Layer19_Neurons_GPU,
     double * Layer20_Neurons_GPU
-){  
+){
     double * Layer19_Weights_CPU = (double *) malloc(sizeof(double) * NINETEENTH_LAYER_WEIGHT_SIZE);
     double * Layer19_Mean_CPU = (double *) malloc(sizeof(double) * NINETEENTH_LAYER_CHANNELS);
     double * Layer19_StanDev_CPU = (double *) malloc(sizeof(double) * NINETEENTH_LAYER_CHANNELS);
@@ -2807,7 +2807,7 @@ void Execute_Nineteenth_Layer(
                     Layer19_Gamma_CPU,
                     Layer19_Beta_CPU
                 );
-    
+
     double *Layer19_Weights_GPU,
            *Layer19_Mean_GPU,
            *Layer19_StanDev_GPU,
@@ -2824,7 +2824,7 @@ void Execute_Nineteenth_Layer(
     cudaMemcpy(Layer19_Mean_GPU, Layer19_Mean_CPU, sizeof(double) * NINETEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer19_StanDev_GPU, Layer19_StanDev_CPU, sizeof(double) * NINETEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer19_Gamma_GPU, Layer19_Gamma_CPU, sizeof(double) * NINETEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer19_Beta_GPU, Layer19_Beta_CPU, sizeof(double) * NINETEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer19_Beta_GPU, Layer19_Beta_CPU, sizeof(double) * NINETEENTH_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer19_Weights_CPU);
     free(Layer19_Mean_CPU);
@@ -2842,7 +2842,7 @@ void Execute_Nineteenth_Layer(
                         Layer19_Gamma_GPU,
                         Layer19_Beta_GPU
                     );
-                    
+
     cudaFree(Layer19_Weights_GPU);
     cudaFree(Layer19_Mean_GPU);
     cudaFree(Layer19_StanDev_GPU);
@@ -2866,7 +2866,7 @@ void Read_NineteenthLayer_Data(double *Layer19_Weights_CPU,
 void Execute_Twenty_Layer(
     double * Layer20_Neurons_GPU,
     double * Layer21_Neurons_GPU
-){  
+){
     double * Layer20_Weights_CPU = (double *) malloc(sizeof(double) * TWENTY_LAYER_WEIGHT_SIZE);
     double * Layer20_Mean_CPU = (double *) malloc(sizeof(double) * TWENTY_LAYER_CHANNELS);
     double * Layer20_StanDev_CPU = (double *) malloc(sizeof(double) * TWENTY_LAYER_CHANNELS);
@@ -2879,7 +2879,7 @@ void Execute_Twenty_Layer(
                     Layer20_Gamma_CPU,
                     Layer20_Beta_CPU
                 );
-    
+
     double *Layer20_Weights_GPU,
            *Layer20_Mean_GPU,
            *Layer20_StanDev_GPU,
@@ -2896,7 +2896,7 @@ void Execute_Twenty_Layer(
     cudaMemcpy(Layer20_Mean_GPU, Layer20_Mean_CPU, sizeof(double) * TWENTY_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer20_StanDev_GPU, Layer20_StanDev_CPU, sizeof(double) * TWENTY_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer20_Gamma_GPU, Layer20_Gamma_CPU, sizeof(double) * TWENTY_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer20_Beta_GPU, Layer20_Beta_CPU, sizeof(double) * TWENTY_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer20_Beta_GPU, Layer20_Beta_CPU, sizeof(double) * TWENTY_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer20_Weights_CPU);
     free(Layer20_Mean_CPU);
@@ -2914,7 +2914,7 @@ void Execute_Twenty_Layer(
                         Layer20_Gamma_GPU,
                         Layer20_Beta_GPU
                     );
-                    
+
     cudaFree(Layer20_Weights_GPU);
     cudaFree(Layer20_Mean_GPU);
     cudaFree(Layer20_StanDev_GPU);
@@ -2938,7 +2938,7 @@ void Read_TwentyLayer_Data(double *Layer20_Weights_CPU,
 void Execute_TwentyOne_Layer(
     double * Layer21_Neurons_GPU,
     double * Layer22_Neurons_GPU
-){  
+){
     double * Layer21_Weights_CPU = (double *) malloc(sizeof(double) * TWENTYONE_LAYER_WEIGHT_SIZE);
     double * Layer21_Mean_CPU = (double *) malloc(sizeof(double) * TWENTYONE_LAYER_CHANNELS);
     double * Layer21_StanDev_CPU = (double *) malloc(sizeof(double) * TWENTYONE_LAYER_CHANNELS);
@@ -2951,7 +2951,7 @@ void Execute_TwentyOne_Layer(
                     Layer21_Gamma_CPU,
                     Layer21_Beta_CPU
                 );
-    
+
     double *Layer21_Weights_GPU,
            *Layer21_Mean_GPU,
            *Layer21_StanDev_GPU,
@@ -2968,7 +2968,7 @@ void Execute_TwentyOne_Layer(
     cudaMemcpy(Layer21_Mean_GPU, Layer21_Mean_CPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer21_StanDev_GPU, Layer21_StanDev_CPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer21_Gamma_GPU, Layer21_Gamma_CPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer21_Beta_GPU, Layer21_Beta_CPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer21_Beta_GPU, Layer21_Beta_CPU, sizeof(double) * TWENTYONE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer21_Weights_CPU);
     free(Layer21_Mean_CPU);
@@ -2986,7 +2986,7 @@ void Execute_TwentyOne_Layer(
                         Layer21_Gamma_GPU,
                         Layer21_Beta_GPU
                     );
-                    
+
     cudaFree(Layer21_Weights_GPU);
     cudaFree(Layer21_Mean_GPU);
     cudaFree(Layer21_StanDev_GPU);
@@ -3010,7 +3010,7 @@ void Read_TwentyOneLayer_Data(double *Layer21_Weights_CPU,
 void Execute_TwentyTwo_Layer(
     double * Layer22_Neurons_GPU,
     double * Layer23_Neurons_GPU
-){  
+){
     double * Layer22_Weights_CPU = (double *) malloc(sizeof(double) * TWENTYTWO_LAYER_WEIGHT_SIZE);
     double * Layer22_Mean_CPU = (double *) malloc(sizeof(double) * TWENTYTWO_LAYER_CHANNELS);
     double * Layer22_StanDev_CPU = (double *) malloc(sizeof(double) * TWENTYTWO_LAYER_CHANNELS);
@@ -3023,7 +3023,7 @@ void Execute_TwentyTwo_Layer(
                     Layer22_Gamma_CPU,
                     Layer22_Beta_CPU
                 );
-    
+
     double *Layer22_Weights_GPU,
            *Layer22_Mean_GPU,
            *Layer22_StanDev_GPU,
@@ -3040,7 +3040,7 @@ void Execute_TwentyTwo_Layer(
     cudaMemcpy(Layer22_Mean_GPU, Layer22_Mean_CPU, sizeof(double) * TWENTYTWO_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer22_StanDev_GPU, Layer22_StanDev_CPU, sizeof(double) * TWENTYTWO_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer22_Gamma_GPU, Layer22_Gamma_CPU, sizeof(double) * TWENTYTWO_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer22_Beta_GPU, Layer22_Beta_CPU, sizeof(double) * TWENTYTWO_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer22_Beta_GPU, Layer22_Beta_CPU, sizeof(double) * TWENTYTWO_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer22_Weights_CPU);
     free(Layer22_Mean_CPU);
@@ -3058,7 +3058,7 @@ void Execute_TwentyTwo_Layer(
                         Layer22_Gamma_GPU,
                         Layer22_Beta_GPU
                     );
-                    
+
     cudaFree(Layer22_Weights_GPU);
     cudaFree(Layer22_Mean_GPU);
     cudaFree(Layer22_StanDev_GPU);
@@ -3082,7 +3082,7 @@ void Read_TwentyTwoLayer_Data(double *Layer22_Weights_CPU,
 void Execute_TwentyThree_Layer(
     double * Layer23_Neurons_GPU,
     double * Layer24_Neurons_GPU
-){  
+){
     double * Layer23_Weights_CPU = (double *) malloc(sizeof(double) * TWENTYTHREE_LAYER_WEIGHT_SIZE);
     double * Layer23_Mean_CPU = (double *) malloc(sizeof(double) * TWENTYTHREE_LAYER_CHANNELS);
     double * Layer23_StanDev_CPU = (double *) malloc(sizeof(double) * TWENTYTHREE_LAYER_CHANNELS);
@@ -3095,7 +3095,7 @@ void Execute_TwentyThree_Layer(
                     Layer23_Gamma_CPU,
                     Layer23_Beta_CPU
                 );
-    
+
     double *Layer23_Weights_GPU,
            *Layer23_Mean_GPU,
            *Layer23_StanDev_GPU,
@@ -3112,7 +3112,7 @@ void Execute_TwentyThree_Layer(
     cudaMemcpy(Layer23_Mean_GPU, Layer23_Mean_CPU, sizeof(double) * TWENTYTHREE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer23_StanDev_GPU, Layer23_StanDev_CPU, sizeof(double) * TWENTYTHREE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer23_Gamma_GPU, Layer23_Gamma_CPU, sizeof(double) * TWENTYTHREE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer23_Beta_GPU, Layer23_Beta_CPU, sizeof(double) * TWENTYTHREE_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer23_Beta_GPU, Layer23_Beta_CPU, sizeof(double) * TWENTYTHREE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer23_Weights_CPU);
     free(Layer23_Mean_CPU);
@@ -3130,7 +3130,7 @@ void Execute_TwentyThree_Layer(
                         Layer23_Gamma_GPU,
                         Layer23_Beta_GPU
                     );
-                    
+
     cudaFree(Layer23_Weights_GPU);
     cudaFree(Layer23_Mean_GPU);
     cudaFree(Layer23_StanDev_GPU);
@@ -3154,7 +3154,7 @@ void Read_TwentyThreeLayer_Data(double *Layer23_Weights_CPU,
 void Execute_TwentyFour_Layer(
     double * Layer24_Neurons_GPU,
     double * Layer25_Neurons_GPU
-){  
+){
     double * Layer24_Weights_CPU = (double *) malloc(sizeof(double) * TWENTYFOUR_LAYER_WEIGHT_SIZE);
     double * Layer24_Mean_CPU = (double *) malloc(sizeof(double) * TWENTYFOUR_LAYER_CHANNELS);
     double * Layer24_StanDev_CPU = (double *) malloc(sizeof(double) * TWENTYFOUR_LAYER_CHANNELS);
@@ -3167,7 +3167,7 @@ void Execute_TwentyFour_Layer(
                     Layer24_Gamma_CPU,
                     Layer24_Beta_CPU
                 );
-    
+
     double *Layer24_Weights_GPU,
            *Layer24_Mean_GPU,
            *Layer24_StanDev_GPU,
@@ -3184,7 +3184,7 @@ void Execute_TwentyFour_Layer(
     cudaMemcpy(Layer24_Mean_GPU, Layer24_Mean_CPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer24_StanDev_GPU, Layer24_StanDev_CPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer24_Gamma_GPU, Layer24_Gamma_CPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer24_Beta_GPU, Layer24_Beta_CPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer24_Beta_GPU, Layer24_Beta_CPU, sizeof(double) * TWENTYFOUR_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer24_Weights_CPU);
     free(Layer24_Mean_CPU);
@@ -3202,7 +3202,7 @@ void Execute_TwentyFour_Layer(
                         Layer24_Gamma_GPU,
                         Layer24_Beta_GPU
                     );
-                    
+
     cudaFree(Layer24_Weights_GPU);
     cudaFree(Layer24_Mean_GPU);
     cudaFree(Layer24_StanDev_GPU);
@@ -3226,7 +3226,7 @@ void Read_TwentyFourLayer_Data(double *Layer24_Weights_CPU,
 void Execute_TwentyFive_Layer(
     double * Layer25_Neurons_GPU,
     double * Layer26_Neurons_GPU
-){  
+){
     double * Layer25_Weights_CPU = (double *) malloc(sizeof(double) * TWENTYFIVE_LAYER_WEIGHT_SIZE);
     double * Layer25_Mean_CPU = (double *) malloc(sizeof(double) * TWENTYFIVE_LAYER_CHANNELS);
     double * Layer25_StanDev_CPU = (double *) malloc(sizeof(double) * TWENTYFIVE_LAYER_CHANNELS);
@@ -3239,7 +3239,7 @@ void Execute_TwentyFive_Layer(
                     Layer25_Gamma_CPU,
                     Layer25_Beta_CPU
                 );
-    
+
     double *Layer25_Weights_GPU,
            *Layer25_Mean_GPU,
            *Layer25_StanDev_GPU,
@@ -3256,7 +3256,7 @@ void Execute_TwentyFive_Layer(
     cudaMemcpy(Layer25_Mean_GPU, Layer25_Mean_CPU, sizeof(double) * TWENTYFIVE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer25_StanDev_GPU, Layer25_StanDev_CPU, sizeof(double) * TWENTYFIVE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer25_Gamma_GPU, Layer25_Gamma_CPU, sizeof(double) * TWENTYFIVE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer25_Beta_GPU, Layer25_Beta_CPU, sizeof(double) * TWENTYFIVE_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer25_Beta_GPU, Layer25_Beta_CPU, sizeof(double) * TWENTYFIVE_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer25_Weights_CPU);
     free(Layer25_Mean_CPU);
@@ -3274,7 +3274,7 @@ void Execute_TwentyFive_Layer(
                         Layer25_Gamma_GPU,
                         Layer25_Beta_GPU
                     );
-                    
+
     cudaFree(Layer25_Weights_GPU);
     cudaFree(Layer25_Mean_GPU);
     cudaFree(Layer25_StanDev_GPU);
@@ -3298,7 +3298,7 @@ void Read_TwentyFiveLayer_Data(double *Layer25_Weights_CPU,
 void Execute_TwentySix_Layer(
     double * Layer26_Neurons_GPU,
     double * Layer27_Neurons_GPU
-){  
+){
     double * Layer26_Weights_CPU = (double *) malloc(sizeof(double) * TWENTYSIX_LAYER_WEIGHT_SIZE);
     double * Layer26_Mean_CPU = (double *) malloc(sizeof(double) * TWENTYSIX_LAYER_CHANNELS);
     double * Layer26_StanDev_CPU = (double *) malloc(sizeof(double) * TWENTYSIX_LAYER_CHANNELS);
@@ -3311,7 +3311,7 @@ void Execute_TwentySix_Layer(
                     Layer26_Gamma_CPU,
                     Layer26_Beta_CPU
                 );
-    
+
     double *Layer26_Weights_GPU,
            *Layer26_Mean_GPU,
            *Layer26_StanDev_GPU,
@@ -3328,7 +3328,7 @@ void Execute_TwentySix_Layer(
     cudaMemcpy(Layer26_Mean_GPU, Layer26_Mean_CPU, sizeof(double) * TWENTYSIX_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer26_StanDev_GPU, Layer26_StanDev_CPU, sizeof(double) * TWENTYSIX_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer26_Gamma_GPU, Layer26_Gamma_CPU, sizeof(double) * TWENTYSIX_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer26_Beta_GPU, Layer26_Beta_CPU, sizeof(double) * TWENTYSIX_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer26_Beta_GPU, Layer26_Beta_CPU, sizeof(double) * TWENTYSIX_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer26_Weights_CPU);
     free(Layer26_Mean_CPU);
@@ -3346,7 +3346,7 @@ void Execute_TwentySix_Layer(
                         Layer26_Gamma_GPU,
                         Layer26_Beta_GPU
                     );
-                    
+
     cudaFree(Layer26_Weights_GPU);
     cudaFree(Layer26_Mean_GPU);
     cudaFree(Layer26_StanDev_GPU);
@@ -3370,7 +3370,7 @@ void Read_TwentySixLayer_Data(double *Layer26_Weights_CPU,
 void Execute_TwentySeven_Layer(
     double * Layer27_Neurons_GPU,
     double * Layer28_Neurons_GPU
-){  
+){
     double * Layer27_Weights_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_WEIGHT_SIZE);
     double * Layer27_Mean_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS);
     double * Layer27_StanDev_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS);
@@ -3383,7 +3383,7 @@ void Execute_TwentySeven_Layer(
                     Layer27_Gamma_CPU,
                     Layer27_Beta_CPU
                 );
-    
+
     double *Layer27_Weights_GPU,
            *Layer27_Mean_GPU,
            *Layer27_StanDev_GPU,
@@ -3400,7 +3400,7 @@ void Execute_TwentySeven_Layer(
     cudaMemcpy(Layer27_Mean_GPU, Layer27_Mean_CPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer27_StanDev_GPU, Layer27_StanDev_CPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS, cudaMemcpyHostToDevice);
     cudaMemcpy(Layer27_Gamma_GPU, Layer27_Gamma_CPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS, cudaMemcpyHostToDevice);
-    cudaMemcpy(Layer27_Beta_GPU, Layer27_Beta_CPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS, cudaMemcpyHostToDevice); 
+    cudaMemcpy(Layer27_Beta_GPU, Layer27_Beta_CPU, sizeof(double) * TWENTYSEVEN_LAYER_CHANNELS, cudaMemcpyHostToDevice);
 
     free(Layer27_Weights_CPU);
     free(Layer27_Mean_CPU);
@@ -3418,7 +3418,7 @@ void Execute_TwentySeven_Layer(
                         Layer27_Gamma_GPU,
                         Layer27_Beta_GPU
                     );
-                    
+
     cudaFree(Layer27_Weights_GPU);
     cudaFree(Layer27_Mean_GPU);
     cudaFree(Layer27_StanDev_GPU);
@@ -3453,14 +3453,14 @@ void Execute_TwentyEight_Layer(
 void Execute_TwentyNine_Layer(
     double * Layer29_Neurons_GPU,
     double * Layer30_Neurons_GPU
-){  
+){
     double * Layer29_Weights_CPU = (double *) malloc(sizeof(double) * TWENTYNINE_LAYER_WEIGHT_SIZE);
     double * Layer29_Bias_CPU = (double *) malloc(sizeof(double) * TWENTYNINE_LAYER_OUTPUT_SIZE);
 
     Read_TwentyNineLayer_Data(Layer29_Weights_CPU,
                     Layer29_Bias_CPU
                 );
-    
+
     double *Layer29_Weights_GPU,
            *Layer29_Bias_GPU;
 
@@ -3480,7 +3480,7 @@ void Execute_TwentyNine_Layer(
                         Layer29_Weights_GPU,
                         Layer29_Bias_GPU
                     );
-                    
+
     cudaFree(Layer29_Weights_GPU);
     cudaFree(Layer29_Bias_GPU);
 }
