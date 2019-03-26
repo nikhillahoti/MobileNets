@@ -1,5 +1,89 @@
 #include <stdio.h>
 
+
+/*
+    Generic Function Depthwise Separable Convolution
+    Parameters:
+     1) Input Matrix
+     2) Weight Matrix
+     3) Output Matrix
+     4) Input Dimension
+     5) Input Block Multiplier 1
+     6) Input Block Multiplier 2
+     7) Input Block Offset 1
+     8) Input Block Offset 2
+     9) Output Dimension
+    10) Output Block Multiplier 1
+    11) Output Block Multiplier 2
+    12) Output Block Offset 1
+    13) Output Block Offset 2
+    14) Weight Dimension
+    15) Kernel Size
+    16) Beta Matrix
+    17) Gamma Matrix
+    18) Standard Deviation Matrix
+    19) Mean Matrix
+*/
+__global__ void executeGenericFunctions(double *Neurons_GPU,
+    double *Weights_GPU,
+    double *Output_GPU,
+    int input_dimension,
+    int input_block_multiplier1,
+    int input_block_multiplier2,
+    int input_block_offset1,
+    int input_block_offset2,
+    int output_dimension,
+    int output_block_multiplier1,
+    int output_block_multiplier2,
+    int output_block_offset1,
+    int output_block_offset2,
+    int weight_dimension,
+    int kernel_size,
+    int stride,
+    double *Mean_GPU,
+    double *StanDev_GPU,
+    double *Gamma_GPU,
+    double *Beta_GPU
+)
+{
+    double product = 0.0;
+
+    int filter_number = blockIdx.x;
+
+    // Output position
+    int output_Position = (filter_number * output_dimension * output_dimension)   // channel to work with
+                        + (blockIdx.y * output_block_multiplier1 * output_dimension + output_block_offset1)    // Position in the grid row-wise
+                        + (blockIdx.z * output_block_multiplier2 + output_block_offset2)          // Position in the grid column-wise
+                        + (threadIdx.x * output_dimension)
+                        + (threadIdx.y);
+
+    int weight_Position = filter_number * weight_dimension;
+
+    int input_Position = (blockIdx.y * input_block_multiplier1 * input_dimension * stride)
+                       + (input_block_offset1 * stride) // Position in the grid row-wise
+                       + (blockIdx.z * input_block_multiplier2 * stride)         // Position in the grid column-wise
+                       + input_block_offset2 * stride
+                       + (threadIdx.x * input_dimension * stride)
+                       + (threadIdx.y * stride);
+
+    for(int row = 0 ; row < kernel_size ; row++)       // This is the Row Loop
+        for(int col = 0 ; col < kernel_size ; col++)
+            product += (Neurons_GPU[(filter_number * input_dimension * input_dimension) + input_Position + (row * input_dimension) + col] * Weights_GPU[weight_Position + (row * kernel_size) + col]);
+
+    double Z = (product - Mean_GPU[filter_number]) / StanDev_GPU[filter_number];
+    Z = (Z * Gamma_GPU[filter_number]) + Beta_GPU[filter_number];
+
+    // ReLU Layer
+    if(Z < 0)
+    Z = 0; // max(0,x)
+
+    // ReLU 6 Layer
+    if(Z > 6)
+    Z = 6.0; 
+
+    Output_GPU[output_Position] = Z;
+}
+
 /*  ************************************************** FIRST LAYER START ********************************************************* */
 /*
     Layer 1: Normal 3D Convolution Layer
