@@ -12,6 +12,6 @@ for i in range(len(fGenLines)):
 	if(fGenLines[i] != fOrgLines[i]):
 		count += 1
 		if count < 30:
-			print(fGenLines[i] + "----" + fOrgLines[i])
+			print(fGenLines[i] + "----" + fOrgLines[i] + " ---> " + str(i))
 
 print("Number of mismatches: " + str(count))
