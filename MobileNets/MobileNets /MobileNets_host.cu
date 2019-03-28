@@ -859,7 +859,7 @@ void NeuralNetwork(){
 
     Execute_Fifteenth_Layer(Layer15_Neurons_GPU, Layer16_Neurons_GPU);
 
-    bool SAVE_FIFTEENTH_LAYER_WEIGHTS = false;
+    bool SAVE_FIFTEENTH_LAYER_WEIGHTS = true;
     if(SAVE_FIFTEENTH_LAYER_WEIGHTS){
         double * Layer16_Neurons_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer16_Neurons_CPU, Layer16_Neurons_GPU, sizeof(double) * FIFTEENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -913,7 +913,7 @@ void NeuralNetwork(){
 
     Execute_Seventeenth_Layer(Layer17_Neurons_GPU, Layer18_Neurons_GPU);
 
-    bool SAVE_SEVENTEENTH_LAYER_WEIGHTS = false;
+    bool SAVE_SEVENTEENTH_LAYER_WEIGHTS = true;
     if(SAVE_SEVENTEENTH_LAYER_WEIGHTS){
         double * Layer18_Neurons_CPU = (double *) malloc(sizeof(double) * SEVENTEENTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer18_Neurons_CPU, Layer18_Neurons_GPU, sizeof(double) * SEVENTEENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -967,7 +967,7 @@ void NeuralNetwork(){
 
     Execute_Nineteenth_Layer(Layer19_Neurons_GPU, Layer20_Neurons_GPU);
 
-    bool SAVE_NINETEENTH_LAYER_WEIGHTS = false;
+    bool SAVE_NINETEENTH_LAYER_WEIGHTS = true;
     if(SAVE_NINETEENTH_LAYER_WEIGHTS){
         double * Layer20_Neurons_CPU = (double *) malloc(sizeof(double) * NINETEENTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer20_Neurons_CPU, Layer20_Neurons_GPU, sizeof(double) * NINETEENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1021,7 +1021,7 @@ void NeuralNetwork(){
 
     Execute_TwentyOne_Layer(Layer21_Neurons_GPU, Layer22_Neurons_GPU);
 
-    bool SAVE_TWENTYONE_LAYER_WEIGHTS = false;
+    bool SAVE_TWENTYONE_LAYER_WEIGHTS = true;
     if(SAVE_TWENTYONE_LAYER_WEIGHTS){
         double * Layer22_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYONE_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer22_Neurons_CPU, Layer22_Neurons_GPU, sizeof(double) * TWENTYONE_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1075,7 +1075,7 @@ void NeuralNetwork(){
 
     Execute_TwentyThree_Layer(Layer23_Neurons_GPU, Layer24_Neurons_GPU);
 
-    bool SAVE_TWENTYTHREE_LAYER_WEIGHTS = false;
+    bool SAVE_TWENTYTHREE_LAYER_WEIGHTS = true;
     if(SAVE_TWENTYTHREE_LAYER_WEIGHTS){
         double * Layer24_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYTHREE_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer24_Neurons_CPU, Layer24_Neurons_GPU, sizeof(double) * TWENTYTHREE_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1129,7 +1129,7 @@ void NeuralNetwork(){
 
     Execute_TwentyFive_Layer(Layer25_Neurons_GPU, Layer26_Neurons_GPU);
 
-    bool SAVE_TWENTYFIVE_LAYER_WEIGHTS = false;
+    bool SAVE_TWENTYFIVE_LAYER_WEIGHTS = true;
     if(SAVE_TWENTYFIVE_LAYER_WEIGHTS){
         double * Layer26_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYFIVE_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer26_Neurons_CPU, Layer26_Neurons_GPU, sizeof(double) * TWENTYFIVE_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1156,7 +1156,7 @@ void NeuralNetwork(){
 
     Execute_TwentySix_Layer(Layer26_Neurons_GPU, Layer27_Neurons_GPU);
 
-    bool SAVE_TWENTYSIX_LAYER_WEIGHTS = true;
+    bool SAVE_TWENTYSIX_LAYER_WEIGHTS = false;
     if(SAVE_TWENTYSIX_LAYER_WEIGHTS){
         double * Layer27_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYSIX_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer27_Neurons_CPU, Layer27_Neurons_GPU, sizeof(double) * TWENTYSIX_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1183,7 +1183,7 @@ void NeuralNetwork(){
 
     Execute_TwentySeven_Layer(Layer27_Neurons_GPU, Layer28_Neurons_GPU);
 
-    bool SAVE_TWENTYSEVEN_LAYER_WEIGHTS = false;
+    bool SAVE_TWENTYSEVEN_LAYER_WEIGHTS = true;
     if(SAVE_TWENTYSEVEN_LAYER_WEIGHTS){
         double * Layer28_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer28_Neurons_CPU, Layer28_Neurons_GPU, sizeof(double) * TWENTYSEVEN_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
