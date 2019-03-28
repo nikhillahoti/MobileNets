@@ -507,7 +507,7 @@ void NeuralNetwork(){
 
     Execute_Second_Layer(Layer2_Neurons_GPU, Layer3_Neurons_GPU);
 
-    bool SAVE_SECOND_LAYER_WEIGHTS = true;
+    bool SAVE_SECOND_LAYER_WEIGHTS = false;
     if(SAVE_SECOND_LAYER_WEIGHTS){
         
         double * Layer3_Neurons_CPU = (double *) malloc(sizeof(double) * SECOND_LAYER_OUTPUT_SIZE);
@@ -562,7 +562,7 @@ void NeuralNetwork(){
 
     Execute_Fourth_Layer(Layer4_Neurons_GPU, Layer5_Neurons_GPU);
 
-    bool SAVE_FOURTH_LAYER_WEIGHTS = true;
+    bool SAVE_FOURTH_LAYER_WEIGHTS = false;
     if(SAVE_FOURTH_LAYER_WEIGHTS){
         double * Layer5_Neurons_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer5_Neurons_CPU, Layer5_Neurons_GPU, sizeof(double) * FOURTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -670,7 +670,7 @@ void NeuralNetwork(){
 
     Execute_Eighth_Layer(Layer8_Neurons_GPU, Layer9_Neurons_GPU);
 
-    bool SAVE_EIGHTH_LAYER_WEIGHTS = false;
+    bool SAVE_EIGHTH_LAYER_WEIGHTS = true;
     if(SAVE_EIGHTH_LAYER_WEIGHTS){
         double * Layer9_Neurons_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer9_Neurons_CPU, Layer9_Neurons_GPU, sizeof(double) * EIGHTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -724,7 +724,7 @@ void NeuralNetwork(){
 
     Execute_Tenth_Layer(Layer10_Neurons_GPU, Layer11_Neurons_GPU);
 
-    bool SAVE_TENTH_LAYER_WEIGHTS = false;
+    bool SAVE_TENTH_LAYER_WEIGHTS = true;
     if(SAVE_TENTH_LAYER_WEIGHTS){
         double * Layer11_Neurons_CPU = (double *) malloc(sizeof(double) * TENTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer11_Neurons_CPU, Layer11_Neurons_GPU, sizeof(double) * TENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1986,45 +1986,129 @@ void Execute_Sixth_Layer(
 
     dim3 gridSizeSixthLayer(128);
     dim3 blockSizeSixthLayerA(32,32);
-    executeSixthLayer_DSC_partA<<< gridSizeSixthLayer, blockSizeSixthLayerA>>>(Layer6_Neurons_GPU,
+    /*executeSixthLayer_DSC_partA<<< gridSizeSixthLayer, blockSizeSixthLayerA>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
                         Layer7_Neurons_GPU,
                         Layer6_Mean_GPU,
                         Layer6_StanDev_GPU,
                         Layer6_Gamma_GPU,
                         Layer6_Beta_GPU
-                    );
+                    );*/
+    executeGenericFunctions<<< gridSizeSixthLayer, blockSizeSixthLayerA>>>(Layer6_Neurons_GPU,
+        Layer6_Weights_GPU,
+        Layer7_Neurons_GPU,
+        58,
+        0, // block multiplier 1
+        0,  // block multiplier 2
+        0, // Offset dimension 1
+        0,  // Offset dimension 2
+        56,
+        0,
+        0,
+        0,
+        0,
+        9,
+        3,
+        1,
+        Layer6_Mean_GPU,
+        Layer6_StanDev_GPU,
+        Layer6_Gamma_GPU,
+        Layer6_Beta_GPU
+    );
                     
     dim3 blockSizeSixthLayerB(32, 24);
-    executeSixthLayer_DSC_partB<<< gridSizeSixthLayer, blockSizeSixthLayerB>>>(Layer6_Neurons_GPU,
+    /*executeSixthLayer_DSC_partB<<< gridSizeSixthLayer, blockSizeSixthLayerB>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
                         Layer7_Neurons_GPU,
                         Layer6_Mean_GPU,
                         Layer6_StanDev_GPU,
                         Layer6_Gamma_GPU,
                         Layer6_Beta_GPU
-                    );
+                    );*/
+    executeGenericFunctions<<< gridSizeSixthLayer, blockSizeSixthLayerB>>>(Layer6_Neurons_GPU,
+        Layer6_Weights_GPU,
+        Layer7_Neurons_GPU,
+        58,
+        0, // block multiplier 1
+        0,  // block multiplier 2
+        0, // Offset dimension 1
+        32,  // Offset dimension 2
+        56,
+        0,
+        0,
+        0,
+        32,
+        9,
+        3,
+        1,
+        Layer6_Mean_GPU,
+        Layer6_StanDev_GPU,
+        Layer6_Gamma_GPU,
+        Layer6_Beta_GPU
+    );
     
     dim3 blockSizeSixthLayerC(24, 32);
-    executeSixthLayer_DSC_partC<<< gridSizeSixthLayer, blockSizeSixthLayerC>>>(Layer6_Neurons_GPU,
+    /*executeSixthLayer_DSC_partC<<< gridSizeSixthLayer, blockSizeSixthLayerC>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
                         Layer7_Neurons_GPU,
                         Layer6_Mean_GPU,
                         Layer6_StanDev_GPU,
                         Layer6_Gamma_GPU,
                         Layer6_Beta_GPU
-                    );
+                    );*/
+    executeGenericFunctions<<< gridSizeSixthLayer, blockSizeSixthLayerC>>>(Layer6_Neurons_GPU,
+        Layer6_Weights_GPU,
+        Layer7_Neurons_GPU,
+        58,
+        0, // block multiplier 1
+        0,  // block multiplier 2
+        58 * 32, // Offset dimension 1
+        0,  // Offset dimension 2
+        56,
+        0,
+        0,
+        56 * 32,
+        0,
+        9,
+        3,
+        1,
+        Layer6_Mean_GPU,
+        Layer6_StanDev_GPU,
+        Layer6_Gamma_GPU,
+        Layer6_Beta_GPU
+    );
 
     
     dim3 blockSizeSixthLayerD(24, 24);
-    executeSixthLayer_DSC_partD<<< gridSizeSixthLayer, blockSizeSixthLayerD>>>(Layer6_Neurons_GPU,
+    /*executeSixthLayer_DSC_partD<<< gridSizeSixthLayer, blockSizeSixthLayerD>>>(Layer6_Neurons_GPU,
                         Layer6_Weights_GPU,
                         Layer7_Neurons_GPU,
                         Layer6_Mean_GPU,
                         Layer6_StanDev_GPU,
                         Layer6_Gamma_GPU,
                         Layer6_Beta_GPU
-                    );
+                    );*/
+    executeGenericFunctions<<< gridSizeSixthLayer, blockSizeSixthLayerD>>>(Layer6_Neurons_GPU,
+        Layer6_Weights_GPU,
+        Layer7_Neurons_GPU,
+        58,
+        0, // block multiplier 1
+        0,  // block multiplier 2
+        58 * 32, // Offset dimension 1
+        32,  // Offset dimension 2
+        56,
+        0,
+        0,
+        56 * 32,
+        32,
+        9,
+        3,
+        1,
+        Layer6_Mean_GPU,
+        Layer6_StanDev_GPU,
+        Layer6_Gamma_GPU,
+        Layer6_Beta_GPU
+    );
 
     cudaFree(Layer6_Weights_GPU);
     cudaFree(Layer6_Mean_GPU);
@@ -2192,14 +2276,35 @@ void Execute_Eighth_Layer(
 
     dim3 gridSizeEighthLayer(128);
     dim3 blockSizeEighth(28,28);
-    executeEighthLayer_DSC<<< gridSizeEighthLayer, blockSizeEighth>>>(Layer8_Neurons_GPU,
+    /*executeEighthLayer_DSC<<< gridSizeEighthLayer, blockSizeEighth>>>(Layer8_Neurons_GPU,
                         Layer8_Weights_GPU,
                         Layer9_Neurons_GPU,
                         Layer8_Mean_GPU,
                         Layer8_StanDev_GPU,
                         Layer8_Gamma_GPU,
                         Layer8_Beta_GPU
-                    );
+                    );*/
+    executeGenericFunctions<<< gridSizeEighthLayer, blockSizeEighth>>>(Layer8_Neurons_GPU,
+        Layer8_Weights_GPU,
+        Layer9_Neurons_GPU,
+        57,
+        0, // block multiplier 1
+        0,  // block multiplier 2
+        0, // Offset dimension 1
+        0,  // Offset dimension 2
+        28,
+        0,
+        0,
+        0,
+        0,
+        9,
+        3,
+        2,
+        Layer8_Mean_GPU,
+        Layer8_StanDev_GPU,
+        Layer8_Gamma_GPU,
+        Layer8_Beta_GPU
+    );
                     
     cudaFree(Layer8_Weights_GPU);
     cudaFree(Layer8_Mean_GPU);
@@ -2337,14 +2442,35 @@ void Execute_Tenth_Layer(
 
     dim3 gridSizeTenthLayer(256);
     dim3 blockSizeTenth(28,28);
-    executeTenthLayer_DSC<<< gridSizeTenthLayer, blockSizeTenth>>>(Layer10_Neurons_GPU,
+    /*executeTenthLayer_DSC<<< gridSizeTenthLayer, blockSizeTenth>>>(Layer10_Neurons_GPU,
                         Layer10_Weights_GPU,
                         Layer11_Neurons_GPU,
                         Layer10_Mean_GPU,
                         Layer10_StanDev_GPU,
                         Layer10_Gamma_GPU,
                         Layer10_Beta_GPU
-                    );
+                    );*/
+    executeGenericFunctions<<< gridSizeTenthLayer, blockSizeTenth>>>(Layer10_Neurons_GPU,
+        Layer10_Weights_GPU,
+        Layer11_Neurons_GPU,
+        30,
+        0, // block multiplier 1
+        0,  // block multiplier 2
+        0, // Offset dimension 1
+        0,  // Offset dimension 2
+        28,
+        0,
+        0,
+        0,
+        0,
+        9,
+        3,
+        1,
+        Layer10_Mean_GPU,
+        Layer10_StanDev_GPU,
+        Layer10_Gamma_GPU,
+        Layer10_Beta_GPU
+    );
                     
     cudaFree(Layer10_Weights_GPU);
     cudaFree(Layer10_Mean_GPU);

@@ -498,7 +498,7 @@ void NeuralNetwork(){
 
         free(Layer2_Neurons_CPU);
     }
-    printf("\n Layer 1 Execution complete !!!");
+    //printf("\n Layer 1 Execution complete !!!");
     /* ************************************************ FIRST LAYER COMPLETE *********************************************** */
 
     /* ************************************************ SECOND LAYER ******************************************************** */
@@ -507,7 +507,7 @@ void NeuralNetwork(){
 
     Execute_Second_Layer(Layer2_Neurons_GPU, Layer3_Neurons_GPU);
 
-    bool SAVE_SECOND_LAYER_WEIGHTS = true;
+    bool SAVE_SECOND_LAYER_WEIGHTS = false;
     if(SAVE_SECOND_LAYER_WEIGHTS){
 
         double * Layer3_Neurons_CPU = (double *) malloc(sizeof(double) * SECOND_LAYER_OUTPUT_SIZE);
@@ -526,7 +526,7 @@ void NeuralNetwork(){
         free(Layer3_Neurons_CPU);
     }
     cudaFree(Layer2_Neurons_GPU);
-    printf("\n Layer 2 Execution complete !!!");
+    //printf("\n Layer 2 Execution complete !!!");
     /* ************************************************ SECOND LAYER COMPLETE *********************************************** */
 
     /* ************************************************ THIRD LAYER ******************************************************** */
@@ -553,7 +553,7 @@ void NeuralNetwork(){
         free(Layer4_Neurons_CPU);
     }
     cudaFree(Layer3_Neurons_GPU);
-    printf("\n Layer 3 Execution complete !!!");
+    //printf("\n Layer 3 Execution complete !!!");
     /* ************************************************ THIRD LAYER COMPLETE *********************************************** */
 
     /* ************************************************ FOURTH LAYER ******************************************************** */
@@ -562,7 +562,7 @@ void NeuralNetwork(){
 
     Execute_Fourth_Layer(Layer4_Neurons_GPU, Layer5_Neurons_GPU);
 
-    bool SAVE_FOURTH_LAYER_WEIGHTS = true;
+    bool SAVE_FOURTH_LAYER_WEIGHTS = false;
     if(SAVE_FOURTH_LAYER_WEIGHTS){
         double * Layer5_Neurons_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer5_Neurons_CPU, Layer5_Neurons_GPU, sizeof(double) * FOURTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -580,7 +580,7 @@ void NeuralNetwork(){
         free(Layer5_Neurons_CPU);
     }
     cudaFree(Layer4_Neurons_GPU);
-    printf("\n Layer 4 Execution complete !!!");
+    //printf("\n Layer 4 Execution complete !!!");
     /* ************************************************ FOURTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ FIFTH LAYER ******************************************************** */
@@ -607,7 +607,7 @@ void NeuralNetwork(){
         free(Layer6_Neurons_CPU);
     }
     cudaFree(Layer5_Neurons_GPU);
-    printf("\n Layer 5 Execution complete !!!");
+    //printf("\n Layer 5 Execution complete !!!");
     /* ************************************************ FIFTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ SIXTH LAYER ******************************************************** */
@@ -634,7 +634,7 @@ void NeuralNetwork(){
         free(Layer7_Neurons_CPU);
     }
     cudaFree(Layer6_Neurons_GPU);
-    printf("\n Layer 6 Execution complete !!!");
+    //printf("\n Layer 6 Execution complete !!!");
     /* ************************************************ SIXTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ SEVENTH LAYER START ******************************************************** */
@@ -661,7 +661,7 @@ void NeuralNetwork(){
         free(Layer8_Neurons_CPU);
     }
     cudaFree(Layer7_Neurons_GPU);
-    printf("\n Layer 7 Execution complete !!!");
+    //printf("\n Layer 7 Execution complete !!!");
     /* ************************************************ SEVENTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ EIGHTH LAYER START ******************************************************** */
@@ -688,7 +688,7 @@ void NeuralNetwork(){
         free(Layer9_Neurons_CPU);
     }
     cudaFree(Layer8_Neurons_GPU);
-    printf("\n Layer 8 Execution complete !!!");
+    //printf("\n Layer 8 Execution complete !!!");
     /* ************************************************ EIGHTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ NINTH LAYER START ******************************************************** */
@@ -715,7 +715,7 @@ void NeuralNetwork(){
         free(Layer10_Neurons_CPU);
     }
     cudaFree(Layer9_Neurons_GPU);
-    printf("\n Layer 9 Execution complete !!!");
+    //printf("\n Layer 9 Execution complete !!!");
     /* ************************************************ NINTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ TENTH LAYER START ******************************************************** */
@@ -724,7 +724,7 @@ void NeuralNetwork(){
 
     Execute_Tenth_Layer(Layer10_Neurons_GPU, Layer11_Neurons_GPU);
 
-    bool SAVE_TENTH_LAYER_WEIGHTS = false;
+    bool SAVE_TENTH_LAYER_WEIGHTS = true;
     if(SAVE_TENTH_LAYER_WEIGHTS){
         double * Layer11_Neurons_CPU = (double *) malloc(sizeof(double) * TENTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer11_Neurons_CPU, Layer11_Neurons_GPU, sizeof(double) * TENTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -742,7 +742,7 @@ void NeuralNetwork(){
         free(Layer11_Neurons_CPU);
     }
     cudaFree(Layer10_Neurons_GPU);
-    printf("\n Layer 10 Execution complete !!!");
+    //printf("\n Layer 10 Execution complete !!!");
     /* ************************************************ TENTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ ELEVENTH LAYER START ******************************************************** */
@@ -769,7 +769,7 @@ void NeuralNetwork(){
         free(Layer12_Neurons_CPU);
     }
     cudaFree(Layer11_Neurons_GPU);
-    printf("\n Layer 11 Execution complete !!!");
+    //printf("\n Layer 11 Execution complete !!!");
     /* ************************************************ ELEVENTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ TWELVETH LAYER START ******************************************************** */
@@ -796,7 +796,7 @@ void NeuralNetwork(){
         free(Layer13_Neurons_CPU);
     }
     cudaFree(Layer12_Neurons_GPU);
-    printf("\n Layer 12 Execution complete !!!");
+    //printf("\n Layer 12 Execution complete !!!");
     /* ************************************************ TWELVETH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ THIRTEENTH LAYER START ******************************************************** */
@@ -823,7 +823,7 @@ void NeuralNetwork(){
         free(Layer14_Neurons_CPU);
     }
     cudaFree(Layer13_Neurons_GPU);
-    printf("\n Layer 13 Execution complete !!!");
+    //printf("\n Layer 13 Execution complete !!!");
     /* ************************************************ THIRTEENTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ FOURTEENTH LAYER START ******************************************************** */
@@ -850,7 +850,7 @@ void NeuralNetwork(){
         free(Layer15_Neurons_CPU);
     }
     cudaFree(Layer14_Neurons_GPU);
-    printf("\n Layer 14 Execution complete !!!");
+    //printf("\n Layer 14 Execution complete !!!");
     /* ************************************************ FOURTEENTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ FIFTEENTH LAYER START ******************************************************** */
@@ -877,7 +877,7 @@ void NeuralNetwork(){
         free(Layer16_Neurons_CPU);
     }
     cudaFree(Layer15_Neurons_GPU);
-    printf("\n Layer 15 Execution complete !!!");
+    //printf("\n Layer 15 Execution complete !!!");
     /* ************************************************ FIFTEENTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ SIXTEENTH LAYER START ******************************************************** */
@@ -904,7 +904,7 @@ void NeuralNetwork(){
         free(Layer17_Neurons_CPU);
     }
     cudaFree(Layer16_Neurons_GPU);
-    printf("\n Layer 16 Execution complete !!!");
+    //printf("\n Layer 16 Execution complete !!!");
     /* ************************************************ SIXTEENTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ SEVENTEENTH LAYER START ******************************************************** */
@@ -931,7 +931,7 @@ void NeuralNetwork(){
         free(Layer18_Neurons_CPU);
     }
     cudaFree(Layer17_Neurons_GPU);
-    printf("\n Layer 17 Execution complete !!!");
+    //printf("\n Layer 17 Execution complete !!!");
     /* ************************************************ SEVENTEENTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ EIGHTEENTH LAYER START ******************************************************** */
@@ -958,7 +958,7 @@ void NeuralNetwork(){
         free(Layer19_Neurons_CPU);
     }
     cudaFree(Layer18_Neurons_GPU);
-    printf("\n Layer 18 Execution complete !!!");
+    //printf("\n Layer 18 Execution complete !!!");
     /* ************************************************ EIGHTEENTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ NINETEENTH LAYER START ******************************************************** */
@@ -985,7 +985,7 @@ void NeuralNetwork(){
         free(Layer20_Neurons_CPU);
     }
     cudaFree(Layer19_Neurons_GPU);
-    printf("\n Layer 19 Execution complete !!!");
+    //printf("\n Layer 19 Execution complete !!!");
     /* ************************************************ NINETEENTH LAYER COMPLETE *********************************************** */
 
     /* ************************************************ TWENTY LAYER START ******************************************************** */
@@ -1012,7 +1012,7 @@ void NeuralNetwork(){
         free(Layer21_Neurons_CPU);
     }
     cudaFree(Layer20_Neurons_GPU);
-    printf("\n Layer 20 Execution complete !!!");
+    //printf("\n Layer 20 Execution complete !!!");
     /* ************************************************ TWENTY LAYER COMPLETE *********************************************** */
 
     /* ************************************************ TWENTYONE LAYER START ******************************************************** */
@@ -1039,7 +1039,7 @@ void NeuralNetwork(){
         free(Layer22_Neurons_CPU);
     }
     cudaFree(Layer21_Neurons_GPU);
-    printf("\n Layer 21 Execution complete !!!");
+    //printf("\n Layer 21 Execution complete !!!");
     /* ************************************************ TWENTYONE LAYER COMPLETE *********************************************** */
 
     /* ************************************************ TWENTYTWO LAYER START ******************************************************** */
@@ -1066,7 +1066,7 @@ void NeuralNetwork(){
         free(Layer23_Neurons_CPU);
     }
     cudaFree(Layer22_Neurons_GPU);
-    printf("\n Layer 22 Execution complete !!!");
+    //printf("\n Layer 22 Execution complete !!!");
     /* ************************************************ TWENTYTWO LAYER COMPLETE *********************************************** */
 
     /* ************************************************ TWENTYTHREE LAYER START ******************************************************** */
@@ -1093,7 +1093,7 @@ void NeuralNetwork(){
         free(Layer24_Neurons_CPU);
     }
     cudaFree(Layer23_Neurons_GPU);
-    printf("\n Layer 23 Execution complete !!!");
+    //printf("\n Layer 23 Execution complete !!!");
     /* ************************************************ TWENTYTHREE LAYER COMPLETE *********************************************** */
 
     /* ************************************************ TWENTYFOUR LAYER START ******************************************************** */
@@ -1120,7 +1120,7 @@ void NeuralNetwork(){
         free(Layer25_Neurons_CPU);
     }
     cudaFree(Layer24_Neurons_GPU);
-    printf("\n Layer 24 Execution complete !!!");
+    //printf("\n Layer 24 Execution complete !!!");
     /* ************************************************ TWENTYFOUR LAYER COMPLETE *********************************************** */
 
     /* ************************************************ TWENTYFIVE LAYER START ******************************************************** */
@@ -1147,7 +1147,7 @@ void NeuralNetwork(){
         free(Layer26_Neurons_CPU);
     }
     cudaFree(Layer25_Neurons_GPU);
-    printf("\n Layer 25 Execution complete !!!");
+    //printf("\n Layer 25 Execution complete !!!");
     /* ************************************************ TWENTYFIVE LAYER COMPLETE *********************************************** */
 
     /* ************************************************ TWENTYSIX LAYER START ******************************************************** */
@@ -1174,7 +1174,7 @@ void NeuralNetwork(){
         free(Layer27_Neurons_CPU);
     }
     cudaFree(Layer26_Neurons_GPU);
-    printf("\n Layer 26 Execution complete !!!");
+    //printf("\n Layer 26 Execution complete !!!");
     /* ************************************************ TWENTYSIX LAYER COMPLETE *********************************************** */
 
     /* ************************************************ TWENTYSEVEN LAYER START ******************************************************** */
@@ -1183,7 +1183,7 @@ void NeuralNetwork(){
 
     Execute_TwentySeven_Layer(Layer27_Neurons_GPU, Layer28_Neurons_GPU);
 
-    bool SAVE_TWENTYSEVEN_LAYER_WEIGHTS = true;
+    bool SAVE_TWENTYSEVEN_LAYER_WEIGHTS = false;
     if(SAVE_TWENTYSEVEN_LAYER_WEIGHTS){
         double * Layer28_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYSEVEN_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer28_Neurons_CPU, Layer28_Neurons_GPU, sizeof(double) * TWENTYSEVEN_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1201,7 +1201,7 @@ void NeuralNetwork(){
         free(Layer28_Neurons_CPU);
     }
     cudaFree(Layer27_Neurons_GPU);
-    printf("\n Layer 27 Execution complete !!!");
+    //printf("\n Layer 27 Execution complete !!!");
     /* ************************************************ TWENTYSEVEN LAYER COMPLETE *********************************************** */
 
     /* ************************************************ TWENTYEIGHT LAYER START ******************************************************** */
@@ -1210,7 +1210,7 @@ void NeuralNetwork(){
 
     Execute_TwentyEight_Layer(Layer28_Neurons_GPU, Layer29_Neurons_GPU);
 
-    bool SAVE_TWENTYEIGHT_LAYER_WEIGHTS = true;
+    bool SAVE_TWENTYEIGHT_LAYER_WEIGHTS = false;
     if(SAVE_TWENTYEIGHT_LAYER_WEIGHTS){
         double * Layer29_Neurons_CPU = (double *) malloc(sizeof(double) * TWENTYEIGHT_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer29_Neurons_CPU, Layer29_Neurons_GPU, sizeof(double) * TWENTYEIGHT_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
@@ -1228,7 +1228,7 @@ void NeuralNetwork(){
         free(Layer29_Neurons_CPU);
     }
     cudaFree(Layer28_Neurons_GPU);
-    printf("\n Layer 28 Execution complete !!!");
+    //printf("\n Layer 28 Execution complete !!!");
     /* ************************************************ TWENTYEIGHT LAYER COMPLETE *********************************************** */
 
     /* ************************************************ TWENTYNINE LAYER START ******************************************************** */
@@ -1271,7 +1271,7 @@ void NeuralNetwork(){
         free(Layer30_Neurons_CPU);
     }
     cudaFree(Layer29_Neurons_GPU);
-    printf("\n Layer 29 Execution complete !!!");
+    //printf("\n Layer 29 Execution complete !!!");
     /* ************************************************ TWENTYNINE LAYER COMPLETE *********************************************** */
 
     printf("\n\n Processing Done !!! \n\n");
@@ -1435,107 +1435,38 @@ void Execute_Second_Layer(
 
     dim3 gridSizeA(32, 3, 3);
     dim3 blockSizeA(32,32);
-    /*executeSecondLayer_DSC_partA<<< gridSizeA, blockSizeA>>>(Layer2_Neurons_GPU,
+    executeSecondLayer_DSC_partA<<< gridSizeA, blockSizeA>>>(Layer2_Neurons_GPU,
                                             Layer2_Weights_GPU,
                                             Layer3_Neurons_GPU,
                                             Layer2_Mean_GPU,
                                             Layer2_StanDev_GPU,
                                             Layer2_Gamma_GPU,
                                             Layer2_Beta_GPU
-    );*/
-
-    executeGenericFunctions<<< gridSizeA, blockSizeA>>>(Layer2_Neurons_GPU,
-        Layer2_Weights_GPU,
-        Layer3_Neurons_GPU,
-        114,
-        32,
-        32,
-        0,
-        0,
-        112,
-        32,
-        32,
-        0,
-        0,
-        9,
-        3,
-        1,
-        Layer2_Mean_GPU,
-        Layer2_StanDev_GPU,
-        Layer2_Gamma_GPU,
-        Layer2_Beta_GPU
     );
 
     dim3 gridSizeB(32, 7);
     dim3 blockSizeB(16, 16);
-    /*executeSecondLayer_DSC_partB<<< gridSizeB, blockSizeB>>>(Layer2_Neurons_GPU,
+    executeSecondLayer_DSC_partB<<< gridSizeB, blockSizeB>>>(Layer2_Neurons_GPU,
                                             Layer2_Weights_GPU,
                                             Layer3_Neurons_GPU,
                                             Layer2_Mean_GPU,
                                             Layer2_StanDev_GPU,
                                             Layer2_Gamma_GPU,
                                             Layer2_Beta_GPU
-    );*/
-    executeGenericFunctions<<< gridSizeB, blockSizeB>>>(Layer2_Neurons_GPU,
-        Layer2_Weights_GPU,
-        Layer3_Neurons_GPU,
-        114,
-        16, // block multiplier 1
-        0,  // block multiplier 2
-        0, // Offset dimension 1
-        96,  // Offset dimension 2
-        112,
-        16,
-        0,
-        0,
-        96,
-        9,
-        3,
-        1,
-        Layer2_Mean_GPU,
-        Layer2_StanDev_GPU,
-        Layer2_Gamma_GPU,
-        Layer2_Beta_GPU
     );
 
-    dim3 gridSizeC(32, 1, 6);
+    dim3 gridSizeC(32, 6);
     dim3 blockSizeC(16, 16);
-    /*executeSecondLayer_DSC_partC<<< gridSizeC, blockSizeC>>>(Layer2_Neurons_GPU,
+    executeSecondLayer_DSC_partC<<< gridSizeC, blockSizeC>>>(Layer2_Neurons_GPU,
                                             Layer2_Weights_GPU,
                                             Layer3_Neurons_GPU,
                                             Layer2_Mean_GPU,
                                             Layer2_StanDev_GPU,
                                             Layer2_Gamma_GPU,
                                             Layer2_Beta_GPU
-    );*/
-    executeGenericFunctions<<< gridSizeC, blockSizeC>>>(Layer2_Neurons_GPU,
-        Layer2_Weights_GPU,
-        Layer3_Neurons_GPU,
-        114,
-        0, // block multiplier 1
-        16,  // block multiplier 2
-        96 * 114, // Offset dimension 1
-        0,  // Offset dimension 2
-        112,
-        0,
-        16,
-        96 * 112,
-        0,
-        9,
-        3,
-        1,
-        Layer2_Mean_GPU,
-        Layer2_StanDev_GPU,
-        Layer2_Gamma_GPU,
-        Layer2_Beta_GPU
     );
 
-<<<<<<< HEAD:MobileNets_host.cu
-
-    cudaFree(Layer2_Weights_GPU);    
-=======
     cudaFree(Layer2_Weights_GPU);
->>>>>>> c6d0bd8bed94db1c578c90804faffd56f9473b51:MobileNets/MobileNets_host.cu
     cudaFree(Layer2_Mean_GPU);
     cudaFree(Layer2_StanDev_GPU);
     cudaFree(Layer2_Gamma_GPU);
@@ -1695,144 +1626,46 @@ void Execute_Fourth_Layer(
 
     dim3 gridSizeFourthLayer(64);
     dim3 blockSizeFourthLayerA(32,32);
-    /*executeFourthLayer_DSC_partA<<< gridSizeFourthLayer, blockSizeFourthLayerA>>>(Layer4_Neurons_GPU,
+    executeFourthLayer_DSC_partA<<< gridSizeFourthLayer, blockSizeFourthLayerA>>>(Layer4_Neurons_GPU,
                         Layer4_Weights_GPU,
                         Layer5_Neurons_GPU,
                         Layer4_Mean_GPU,
                         Layer4_StanDev_GPU,
                         Layer4_Gamma_GPU,
                         Layer4_Beta_GPU
-                    );*/
-
-    executeGenericFunctions<<< gridSizeFourthLayer, blockSizeFourthLayerA>>>(Layer4_Neurons_GPU,
-        Layer4_Weights_GPU,
-        Layer5_Neurons_GPU,
-        113,
-        0, // block multiplier 1
-        0,  // block multiplier 2
-        0, // Offset dimension 1
-        0,  // Offset dimension 2
-        56,
-        0,
-        0,
-        0,
-        0,
-        9,
-        3,
-        2,
-        Layer4_Mean_GPU,
-        Layer4_StanDev_GPU,
-        Layer4_Gamma_GPU,
-        Layer4_Beta_GPU
-    );
+                    );
 
     dim3 blockSizeFourthLayerB(32, 24);
-    /*executeFourthLayer_DSC_partB<<< gridSizeFourthLayer, blockSizeFourthLayerB>>>(Layer4_Neurons_GPU,
+    executeFourthLayer_DSC_partB<<< gridSizeFourthLayer, blockSizeFourthLayerB>>>(Layer4_Neurons_GPU,
                         Layer4_Weights_GPU,
                         Layer5_Neurons_GPU,
                         Layer4_Mean_GPU,
                         Layer4_StanDev_GPU,
                         Layer4_Gamma_GPU,
                         Layer4_Beta_GPU
-<<<<<<< HEAD:MobileNets_host.cu
-                    );*/
-
-    executeGenericFunctions<<< gridSizeFourthLayer, blockSizeFourthLayerB>>>(Layer4_Neurons_GPU,
-        Layer4_Weights_GPU,
-        Layer5_Neurons_GPU,
-        113,
-        0, // block multiplier 1
-        0,  // block multiplier 2
-        32, // Offset dimension 1
-        0,  // Offset dimension 2
-        56,
-        0,
-        0,
-        32,
-        0,
-        9,
-        3,
-        2,
-        Layer4_Mean_GPU,
-        Layer4_StanDev_GPU,
-        Layer4_Gamma_GPU,
-        Layer4_Beta_GPU
-    );
-                                    
-=======
                     );
 
 
->>>>>>> c6d0bd8bed94db1c578c90804faffd56f9473b51:MobileNets/MobileNets_host.cu
     dim3 blockSizeFourthLayerC(24, 32);
-    /*executeFourthLayer_DSC_partC<<< gridSizeFourthLayer, blockSizeFourthLayerC>>>(Layer4_Neurons_GPU,
+    executeFourthLayer_DSC_partC<<< gridSizeFourthLayer, blockSizeFourthLayerC>>>(Layer4_Neurons_GPU,
                         Layer4_Weights_GPU,
                         Layer5_Neurons_GPU,
                         Layer4_Mean_GPU,
                         Layer4_StanDev_GPU,
                         Layer4_Gamma_GPU,
                         Layer4_Beta_GPU
-<<<<<<< HEAD:MobileNets_host.cu
-                    );*/
-
-    executeGenericFunctions<<< gridSizeFourthLayer, blockSizeFourthLayerC>>>(Layer4_Neurons_GPU,
-        Layer4_Weights_GPU,
-        Layer5_Neurons_GPU,
-        113,
-        0, // block multiplier 1
-        0,  // block multiplier 2
-        113 * 32, // Offset dimension 1
-        0,  // Offset dimension 2
-        56,
-        0,
-        0,
-        56 * 32,
-        0,
-        9,
-        3,
-        2,
-        Layer4_Mean_GPU,
-        Layer4_StanDev_GPU,
-        Layer4_Gamma_GPU,
-        Layer4_Beta_GPU
-    );                    
-    
-=======
                     );
 
 
->>>>>>> c6d0bd8bed94db1c578c90804faffd56f9473b51:MobileNets/MobileNets_host.cu
     dim3 blockSizeFourthLayerD(24, 24);
-    /*executeFourthLayer_DSC_partD<<< gridSizeFourthLayer, blockSizeFourthLayerD>>>(Layer4_Neurons_GPU,
+    executeFourthLayer_DSC_partD<<< gridSizeFourthLayer, blockSizeFourthLayerD>>>(Layer4_Neurons_GPU,
                         Layer4_Weights_GPU,
                         Layer5_Neurons_GPU,
                         Layer4_Mean_GPU,
                         Layer4_StanDev_GPU,
                         Layer4_Gamma_GPU,
                         Layer4_Beta_GPU
-                    );*/
-
-    executeGenericFunctions<<< gridSizeFourthLayer, blockSizeFourthLayerD>>>(Layer4_Neurons_GPU,
-        Layer4_Weights_GPU,
-        Layer5_Neurons_GPU,
-        113,
-        0, // block multiplier 1
-        0,  // block multiplier 2
-        113 * 32, // Offset dimension 1
-        32,  // Offset dimension 2
-        56,
-        0,
-        0,
-        56 * 32,
-        32,
-        9,
-        3,
-        2,
-        Layer4_Mean_GPU,
-        Layer4_StanDev_GPU,
-        Layer4_Gamma_GPU,
-        Layer4_Beta_GPU
-    );                    
+                    );
 
     cudaFree(Layer4_Weights_GPU);
     cudaFree(Layer4_Mean_GPU);
