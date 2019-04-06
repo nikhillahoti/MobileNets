@@ -377,7 +377,7 @@ __kernel void executeTwentyNineLayer_FullyConnected(__global double *Layer29_Neu
 )
 {
     double product = 0.0;
-    int filter_number = get_local_id(1);
+    int filter_number = get_global_id(1);
 
     // Output position
     int output_Position = filter_number;

@@ -616,7 +616,7 @@ void NeuralNetwork(){
 
     Execute_Sixth_Layer(Layer6_Neurons_GPU, Layer7_Neurons_GPU);
 
-    bool SAVE_SIXTH_LAYER_WEIGHTS = true;
+    bool SAVE_SIXTH_LAYER_WEIGHTS = false;
     if(SAVE_SIXTH_LAYER_WEIGHTS){
         double * Layer7_Neurons_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_OUTPUT_SIZE);
         cudaMemcpy(Layer7_Neurons_CPU, Layer7_Neurons_GPU, sizeof(double) * SIXTH_LAYER_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
