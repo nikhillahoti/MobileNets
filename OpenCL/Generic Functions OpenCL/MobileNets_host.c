@@ -189,6 +189,202 @@ void Execute_Fourth_Layer(cl_mem Layer4_Neurons_GPU,
     cl_program program
 );
 
+void Read_FifthLayer_Data(double *Layer5_Weights_CPU,
+    double *Layer5_Mean_CPU,
+    double *Layer5_StanDev_CPU,
+    double *Layer5_Gamma_CPU,
+    double *Layer5_Beta_CPU
+);
+
+void Execute_Fifth_Layer(cl_mem Layer5_Neurons_GPU,
+    cl_mem Layer6_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_SixthLayer_Data(double *Layer6_Weights_CPU,
+    double *Layer6_Mean_CPU,
+    double *Layer6_StanDev_CPU,
+    double *Layer6_Gamma_CPU,
+    double *Layer6_Beta_CPU
+);
+
+void Execute_Sixth_Layer(cl_mem Layer6_Neurons_GPU,
+    cl_mem Layer7_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_SeventhLayer_Data(double *Layer7_Weights_CPU,
+    double *Layer7_Mean_CPU,
+    double *Layer7_StanDev_CPU,
+    double *Layer7_Gamma_CPU,
+    double *Layer7_Beta_CPU
+);
+
+void Execute_Seventh_Layer(cl_mem Layer7_Neurons_GPU,
+    cl_mem Layer8_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_EighthLayer_Data(double *Layer8_Weights_CPU,
+    double *Layer8_Mean_CPU,
+    double *Layer8_StanDev_CPU,
+    double *Layer8_Gamma_CPU,
+    double *Layer8_Beta_CPU
+);
+
+void Execute_Eighth_Layer(cl_mem Layer8_Neurons_GPU,
+    cl_mem Layer9_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_NinthLayer_Data(double *Layer9_Weights_CPU,
+    double *Layer9_Mean_CPU,
+    double *Layer9_StanDev_CPU,
+    double *Layer9_Gamma_CPU,
+    double *Layer9_Beta_CPU
+);
+
+void Execute_Ninth_Layer(cl_mem Layer9_Neurons_GPU,
+    cl_mem Layer10_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_TenthLayer_Data(double *Layer10_Weights_CPU,
+    double *Layer10_Mean_CPU,
+    double *Layer10_StanDev_CPU,
+    double *Layer10_Gamma_CPU,
+    double *Layer10_Beta_CPU
+);
+
+void Execute_Tenth_Layer(cl_mem Layer10_Neurons_GPU,
+    cl_mem Layer11_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_EleventhLayer_Data(double *Layer11_Weights_CPU,
+    double *Layer11_Mean_CPU,
+    double *Layer11_StanDev_CPU,
+    double *Layer11_Gamma_CPU,
+    double *Layer11_Beta_CPU
+);
+
+void Execute_Eleventh_Layer(cl_mem Layer11_Neurons_GPU,
+    cl_mem Layer12_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_TwelvethLayer_Data(double *Layer12_Weights_CPU,
+    double *Layer12_Mean_CPU,
+    double *Layer12_StanDev_CPU,
+    double *Layer12_Gamma_CPU,
+    double *Layer12_Beta_CPU
+);
+
+void Execute_Twelveth_Layer(cl_mem Layer12_Neurons_GPU,
+    cl_mem Layer13_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_ThirteenthLayer_Data(double *Layer13_Weights_CPU,
+    double *Layer13_Mean_CPU,
+    double *Layer13_StanDev_CPU,
+    double *Layer13_Gamma_CPU,
+    double *Layer13_Beta_CPU
+);
+
+void Execute_Thirteenth_Layer(cl_mem Layer13_Neurons_GPU,
+    cl_mem Layer14_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_FourteenthLayer_Data(double *Layer14_Weights_CPU,
+    double *Layer14_Mean_CPU,
+    double *Layer14_StanDev_CPU,
+    double *Layer14_Gamma_CPU,
+    double *Layer14_Beta_CPU
+);
+
+void Execute_Fourteenth_Layer(cl_mem Layer14_Neurons_GPU,
+    cl_mem Layer15_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_FifteenthLayer_Data(double *Layer15_Weights_CPU,
+    double *Layer15_Mean_CPU,
+    double *Layer15_StanDev_CPU,
+    double *Layer15_Gamma_CPU,
+    double *Layer15_Beta_CPU
+);
+
+void Execute_Fifteenth_Layer(cl_mem Layer15_Neurons_GPU,
+    cl_mem Layer16_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_SixteenthLayer_Data(double *Layer16_Weights_CPU,
+    double *Layer16_Mean_CPU,
+    double *Layer16_StanDev_CPU,
+    double *Layer16_Gamma_CPU,
+    double *Layer16_Beta_CPU
+);
+
+void Execute_Sixteenth_Layer(cl_mem Layer16_Neurons_GPU,
+    cl_mem Layer17_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_SeventeenthLayer_Data(double *Layer17_Weights_CPU,
+    double *Layer17_Mean_CPU,
+    double *Layer17_StanDev_CPU,
+    double *Layer17_Gamma_CPU,
+    double *Layer17_Beta_CPU
+);
+
+void Execute_Seventeenth_Layer(cl_mem Layer17_Neurons_GPU,
+    cl_mem Layer18_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
+void Read_EighteenthLayer_Data(double *Layer18_Weights_CPU,
+    double *Layer18_Mean_CPU,
+    double *Layer18_StanDev_CPU,
+    double *Layer18_Gamma_CPU,
+    double *Layer18_Beta_CPU
+);
+
+void Execute_Eighteenth_Layer(cl_mem Layer18_Neurons_GPU,
+    cl_mem Layer19_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+);
+
 int main( int argc, char* argv[] )
 {
     NeuralNetwork();
@@ -320,7 +516,7 @@ void NeuralNetwork(){
     }
     clReleaseMemObject(Layer3_Neurons_GPU);
     printf("\n Layer 3 Execution complete !!! \n");
-    /* ************************************************ THIRD LAYER COMPLETE *********************************************** */\
+    /* ************************************************ THIRD LAYER COMPLETE *********************************************** */
 
     /* ************************************************ FOURTH LAYER START ******************************************************** */
     cl_mem Layer5_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, FOURTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
@@ -328,7 +524,7 @@ void NeuralNetwork(){
     Execute_Fourth_Layer(Layer4_Neurons_GPU, Layer5_Neurons_GPU, context, queue, program);
 
     // Read the results from the device
-    bool SAVE_FOURTH_LAYER_WEIGHTS = true;
+    bool SAVE_FOURTH_LAYER_WEIGHTS = false;
     if(SAVE_FOURTH_LAYER_WEIGHTS){
         
         double *Layer5_Neurons_CPU = (double *) malloc(sizeof(double) * FOURTH_LAYER_OUTPUT_SIZE);
@@ -351,12 +547,2226 @@ void NeuralNetwork(){
     printf("\n Layer 4 Execution complete !!! \n");
     /* ************************************************ FOURTH LAYER COMPLETE *********************************************** */
 
+    /* ************************************************ FIFTH LAYER START ******************************************************** */
+    cl_mem Layer6_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, FIFTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Fifth_Layer(Layer5_Neurons_GPU, Layer6_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_FIFTH_LAYER_WEIGHTS = false;
+    if(SAVE_FIFTH_LAYER_WEIGHTS){
+        
+        double *Layer6_Neurons_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer6_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * FIFTH_LAYER_OUTPUT_SIZE, Layer6_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/FifthLayer/output.txt", "w");
+        value_size = FIFTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer6_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer6_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer5_Neurons_GPU);
+    printf("\n Layer 5 Execution complete !!! \n");
+    /* ************************************************ FIFTH LAYER COMPLETE *********************************************** */
+    
+    /* ************************************************ SIXTH LAYER START ******************************************************** */
+    cl_mem Layer7_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, SIXTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Sixth_Layer(Layer6_Neurons_GPU, Layer7_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_SEVENTH_LAYER_WEIGHTS = false;
+    if(SAVE_SEVENTH_LAYER_WEIGHTS){
+        
+        double *Layer7_Neurons_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer7_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * SIXTH_LAYER_OUTPUT_SIZE, Layer7_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/SixthLayer/output.txt", "w");
+        value_size = SIXTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer7_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer7_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer6_Neurons_GPU);
+    printf("\n Layer 6 Execution complete !!! \n");
+    /* ************************************************ SIXTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ SEVENTH LAYER START ******************************************************** */
+    cl_mem Layer8_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, SEVENTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Seventh_Layer(Layer7_Neurons_GPU, Layer8_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_SIXTH_LAYER_WEIGHTS = false;
+    if(SAVE_SIXTH_LAYER_WEIGHTS){
+        
+        double *Layer8_Neurons_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer8_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * SEVENTH_LAYER_OUTPUT_SIZE, Layer8_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/SeventhLayer/output.txt", "w");
+        value_size = SEVENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer8_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer8_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer7_Neurons_GPU);
+    printf("\n Layer 7 Execution complete !!! \n");
+    /* ************************************************ SEVENTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ EIGHTH LAYER START ******************************************************** */
+    cl_mem Layer9_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, SEVENTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Eighth_Layer(Layer8_Neurons_GPU, Layer9_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_EIGHTH_LAYER_WEIGHTS = false;
+    if(SAVE_EIGHTH_LAYER_WEIGHTS){
+        
+        double *Layer9_Neurons_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer9_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * EIGHTH_LAYER_OUTPUT_SIZE, Layer9_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/EighthLayer/output.txt", "w");
+        value_size = EIGHTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer9_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer9_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer8_Neurons_GPU);
+    printf("\n Layer 8 Execution complete !!! \n");
+    /* ************************************************ EIGHTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ NINTH LAYER START ******************************************************** */
+    cl_mem Layer10_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, NINTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Ninth_Layer(Layer9_Neurons_GPU, Layer10_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_NINTH_LAYER_WEIGHTS = false;
+    if(SAVE_NINTH_LAYER_WEIGHTS){
+        
+        double *Layer10_Neurons_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer10_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * NINTH_LAYER_OUTPUT_SIZE, Layer10_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/NinthLayer/output.txt", "w");
+        value_size = NINTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer10_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer10_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer9_Neurons_GPU);
+    printf("\n Layer 9 Execution complete !!! \n");
+    /* ************************************************ NINTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ TENTH LAYER START ******************************************************** */
+    cl_mem Layer11_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, TENTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Tenth_Layer(Layer10_Neurons_GPU, Layer11_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_TENTH_LAYER_WEIGHTS = false;
+    if(SAVE_TENTH_LAYER_WEIGHTS){
+        
+        double *Layer11_Neurons_CPU = (double *) malloc(sizeof(double) * TENTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer11_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * TENTH_LAYER_OUTPUT_SIZE, Layer11_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/TenthLayer/output.txt", "w");
+        value_size = TENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer11_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer11_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer10_Neurons_GPU);
+    printf("\n Layer 10 Execution complete !!! \n");
+    /* ************************************************ TENTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ ELEVENTH LAYER START ******************************************************** */
+    cl_mem Layer12_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, ELEVENTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Eleventh_Layer(Layer11_Neurons_GPU, Layer12_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_ELEVENTH_LAYER_WEIGHTS = false;
+    if(SAVE_ELEVENTH_LAYER_WEIGHTS){
+        
+        double *Layer12_Neurons_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer12_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * ELEVENTH_LAYER_OUTPUT_SIZE, Layer12_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/EleventhLayer/output.txt", "w");
+        value_size = ELEVENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer12_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer12_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer11_Neurons_GPU);
+    printf("\n Layer 11 Execution complete !!! \n");
+    /* ************************************************ TENTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ TWELFTH LAYER START ******************************************************** */
+    cl_mem Layer13_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, TWELFTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Twelveth_Layer(Layer12_Neurons_GPU, Layer13_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_TWELFTH_LAYER_WEIGHTS = false;
+    if(SAVE_TWELFTH_LAYER_WEIGHTS){
+        
+        double *Layer13_Neurons_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer13_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * TWELFTH_LAYER_OUTPUT_SIZE, Layer13_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/TwelvethLayer/output.txt", "w");
+        value_size = TWELFTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer13_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer13_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer12_Neurons_GPU);
+    printf("\n Layer 12 Execution complete !!! \n");
+    /* ************************************************ TWELFTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ THIRTEENTH LAYER START ******************************************************** */
+    cl_mem Layer14_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, THIRTEENTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Thirteenth_Layer(Layer13_Neurons_GPU, Layer14_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_THIRTEENTH_LAYER_WEIGHTS = false;
+    if(SAVE_THIRTEENTH_LAYER_WEIGHTS){
+        
+        double *Layer14_Neurons_CPU = (double *) malloc(sizeof(double) * THIRTEENTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer14_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * THIRTEENTH_LAYER_OUTPUT_SIZE, Layer14_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/ThirteenthLayer/output.txt", "w");
+        value_size = THIRTEENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer14_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer14_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer13_Neurons_GPU);
+    printf("\n Layer 13 Execution complete !!! \n");
+    /* ************************************************ THIRTEENTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ FOURTEENTH LAYER START ******************************************************** */
+    cl_mem Layer15_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, FOURTEENTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Fourteenth_Layer(Layer14_Neurons_GPU, Layer15_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_FOURTEENTH_LAYER_WEIGHTS = false;
+    if(SAVE_FOURTEENTH_LAYER_WEIGHTS){
+        
+        double *Layer15_Neurons_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer15_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * FOURTEENTH_LAYER_OUTPUT_SIZE, Layer15_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/FourteenthLayer/output.txt", "w");
+        value_size = FOURTEENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer15_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer15_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer14_Neurons_GPU);
+    printf("\n Layer 14 Execution complete !!! \n");
+    /* ************************************************ FOURTEENTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ FIFTEENTH LAYER START ******************************************************** */
+    cl_mem Layer16_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, FIFTEENTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Fifteenth_Layer(Layer15_Neurons_GPU, Layer16_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_FIFTEENTH_LAYER_WEIGHTS = false;
+    if(SAVE_FIFTEENTH_LAYER_WEIGHTS){
+        
+        double *Layer16_Neurons_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer16_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * FIFTEENTH_LAYER_OUTPUT_SIZE, Layer16_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/FifteenthLayer/output.txt", "w");
+        value_size = FIFTEENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer16_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer16_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer15_Neurons_GPU);
+    printf("\n Layer 15 Execution complete !!! \n");
+    /* ************************************************ FIFTEENTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ SIXTEENTH LAYER START ******************************************************** */
+    cl_mem Layer17_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, SIXTEENTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Sixteenth_Layer(Layer16_Neurons_GPU, Layer17_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_SIXTEENTH_LAYER_WEIGHTS = false;
+    if(SAVE_SIXTEENTH_LAYER_WEIGHTS){
+        
+        double *Layer17_Neurons_CPU = (double *) malloc(sizeof(double) * SIXTEENTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer17_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * SIXTEENTH_LAYER_OUTPUT_SIZE, Layer17_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/SixteenthLayer/output.txt", "w");
+        value_size = SIXTEENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer17_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer17_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer16_Neurons_GPU);
+    printf("\n Layer 16 Execution complete !!! \n");
+    /* ************************************************ SIXTEENTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ SEVENTEENTH LAYER START ******************************************************** */
+    cl_mem Layer18_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, SEVENTEENTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Seventeenth_Layer(Layer17_Neurons_GPU, Layer18_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_SEVENTEENTH_LAYER_WEIGHTS = false;
+    if(SAVE_SEVENTEENTH_LAYER_WEIGHTS){
+        
+        double *Layer18_Neurons_CPU = (double *) malloc(sizeof(double) * SEVENTEENTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer18_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * SEVENTEENTH_LAYER_OUTPUT_SIZE, Layer18_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/SeventeenthLayer/output.txt", "w");
+        value_size = SEVENTEENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer18_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer18_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer17_Neurons_GPU);
+    printf("\n Layer 17 Execution complete !!! \n");
+    /* ************************************************ SEVENTEENTH LAYER COMPLETE *********************************************** */
+
+    /* ************************************************ EIGHTEENTH LAYER START ******************************************************** */
+    cl_mem Layer19_Neurons_GPU = clCreateBuffer(context, CL_MEM_WRITE_ONLY, EIGHTEENTH_LAYER_OUTPUT_SIZE * sizeof(double), NULL, NULL);
+
+    Execute_Eighteenth_Layer(Layer18_Neurons_GPU, Layer19_Neurons_GPU, context, queue, program);
+
+    // Read the results from the device
+    bool SAVE_EIGHTEENTH_LAYER_WEIGHTS = true;
+    if(SAVE_EIGHTEENTH_LAYER_WEIGHTS){
+        
+        double *Layer19_Neurons_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_OUTPUT_SIZE);
+        clEnqueueReadBuffer(queue, Layer19_Neurons_GPU, CL_TRUE, 0,
+                                sizeof(double) * EIGHTEENTH_LAYER_OUTPUT_SIZE, Layer19_Neurons_CPU, 0, NULL, NULL );
+
+        clFinish(queue);
+
+        // Logic to save into the file to verify the results
+        fOutput = fopen("data/EighteenthLayer/output.txt", "w");
+        value_size = EIGHTEENTH_LAYER_OUTPUT_SIZE;
+        for(int i = 0 ; i < value_size ; i++){
+            fprintf (fOutput, "%0.6lf\n", Layer19_Neurons_CPU[i]);
+        }
+        fclose(fOutput);
+
+        free(Layer19_Neurons_CPU);
+    }
+    clReleaseMemObject(Layer18_Neurons_GPU);
+    printf("\n Layer 18 Execution complete !!! \n");
+    /* ************************************************ EIGHTEENTH LAYER COMPLETE *********************************************** */
+
     clReleaseProgram(program);
     clReleaseKernel(kernel);
     clReleaseCommandQueue(queue);
     clReleaseContext(context);
 
-    clReleaseMemObject(Layer5_Neurons_GPU);
+    clReleaseMemObject(Layer19_Neurons_GPU);
+}
+
+void Execute_Eighteenth_Layer(cl_mem Layer18_Neurons_GPU,
+    cl_mem Layer19_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer18_Weights_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_WEIGHT_SIZE);
+    double *Layer18_Mean_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
+    double *Layer18_StanDev_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
+    double *Layer18_Gamma_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
+    double *Layer18_Beta_CPU = (double *) malloc(sizeof(double) * EIGHTEENTH_LAYER_CHANNELS);
+
+    Read_EighteenthLayer_Data(
+        Layer18_Weights_CPU,        
+        Layer18_Mean_CPU,
+        Layer18_StanDev_CPU,
+        Layer18_Gamma_CPU,
+        Layer18_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer18_Weights_GPU,
+           Layer18_Mean_GPU,
+           Layer18_StanDev_GPU,
+           Layer18_Gamma_GPU,
+           Layer18_Beta_GPU;
+
+    cl_int err;
+    
+    Layer18_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * EIGHTEENTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer18_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer18_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer18_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer18_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer18_Weights_GPU, CL_TRUE, 0, sizeof(double) * EIGHTEENTH_LAYER_WEIGHT_SIZE, Layer18_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer18_Mean_GPU, CL_TRUE, 0, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, Layer18_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer18_StanDev_GPU, CL_TRUE, 0, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, Layer18_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer18_Gamma_GPU, CL_TRUE, 0, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, Layer18_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer18_Beta_GPU, CL_TRUE, 0, sizeof(double) * EIGHTEENTH_LAYER_CHANNELS, Layer18_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_DSC", &err);
+    
+    int inputWidth = 16, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 14, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 9, kernelSize = 3, stride = 1;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer18_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer18_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer19_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &kernelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(cl_mem), (void *) &Layer18_Mean_GPU);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer18_StanDev_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer18_Gamma_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer18_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {512, 1 * 14, 1 * 14};
+    size_t localWorkSize_A[3] = {1, 14, 14};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    clReleaseMemObject(Layer18_Weights_GPU);
+    clReleaseMemObject(Layer18_Mean_GPU);
+    clReleaseMemObject(Layer18_StanDev_GPU);
+    clReleaseMemObject(Layer18_Gamma_GPU);
+    clReleaseMemObject(Layer18_Beta_GPU);
+
+    free(Layer18_Weights_CPU);
+    free(Layer18_Mean_CPU);
+    free(Layer18_StanDev_CPU);
+    free(Layer18_Gamma_CPU);
+    free(Layer18_Beta_CPU);
+}
+
+void Read_EighteenthLayer_Data(double *Layer18_Weights_CPU,
+    double * Layer18_Mean_CPU,
+    double * Layer18_StanDev_CPU,
+    double * Layer18_Gamma_CPU,
+    double * Layer18_Beta_CPU
+){
+    read_File("data/EighteenthLayer/weightsNorm.txt", Layer18_Weights_CPU);
+    read_File("data/EighteenthLayer/Eighteenth_Layer_Mean.txt", Layer18_Mean_CPU);
+    read_File("data/EighteenthLayer/Eighteenth_Layer_StanDev.txt", Layer18_StanDev_CPU);
+    read_File("data/EighteenthLayer/Eighteenth_Layer_Gamma.txt", Layer18_Gamma_CPU);
+    read_File("data/EighteenthLayer/Eighteenth_Layer_Beta.txt", Layer18_Beta_CPU);
+}
+
+void Execute_Seventeenth_Layer(cl_mem Layer17_Neurons_GPU,
+    cl_mem Layer18_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer17_Weights_CPU = (double *) malloc(sizeof(double) * SEVENTEENTH_LAYER_WEIGHT_SIZE);
+    double *Layer17_Mean_CPU = (double *) malloc(sizeof(double) * SEVENTEENTH_LAYER_CHANNELS);
+    double *Layer17_StanDev_CPU = (double *) malloc(sizeof(double) * SEVENTEENTH_LAYER_CHANNELS);
+    double *Layer17_Gamma_CPU = (double *) malloc(sizeof(double) * SEVENTEENTH_LAYER_CHANNELS);
+    double *Layer17_Beta_CPU = (double *) malloc(sizeof(double) * SEVENTEENTH_LAYER_CHANNELS);
+
+    Read_SeventeenthLayer_Data(
+        Layer17_Weights_CPU,        
+        Layer17_Mean_CPU,
+        Layer17_StanDev_CPU,
+        Layer17_Gamma_CPU,
+        Layer17_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer17_Weights_GPU,
+           Layer17_Mean_GPU,
+           Layer17_StanDev_GPU,
+           Layer17_Gamma_GPU,
+           Layer17_Beta_GPU;
+
+    cl_int err;
+    
+    Layer17_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SEVENTEENTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer17_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer17_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer17_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer17_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer17_Weights_GPU, CL_TRUE, 0, sizeof(double) * SEVENTEENTH_LAYER_WEIGHT_SIZE, Layer17_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer17_Mean_GPU, CL_TRUE, 0, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, Layer17_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer17_StanDev_GPU, CL_TRUE, 0, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, Layer17_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer17_Gamma_GPU, CL_TRUE, 0, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, Layer17_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer17_Beta_GPU, CL_TRUE, 0, sizeof(double) * SEVENTEENTH_LAYER_CHANNELS, Layer17_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+    
+    int inputWidth = 14, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 16, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 512, channelSize = 512, stride = 1, offset = 17;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer17_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer17_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer18_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer17_Mean_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer17_StanDev_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer17_Gamma_GPU);
+    clSetKernelArg(kernel, 20, sizeof(cl_mem), (void *) &Layer17_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {512, 1 * 14, 1 * 14};
+    size_t localWorkSize_A[3] = {1, 14, 14};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    clReleaseMemObject(Layer17_Weights_GPU);
+    clReleaseMemObject(Layer17_Mean_GPU);
+    clReleaseMemObject(Layer17_StanDev_GPU);
+    clReleaseMemObject(Layer17_Gamma_GPU);
+    clReleaseMemObject(Layer17_Beta_GPU);
+
+    free(Layer17_Weights_CPU);
+    free(Layer17_Mean_CPU);
+    free(Layer17_StanDev_CPU);
+    free(Layer17_Gamma_CPU);
+    free(Layer17_Beta_CPU);
+}
+
+void Read_SeventeenthLayer_Data(double *Layer17_Weights_CPU,
+    double * Layer17_Mean_CPU,
+    double * Layer17_StanDev_CPU,
+    double * Layer17_Gamma_CPU,
+    double * Layer17_Beta_CPU
+){
+    read_File("data/SeventeenthLayer/weightsNorm.txt", Layer17_Weights_CPU);
+    read_File("data/SeventeenthLayer/Seventeenth_Layer_Mean.txt", Layer17_Mean_CPU);
+    read_File("data/SeventeenthLayer/Seventeenth_Layer_StanDev.txt", Layer17_StanDev_CPU);
+    read_File("data/SeventeenthLayer/Seventeenth_Layer_Gamma.txt", Layer17_Gamma_CPU);
+    read_File("data/SeventeenthLayer/Seventeenth_Layer_Beta.txt", Layer17_Beta_CPU);
+}
+
+void Execute_Sixteenth_Layer(cl_mem Layer16_Neurons_GPU,
+    cl_mem Layer17_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer16_Weights_CPU = (double *) malloc(sizeof(double) * SIXTEENTH_LAYER_WEIGHT_SIZE);
+    double *Layer16_Mean_CPU = (double *) malloc(sizeof(double) * SIXTEENTH_LAYER_CHANNELS);
+    double *Layer16_StanDev_CPU = (double *) malloc(sizeof(double) * SIXTEENTH_LAYER_CHANNELS);
+    double *Layer16_Gamma_CPU = (double *) malloc(sizeof(double) * SIXTEENTH_LAYER_CHANNELS);
+    double *Layer16_Beta_CPU = (double *) malloc(sizeof(double) * SIXTEENTH_LAYER_CHANNELS);
+
+    Read_SixteenthLayer_Data(
+        Layer16_Weights_CPU,        
+        Layer16_Mean_CPU,
+        Layer16_StanDev_CPU,
+        Layer16_Gamma_CPU,
+        Layer16_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer16_Weights_GPU,
+           Layer16_Mean_GPU,
+           Layer16_StanDev_GPU,
+           Layer16_Gamma_GPU,
+           Layer16_Beta_GPU;
+
+    cl_int err;
+    
+    Layer16_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SIXTEENTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer16_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer16_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer16_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer16_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer16_Weights_GPU, CL_TRUE, 0, sizeof(double) * SIXTEENTH_LAYER_WEIGHT_SIZE, Layer16_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer16_Mean_GPU, CL_TRUE, 0, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, Layer16_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer16_StanDev_GPU, CL_TRUE, 0, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, Layer16_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer16_Gamma_GPU, CL_TRUE, 0, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, Layer16_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer16_Beta_GPU, CL_TRUE, 0, sizeof(double) * SIXTEENTH_LAYER_CHANNELS, Layer16_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_DSC", &err);
+    
+    int inputWidth = 16, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 14, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 9, kernelSize = 3, stride = 1;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer16_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer16_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer17_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &kernelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(cl_mem), (void *) &Layer16_Mean_GPU);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer16_StanDev_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer16_Gamma_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer16_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {512, 1 * 14, 1 * 14};
+    size_t localWorkSize_A[3] = {1, 14, 14};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    clReleaseMemObject(Layer16_Weights_GPU);
+    clReleaseMemObject(Layer16_Mean_GPU);
+    clReleaseMemObject(Layer16_StanDev_GPU);
+    clReleaseMemObject(Layer16_Gamma_GPU);
+    clReleaseMemObject(Layer16_Beta_GPU);
+
+    free(Layer16_Weights_CPU);
+    free(Layer16_Mean_CPU);
+    free(Layer16_StanDev_CPU);
+    free(Layer16_Gamma_CPU);
+    free(Layer16_Beta_CPU);
+}
+
+void Read_SixteenthLayer_Data(double *Layer16_Weights_CPU,
+    double * Layer16_Mean_CPU,
+    double * Layer16_StanDev_CPU,
+    double * Layer16_Gamma_CPU,
+    double * Layer16_Beta_CPU
+){
+    read_File("data/SixteenthLayer/weightsNorm.txt", Layer16_Weights_CPU);
+    read_File("data/SixteenthLayer/Sixteenth_Layer_Mean.txt", Layer16_Mean_CPU);
+    read_File("data/SixteenthLayer/Sixteenth_Layer_StanDev.txt", Layer16_StanDev_CPU);
+    read_File("data/SixteenthLayer/Sixteenth_Layer_Gamma.txt", Layer16_Gamma_CPU);
+    read_File("data/SixteenthLayer/Sixteenth_Layer_Beta.txt", Layer16_Beta_CPU);
+}
+
+void Execute_Fifteenth_Layer(cl_mem Layer15_Neurons_GPU,
+    cl_mem Layer16_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer15_Weights_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_WEIGHT_SIZE);
+    double *Layer15_Mean_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
+    double *Layer15_StanDev_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
+    double *Layer15_Gamma_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
+    double *Layer15_Beta_CPU = (double *) malloc(sizeof(double) * FIFTEENTH_LAYER_CHANNELS);
+
+    Read_FifteenthLayer_Data(
+        Layer15_Weights_CPU,        
+        Layer15_Mean_CPU,
+        Layer15_StanDev_CPU,
+        Layer15_Gamma_CPU,
+        Layer15_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer15_Weights_GPU,
+           Layer15_Mean_GPU,
+           Layer15_StanDev_GPU,
+           Layer15_Gamma_GPU,
+           Layer15_Beta_GPU;
+
+    cl_int err;
+    
+    Layer15_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FIFTEENTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer15_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer15_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer15_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer15_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer15_Weights_GPU, CL_TRUE, 0, sizeof(double) * FIFTEENTH_LAYER_WEIGHT_SIZE, Layer15_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer15_Mean_GPU, CL_TRUE, 0, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, Layer15_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer15_StanDev_GPU, CL_TRUE, 0, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, Layer15_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer15_Gamma_GPU, CL_TRUE, 0, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, Layer15_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer15_Beta_GPU, CL_TRUE, 0, sizeof(double) * FIFTEENTH_LAYER_CHANNELS, Layer15_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+    
+    int inputWidth = 14, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 16, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 512, channelSize = 512, stride = 1, offset = 17;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer15_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer15_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer16_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer15_Mean_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer15_StanDev_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer15_Gamma_GPU);
+    clSetKernelArg(kernel, 20, sizeof(cl_mem), (void *) &Layer15_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {512, 1 * 14, 1 * 14};
+    size_t localWorkSize_A[3] = {1, 14, 14};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    clReleaseMemObject(Layer15_Weights_GPU);
+    clReleaseMemObject(Layer15_Mean_GPU);
+    clReleaseMemObject(Layer15_StanDev_GPU);
+    clReleaseMemObject(Layer15_Gamma_GPU);
+    clReleaseMemObject(Layer15_Beta_GPU);
+
+    free(Layer15_Weights_CPU);
+    free(Layer15_Mean_CPU);
+    free(Layer15_StanDev_CPU);
+    free(Layer15_Gamma_CPU);
+    free(Layer15_Beta_CPU);
+}
+
+void Read_FifteenthLayer_Data(double *Layer15_Weights_CPU,
+    double * Layer15_Mean_CPU,
+    double * Layer15_StanDev_CPU,
+    double * Layer15_Gamma_CPU,
+    double * Layer15_Beta_CPU
+){
+    read_File("data/FifteenthLayer/weightsNorm.txt", Layer15_Weights_CPU);
+    read_File("data/FifteenthLayer/Fifteenth_Layer_Mean.txt", Layer15_Mean_CPU);
+    read_File("data/FifteenthLayer/Fifteenth_Layer_StanDev.txt", Layer15_StanDev_CPU);
+    read_File("data/FifteenthLayer/Fifteenth_Layer_Gamma.txt", Layer15_Gamma_CPU);
+    read_File("data/FifteenthLayer/Fifteenth_Layer_Beta.txt", Layer15_Beta_CPU);
+}
+
+void Execute_Fourteenth_Layer(cl_mem Layer14_Neurons_GPU,
+    cl_mem Layer15_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer14_Weights_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_WEIGHT_SIZE);
+    double *Layer14_Mean_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
+    double *Layer14_StanDev_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
+    double *Layer14_Gamma_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
+    double *Layer14_Beta_CPU = (double *) malloc(sizeof(double) * FOURTEENTH_LAYER_CHANNELS);
+
+    Read_FourteenthLayer_Data(
+        Layer14_Weights_CPU,        
+        Layer14_Mean_CPU,
+        Layer14_StanDev_CPU,
+        Layer14_Gamma_CPU,
+        Layer14_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer14_Weights_GPU,
+           Layer14_Mean_GPU,
+           Layer14_StanDev_GPU,
+           Layer14_Gamma_GPU,
+           Layer14_Beta_GPU;
+
+    cl_int err;
+    
+    Layer14_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FOURTEENTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer14_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer14_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer14_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer14_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer14_Weights_GPU, CL_TRUE, 0, sizeof(double) * FOURTEENTH_LAYER_WEIGHT_SIZE, Layer14_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer14_Mean_GPU, CL_TRUE, 0, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, Layer14_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer14_StanDev_GPU, CL_TRUE, 0, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, Layer14_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer14_Gamma_GPU, CL_TRUE, 0, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, Layer14_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer14_Beta_GPU, CL_TRUE, 0, sizeof(double) * FOURTEENTH_LAYER_CHANNELS, Layer14_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_DSC", &err);
+    
+    int inputWidth = 16, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 14, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 9, kernelSize = 3, stride = 1;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer14_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer14_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer15_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &kernelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(cl_mem), (void *) &Layer14_Mean_GPU);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer14_StanDev_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer14_Gamma_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer14_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {512, 1 * 14, 1 * 14};
+    size_t localWorkSize_A[3] = {1, 14, 14};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    clReleaseMemObject(Layer14_Weights_GPU);
+    clReleaseMemObject(Layer14_Mean_GPU);
+    clReleaseMemObject(Layer14_StanDev_GPU);
+    clReleaseMemObject(Layer14_Gamma_GPU);
+    clReleaseMemObject(Layer14_Beta_GPU);
+
+    free(Layer14_Weights_CPU);
+    free(Layer14_Mean_CPU);
+    free(Layer14_StanDev_CPU);
+    free(Layer14_Gamma_CPU);
+    free(Layer14_Beta_CPU);
+}
+
+void Read_FourteenthLayer_Data(double *Layer14_Weights_CPU,
+    double * Layer14_Mean_CPU,
+    double * Layer14_StanDev_CPU,
+    double * Layer14_Gamma_CPU,
+    double * Layer14_Beta_CPU
+){
+    read_File("data/FourteenthLayer/weightsNorm.txt", Layer14_Weights_CPU);
+    read_File("data/FourteenthLayer/Fourteenth_Layer_Mean.txt", Layer14_Mean_CPU);
+    read_File("data/FourteenthLayer/Fourteenth_Layer_StanDev.txt", Layer14_StanDev_CPU);
+    read_File("data/FourteenthLayer/Fourteenth_Layer_Gamma.txt", Layer14_Gamma_CPU);
+    read_File("data/FourteenthLayer/Fourteenth_Layer_Beta.txt", Layer14_Beta_CPU);
+}
+
+void Execute_Thirteenth_Layer(cl_mem Layer13_Neurons_GPU,
+    cl_mem Layer14_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer13_Weights_CPU = (double *) malloc(sizeof(double) * THIRTEENTH_LAYER_WEIGHT_SIZE);
+    double *Layer13_Mean_CPU = (double *) malloc(sizeof(double) * THIRTEENTH_LAYER_CHANNELS);
+    double *Layer13_StanDev_CPU = (double *) malloc(sizeof(double) * THIRTEENTH_LAYER_CHANNELS);
+    double *Layer13_Gamma_CPU = (double *) malloc(sizeof(double) * THIRTEENTH_LAYER_CHANNELS);
+    double *Layer13_Beta_CPU = (double *) malloc(sizeof(double) * THIRTEENTH_LAYER_CHANNELS);
+
+    Read_ThirteenthLayer_Data(
+        Layer13_Weights_CPU,        
+        Layer13_Mean_CPU,
+        Layer13_StanDev_CPU,
+        Layer13_Gamma_CPU,
+        Layer13_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer13_Weights_GPU,
+           Layer13_Mean_GPU,
+           Layer13_StanDev_GPU,
+           Layer13_Gamma_GPU,
+           Layer13_Beta_GPU;
+
+    cl_int err;
+    
+    Layer13_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * THIRTEENTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer13_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer13_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer13_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer13_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer13_Weights_GPU, CL_TRUE, 0, sizeof(double) * THIRTEENTH_LAYER_WEIGHT_SIZE, Layer13_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer13_Mean_GPU, CL_TRUE, 0, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, Layer13_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer13_StanDev_GPU, CL_TRUE, 0, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, Layer13_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer13_Gamma_GPU, CL_TRUE, 0, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, Layer13_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer13_Beta_GPU, CL_TRUE, 0, sizeof(double) * THIRTEENTH_LAYER_CHANNELS, Layer13_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+    
+    int inputWidth = 14, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 16, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 256, channelSize = 256, stride = 1, offset = 17;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer13_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer13_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer14_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer13_Mean_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer13_StanDev_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer13_Gamma_GPU);
+    clSetKernelArg(kernel, 20, sizeof(cl_mem), (void *) &Layer13_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {512, 1 * 14, 1 * 14};
+    size_t localWorkSize_A[3] = {1, 14, 14};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    clReleaseMemObject(Layer13_Weights_GPU);
+    clReleaseMemObject(Layer13_Mean_GPU);
+    clReleaseMemObject(Layer13_StanDev_GPU);
+    clReleaseMemObject(Layer13_Gamma_GPU);
+    clReleaseMemObject(Layer13_Beta_GPU);
+
+    free(Layer13_Weights_CPU);
+    free(Layer13_Mean_CPU);
+    free(Layer13_StanDev_CPU);
+    free(Layer13_Gamma_CPU);
+    free(Layer13_Beta_CPU);
+}
+
+void Read_ThirteenthLayer_Data(double *Layer13_Weights_CPU,
+    double * Layer13_Mean_CPU,
+    double * Layer13_StanDev_CPU,
+    double * Layer13_Gamma_CPU,
+    double * Layer13_Beta_CPU
+){
+    read_File("data/ThirteenthLayer/weightsNorm.txt", Layer13_Weights_CPU);
+    read_File("data/ThirteenthLayer/Thirteenth_Layer_Mean.txt", Layer13_Mean_CPU);
+    read_File("data/ThirteenthLayer/Thirteenth_Layer_StanDev.txt", Layer13_StanDev_CPU);
+    read_File("data/ThirteenthLayer/Thirteenth_Layer_Gamma.txt", Layer13_Gamma_CPU);
+    read_File("data/ThirteenthLayer/Thirteenth_Layer_Beta.txt", Layer13_Beta_CPU);
+}
+
+void Execute_Twelveth_Layer(cl_mem Layer12_Neurons_GPU,
+    cl_mem Layer13_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer12_Weights_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_WEIGHT_SIZE);
+    double *Layer12_Mean_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_CHANNELS);
+    double *Layer12_StanDev_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_CHANNELS);
+    double *Layer12_Gamma_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_CHANNELS);
+    double *Layer12_Beta_CPU = (double *) malloc(sizeof(double) * TWELFTH_LAYER_CHANNELS);
+
+    Read_TwelvethLayer_Data(
+        Layer12_Weights_CPU,        
+        Layer12_Mean_CPU,
+        Layer12_StanDev_CPU,
+        Layer12_Gamma_CPU,
+        Layer12_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer12_Weights_GPU,
+           Layer12_Mean_GPU,
+           Layer12_StanDev_GPU,
+           Layer12_Gamma_GPU,
+           Layer12_Beta_GPU;
+
+    cl_int err;
+    
+    Layer12_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * TWELFTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer12_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * TWELFTH_LAYER_CHANNELS, NULL, NULL);
+    Layer12_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * TWELFTH_LAYER_CHANNELS, NULL, NULL);
+    Layer12_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * TWELFTH_LAYER_CHANNELS, NULL, NULL);
+    Layer12_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * TWELFTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer12_Weights_GPU, CL_TRUE, 0, sizeof(double) * TWELFTH_LAYER_WEIGHT_SIZE, Layer12_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer12_Mean_GPU, CL_TRUE, 0, sizeof(double) * TWELFTH_LAYER_CHANNELS, Layer12_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer12_StanDev_GPU, CL_TRUE, 0, sizeof(double) * TWELFTH_LAYER_CHANNELS, Layer12_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer12_Gamma_GPU, CL_TRUE, 0, sizeof(double) * TWELFTH_LAYER_CHANNELS, Layer12_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer12_Beta_GPU, CL_TRUE, 0, sizeof(double) * TWELFTH_LAYER_CHANNELS, Layer12_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_DSC", &err);
+    
+    int inputWidth = 29, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 14, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 9, kernelSize = 3, stride = 2;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer12_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer12_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer13_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &kernelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(cl_mem), (void *) &Layer12_Mean_GPU);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer12_StanDev_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer12_Gamma_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer12_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {256, 1 * 14, 1 * 14};
+    size_t localWorkSize_A[3] = {1, 14, 14};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    clReleaseMemObject(Layer12_Weights_GPU);
+    clReleaseMemObject(Layer12_Mean_GPU);
+    clReleaseMemObject(Layer12_StanDev_GPU);
+    clReleaseMemObject(Layer12_Gamma_GPU);
+    clReleaseMemObject(Layer12_Beta_GPU);
+
+    free(Layer12_Weights_CPU);
+    free(Layer12_Mean_CPU);
+    free(Layer12_StanDev_CPU);
+    free(Layer12_Gamma_CPU);
+    free(Layer12_Beta_CPU);
+}
+
+void Read_TwelvethLayer_Data(double *Layer12_Weights_CPU,
+    double * Layer12_Mean_CPU,
+    double * Layer12_StanDev_CPU,
+    double * Layer12_Gamma_CPU,
+    double * Layer12_Beta_CPU
+){
+    read_File("data/TwelvethLayer/weightsNorm.txt", Layer12_Weights_CPU);
+    read_File("data/TwelvethLayer/Twelveth_Layer_Mean.txt", Layer12_Mean_CPU);
+    read_File("data/TwelvethLayer/Twelveth_Layer_StanDev.txt", Layer12_StanDev_CPU);
+    read_File("data/TwelvethLayer/Twelveth_Layer_Gamma.txt", Layer12_Gamma_CPU);
+    read_File("data/TwelvethLayer/Twelveth_Layer_Beta.txt", Layer12_Beta_CPU);
+}
+
+void Execute_Eleventh_Layer(cl_mem Layer11_Neurons_GPU,
+    cl_mem Layer12_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer11_Weights_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_WEIGHT_SIZE);
+    double *Layer11_Mean_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_CHANNELS);
+    double *Layer11_StanDev_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_CHANNELS);
+    double *Layer11_Gamma_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_CHANNELS);
+    double *Layer11_Beta_CPU = (double *) malloc(sizeof(double) * ELEVENTH_LAYER_CHANNELS);
+
+    Read_EleventhLayer_Data(
+        Layer11_Weights_CPU,        
+        Layer11_Mean_CPU,
+        Layer11_StanDev_CPU,
+        Layer11_Gamma_CPU,
+        Layer11_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer11_Weights_GPU,
+           Layer11_Mean_GPU,
+           Layer11_StanDev_GPU,
+           Layer11_Gamma_GPU,
+           Layer11_Beta_GPU;
+
+    cl_int err;
+    
+    Layer11_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * ELEVENTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer11_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * ELEVENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer11_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * ELEVENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer11_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * ELEVENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer11_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * ELEVENTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer11_Weights_GPU, CL_TRUE, 0, sizeof(double) * ELEVENTH_LAYER_WEIGHT_SIZE, Layer11_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer11_Mean_GPU, CL_TRUE, 0, sizeof(double) * ELEVENTH_LAYER_CHANNELS, Layer11_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer11_StanDev_GPU, CL_TRUE, 0, sizeof(double) * ELEVENTH_LAYER_CHANNELS, Layer11_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer11_Gamma_GPU, CL_TRUE, 0, sizeof(double) * ELEVENTH_LAYER_CHANNELS, Layer11_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer11_Beta_GPU, CL_TRUE, 0, sizeof(double) * ELEVENTH_LAYER_CHANNELS, Layer11_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+    
+    int inputWidth = 28, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 29, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 256, channelSize = 256, stride = 1, offset = 0;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer11_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer11_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer12_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer11_Mean_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer11_StanDev_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer11_Gamma_GPU);
+    clSetKernelArg(kernel, 20, sizeof(cl_mem), (void *) &Layer11_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {256, 1 * 28, 1 * 28};
+    size_t localWorkSize_A[3] = {1, 28, 28};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    clReleaseMemObject(Layer11_Weights_GPU);
+    clReleaseMemObject(Layer11_Mean_GPU);
+    clReleaseMemObject(Layer11_StanDev_GPU);
+    clReleaseMemObject(Layer11_Gamma_GPU);
+    clReleaseMemObject(Layer11_Beta_GPU);
+
+    free(Layer11_Weights_CPU);
+    free(Layer11_Mean_CPU);
+    free(Layer11_StanDev_CPU);
+    free(Layer11_Gamma_CPU);
+    free(Layer11_Beta_CPU);
+}
+
+void Read_EleventhLayer_Data(double *Layer11_Weights_CPU,
+    double * Layer11_Mean_CPU,
+    double * Layer11_StanDev_CPU,
+    double * Layer11_Gamma_CPU,
+    double * Layer11_Beta_CPU
+){
+    read_File("data/EleventhLayer/weightsNorm.txt", Layer11_Weights_CPU);
+    read_File("data/EleventhLayer/Eleventh_Layer_Mean.txt", Layer11_Mean_CPU);
+    read_File("data/EleventhLayer/Eleventh_Layer_StanDev.txt", Layer11_StanDev_CPU);
+    read_File("data/EleventhLayer/Eleventh_Layer_Gamma.txt", Layer11_Gamma_CPU);
+    read_File("data/EleventhLayer/Eleventh_Layer_Beta.txt", Layer11_Beta_CPU);
+}
+
+void Execute_Tenth_Layer(cl_mem Layer10_Neurons_GPU,
+    cl_mem Layer11_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer10_Weights_CPU = (double *) malloc(sizeof(double) * TENTH_LAYER_WEIGHT_SIZE);
+    double *Layer10_Mean_CPU = (double *) malloc(sizeof(double) * TENTH_LAYER_CHANNELS);
+    double *Layer10_StanDev_CPU = (double *) malloc(sizeof(double) * TENTH_LAYER_CHANNELS);
+    double *Layer10_Gamma_CPU = (double *) malloc(sizeof(double) * TENTH_LAYER_CHANNELS);
+    double *Layer10_Beta_CPU = (double *) malloc(sizeof(double) * TENTH_LAYER_CHANNELS);
+
+    Read_TenthLayer_Data(
+        Layer10_Weights_CPU,        
+        Layer10_Mean_CPU,
+        Layer10_StanDev_CPU,
+        Layer10_Gamma_CPU,
+        Layer10_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer10_Weights_GPU,
+           Layer10_Mean_GPU,
+           Layer10_StanDev_GPU,
+           Layer10_Gamma_GPU,
+           Layer10_Beta_GPU;
+
+    cl_int err;
+    
+    Layer10_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * TENTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer10_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * TENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer10_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * TENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer10_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * TENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer10_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * TENTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer10_Weights_GPU, CL_TRUE, 0, sizeof(double) * TENTH_LAYER_WEIGHT_SIZE, Layer10_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer10_Mean_GPU, CL_TRUE, 0, sizeof(double) * TENTH_LAYER_CHANNELS, Layer10_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer10_StanDev_GPU, CL_TRUE, 0, sizeof(double) * TENTH_LAYER_CHANNELS, Layer10_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer10_Gamma_GPU, CL_TRUE, 0, sizeof(double) * TENTH_LAYER_CHANNELS, Layer10_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer10_Beta_GPU, CL_TRUE, 0, sizeof(double) * TENTH_LAYER_CHANNELS, Layer10_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_DSC", &err);
+    
+    int inputWidth = 30, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 28, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 9, kernelSize = 3, stride = 1;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer10_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer10_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer11_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &kernelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(cl_mem), (void *) &Layer10_Mean_GPU);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer10_StanDev_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer10_Gamma_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer10_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {256, 1 * 28, 1 * 28};
+    size_t localWorkSize_A[3] = {1, 28, 28};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    clReleaseMemObject(Layer10_Weights_GPU);
+    clReleaseMemObject(Layer10_Mean_GPU);
+    clReleaseMemObject(Layer10_StanDev_GPU);
+    clReleaseMemObject(Layer10_Gamma_GPU);
+    clReleaseMemObject(Layer10_Beta_GPU);
+
+    free(Layer10_Weights_CPU);
+    free(Layer10_Mean_CPU);
+    free(Layer10_StanDev_CPU);
+    free(Layer10_Gamma_CPU);
+    free(Layer10_Beta_CPU);
+}
+
+void Read_TenthLayer_Data(double *Layer10_Weights_CPU,
+    double * Layer10_Mean_CPU,
+    double * Layer10_StanDev_CPU,
+    double * Layer10_Gamma_CPU,
+    double * Layer10_Beta_CPU
+){
+    read_File("data/TenthLayer/weightsNorm.txt", Layer10_Weights_CPU);
+    read_File("data/TenthLayer/Tenth_Layer_Mean.txt", Layer10_Mean_CPU);
+    read_File("data/TenthLayer/Tenth_Layer_StanDev.txt", Layer10_StanDev_CPU);
+    read_File("data/TenthLayer/Tenth_Layer_Gamma.txt", Layer10_Gamma_CPU);
+    read_File("data/TenthLayer/Tenth_Layer_Beta.txt", Layer10_Beta_CPU);
+}
+
+void Execute_Ninth_Layer(cl_mem Layer9_Neurons_GPU,
+    cl_mem Layer10_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer9_Weights_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_WEIGHT_SIZE);
+    double *Layer9_Mean_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_CHANNELS);
+    double *Layer9_StanDev_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_CHANNELS);
+    double *Layer9_Gamma_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_CHANNELS);
+    double *Layer9_Beta_CPU = (double *) malloc(sizeof(double) * NINTH_LAYER_CHANNELS);
+
+    Read_NinthLayer_Data(
+        Layer9_Weights_CPU,        
+        Layer9_Mean_CPU,
+        Layer9_StanDev_CPU,
+        Layer9_Gamma_CPU,
+        Layer9_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer9_Weights_GPU,
+           Layer9_Mean_GPU,
+           Layer9_StanDev_GPU,
+           Layer9_Gamma_GPU,
+           Layer9_Beta_GPU;
+
+    cl_int err;
+    
+    Layer9_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * NINTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer9_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * NINTH_LAYER_CHANNELS, NULL, NULL);
+    Layer9_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * NINTH_LAYER_CHANNELS, NULL, NULL);
+    Layer9_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * NINTH_LAYER_CHANNELS, NULL, NULL);
+    Layer9_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * NINTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer9_Weights_GPU, CL_TRUE, 0, sizeof(double) * NINTH_LAYER_WEIGHT_SIZE, Layer9_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer9_Mean_GPU, CL_TRUE, 0, sizeof(double) * NINTH_LAYER_CHANNELS, Layer9_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer9_StanDev_GPU, CL_TRUE, 0, sizeof(double) * NINTH_LAYER_CHANNELS, Layer9_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer9_Gamma_GPU, CL_TRUE, 0, sizeof(double) * NINTH_LAYER_CHANNELS, Layer9_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer9_Beta_GPU, CL_TRUE, 0, sizeof(double) * NINTH_LAYER_CHANNELS, Layer9_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+    
+    int inputWidth = 28, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 30, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 128, channelSize = 128, stride = 1, offset = 31;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer9_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer9_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer10_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer9_Mean_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer9_StanDev_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer9_Gamma_GPU);
+    clSetKernelArg(kernel, 20, sizeof(cl_mem), (void *) &Layer9_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {256, 1 * 28, 1 * 28};
+    size_t localWorkSize_A[3] = {1, 28, 28};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    clReleaseMemObject(Layer9_Weights_GPU);
+    clReleaseMemObject(Layer9_Mean_GPU);
+    clReleaseMemObject(Layer9_StanDev_GPU);
+    clReleaseMemObject(Layer9_Gamma_GPU);
+    clReleaseMemObject(Layer9_Beta_GPU);
+
+    free(Layer9_Weights_CPU);
+    free(Layer9_Mean_CPU);
+    free(Layer9_StanDev_CPU);
+    free(Layer9_Gamma_CPU);
+    free(Layer9_Beta_CPU);
+}
+
+void Read_NinthLayer_Data(double *Layer9_Weights_CPU,
+    double * Layer9_Mean_CPU,
+    double * Layer9_StanDev_CPU,
+    double * Layer9_Gamma_CPU,
+    double * Layer9_Beta_CPU
+){
+    read_File("data/NinthLayer/weightsNorm.txt", Layer9_Weights_CPU);
+    read_File("data/NinthLayer/Ninth_Layer_Mean.txt", Layer9_Mean_CPU);
+    read_File("data/NinthLayer/Ninth_Layer_StanDev.txt", Layer9_StanDev_CPU);
+    read_File("data/NinthLayer/Ninth_Layer_Gamma.txt", Layer9_Gamma_CPU);
+    read_File("data/NinthLayer/Ninth_Layer_Beta.txt", Layer9_Beta_CPU);
+}
+
+void Execute_Eighth_Layer(cl_mem Layer8_Neurons_GPU,
+    cl_mem Layer9_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer8_Weights_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_WEIGHT_SIZE);
+    double *Layer8_Mean_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_CHANNELS);
+    double *Layer8_StanDev_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_CHANNELS);
+    double *Layer8_Gamma_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_CHANNELS);
+    double *Layer8_Beta_CPU = (double *) malloc(sizeof(double) * EIGHTH_LAYER_CHANNELS);
+
+    Read_EighthLayer_Data(
+        Layer8_Weights_CPU,        
+        Layer8_Mean_CPU,
+        Layer8_StanDev_CPU,
+        Layer8_Gamma_CPU,
+        Layer8_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer8_Weights_GPU,
+           Layer8_Mean_GPU,
+           Layer8_StanDev_GPU,
+           Layer8_Gamma_GPU,
+           Layer8_Beta_GPU;
+
+    cl_int err;
+    
+    Layer8_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * EIGHTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer8_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * EIGHTH_LAYER_CHANNELS, NULL, NULL);
+    Layer8_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * EIGHTH_LAYER_CHANNELS, NULL, NULL);
+    Layer8_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * EIGHTH_LAYER_CHANNELS, NULL, NULL);
+    Layer8_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * EIGHTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer8_Weights_GPU, CL_TRUE, 0, sizeof(double) * EIGHTH_LAYER_WEIGHT_SIZE, Layer8_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer8_Mean_GPU, CL_TRUE, 0, sizeof(double) * EIGHTH_LAYER_CHANNELS, Layer8_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer8_StanDev_GPU, CL_TRUE, 0, sizeof(double) * EIGHTH_LAYER_CHANNELS, Layer8_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer8_Gamma_GPU, CL_TRUE, 0, sizeof(double) * EIGHTH_LAYER_CHANNELS, Layer8_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer8_Beta_GPU, CL_TRUE, 0, sizeof(double) * EIGHTH_LAYER_CHANNELS, Layer8_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_DSC", &err);
+    
+    int inputWidth = 57, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 28, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 9, kernelSize = 3, stride = 2;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer8_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer8_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer9_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &kernelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(cl_mem), (void *) &Layer8_Mean_GPU);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer8_StanDev_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer8_Gamma_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer8_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {256, 1 * 28, 1 * 28};
+    size_t localWorkSize_A[3] = {1, 28, 28};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    clReleaseMemObject(Layer8_Weights_GPU);
+    clReleaseMemObject(Layer8_Mean_GPU);
+    clReleaseMemObject(Layer8_StanDev_GPU);
+    clReleaseMemObject(Layer8_Gamma_GPU);
+    clReleaseMemObject(Layer8_Beta_GPU);
+
+    free(Layer8_Weights_CPU);
+    free(Layer8_Mean_CPU);
+    free(Layer8_StanDev_CPU);
+    free(Layer8_Gamma_CPU);
+    free(Layer8_Beta_CPU);
+}
+
+void Read_EighthLayer_Data(double *Layer8_Weights_CPU,
+    double * Layer8_Mean_CPU,
+    double * Layer8_StanDev_CPU,
+    double * Layer8_Gamma_CPU,
+    double * Layer8_Beta_CPU
+){
+    read_File("data/EighthLayer/weightsNorm.txt", Layer8_Weights_CPU);
+    read_File("data/EighthLayer/Eighth_Layer_Mean.txt", Layer8_Mean_CPU);
+    read_File("data/EighthLayer/Eighth_Layer_StanDev.txt", Layer8_StanDev_CPU);
+    read_File("data/EighthLayer/Eighth_Layer_Gamma.txt", Layer8_Gamma_CPU);
+    read_File("data/EighthLayer/Eighth_Layer_Beta.txt", Layer8_Beta_CPU);
+}
+
+void Execute_Seventh_Layer(cl_mem Layer7_Neurons_GPU,
+    cl_mem Layer8_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer7_Weights_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_WEIGHT_SIZE);
+    double *Layer7_Mean_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_CHANNELS);
+    double *Layer7_StanDev_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_CHANNELS);
+    double *Layer7_Gamma_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_CHANNELS);
+    double *Layer7_Beta_CPU = (double *) malloc(sizeof(double) * SEVENTH_LAYER_CHANNELS);
+
+    Read_SeventhLayer_Data(
+        Layer7_Weights_CPU,        
+        Layer7_Mean_CPU,
+        Layer7_StanDev_CPU,
+        Layer7_Gamma_CPU,
+        Layer7_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer7_Weights_GPU,
+           Layer7_Mean_GPU,
+           Layer7_StanDev_GPU,
+           Layer7_Gamma_GPU,
+           Layer7_Beta_GPU;
+
+    cl_int err;
+    
+    Layer7_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SEVENTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer7_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SEVENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer7_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SEVENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer7_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SEVENTH_LAYER_CHANNELS, NULL, NULL);
+    Layer7_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SEVENTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer7_Weights_GPU, CL_TRUE, 0, sizeof(double) * SEVENTH_LAYER_WEIGHT_SIZE, Layer7_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer7_Mean_GPU, CL_TRUE, 0, sizeof(double) * SEVENTH_LAYER_CHANNELS, Layer7_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer7_StanDev_GPU, CL_TRUE, 0, sizeof(double) * SEVENTH_LAYER_CHANNELS, Layer7_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer7_Gamma_GPU, CL_TRUE, 0, sizeof(double) * SEVENTH_LAYER_CHANNELS, Layer7_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer7_Beta_GPU, CL_TRUE, 0, sizeof(double) * SEVENTH_LAYER_CHANNELS, Layer7_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+    
+    int inputWidth = 56, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 57, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 128, channelSize = 128, stride = 1, offset = 0;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer7_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer7_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer8_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer7_Mean_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer7_StanDev_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer7_Gamma_GPU);
+    clSetKernelArg(kernel, 20, sizeof(cl_mem), (void *) &Layer7_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {128, 1 * 32, 1 * 32};
+    size_t localWorkSize_A[3] = {1, 32, 32};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    cl_kernel kernelB = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+
+    inputWidth = 56, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 32, blockOffset2 = 0;
+    outputWidth = 57, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 32, blockOffset2Out = 0;
+
+    // Setting arguments
+    clSetKernelArg(kernelB, 0, sizeof(cl_mem), (void *) &Layer7_Neurons_GPU);
+    clSetKernelArg(kernelB, 1, sizeof(cl_mem), (void *) &Layer7_Weights_GPU);
+    clSetKernelArg(kernelB, 2, sizeof(cl_mem), (void *) &Layer8_Neurons_GPU);
+    clSetKernelArg(kernelB, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernelB, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernelB, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernelB, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernelB, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernelB, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernelB, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernelB, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernelB, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernelB, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernelB, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernelB, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernelB, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernelB, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernelB, 17, sizeof(cl_mem), (void *) &Layer7_Mean_GPU);
+    clSetKernelArg(kernelB, 18, sizeof(cl_mem), (void *) &Layer7_StanDev_GPU);
+    clSetKernelArg(kernelB, 19, sizeof(cl_mem), (void *) &Layer7_Gamma_GPU);
+    clSetKernelArg(kernelB, 20, sizeof(cl_mem), (void *) &Layer7_Beta_GPU);
+
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_B[3] = {128, 1 * 32, 1 * 24};
+    size_t localWorkSize_B[3] = {1, 32, 24};
+
+    err = clEnqueueNDRangeKernel(queue, kernelB, 3, NULL, globalWorkSize_B, localWorkSize_B,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    cl_kernel kernelC = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+
+    inputWidth = 56, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 56 * 32, blockOffset2 = 0;
+    outputWidth = 57, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 57 * 32, blockOffset2Out = 0;
+
+    // Setting arguments
+    clSetKernelArg(kernelC, 0, sizeof(cl_mem), (void *) &Layer7_Neurons_GPU);
+    clSetKernelArg(kernelC, 1, sizeof(cl_mem), (void *) &Layer7_Weights_GPU);
+    clSetKernelArg(kernelC, 2, sizeof(cl_mem), (void *) &Layer8_Neurons_GPU);
+    clSetKernelArg(kernelC, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernelC, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernelC, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernelC, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernelC, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernelC, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernelC, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernelC, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernelC, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernelC, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernelC, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernelC, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernelC, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernelC, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernelC, 17, sizeof(cl_mem), (void *) &Layer7_Mean_GPU);
+    clSetKernelArg(kernelC, 18, sizeof(cl_mem), (void *) &Layer7_StanDev_GPU);
+    clSetKernelArg(kernelC, 19, sizeof(cl_mem), (void *) &Layer7_Gamma_GPU);
+    clSetKernelArg(kernelC, 20, sizeof(cl_mem), (void *) &Layer7_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_C[3] = {128, 1 * 24, 1 * 32};
+    size_t localWorkSize_C[3] = {1, 24, 32};
+
+    err = clEnqueueNDRangeKernel(queue, kernelC, 3, NULL, globalWorkSize_C, localWorkSize_C,
+                                                              0, NULL, NULL);
+    
+    cl_kernel kernelD = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+
+    inputWidth = 56, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 56 * 32, blockOffset2 = 32;
+    outputWidth = 57, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 57 * 32, blockOffset2Out = 32;
+
+    // Setting arguments
+    clSetKernelArg(kernelD, 0, sizeof(cl_mem), (void *) &Layer7_Neurons_GPU);
+    clSetKernelArg(kernelD, 1, sizeof(cl_mem), (void *) &Layer7_Weights_GPU);
+    clSetKernelArg(kernelD, 2, sizeof(cl_mem), (void *) &Layer8_Neurons_GPU);
+    clSetKernelArg(kernelD, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernelD, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernelD, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernelD, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernelD, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernelD, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernelD, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernelD, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernelD, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernelD, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernelD, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernelD, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernelD, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernelD, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernelD, 17, sizeof(cl_mem), (void *) &Layer7_Mean_GPU);
+    clSetKernelArg(kernelD, 18, sizeof(cl_mem), (void *) &Layer7_StanDev_GPU);
+    clSetKernelArg(kernelD, 19, sizeof(cl_mem), (void *) &Layer7_Gamma_GPU);
+    clSetKernelArg(kernelD, 20, sizeof(cl_mem), (void *) &Layer7_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_D[3] = {128, 1 * 24, 1 * 24};
+    size_t localWorkSize_D[3] = {1, 24, 24};
+
+    err = clEnqueueNDRangeKernel(queue, kernelD, 3, NULL, globalWorkSize_D, localWorkSize_D,
+                                                              0, NULL, NULL);
+
+    // Wait for the command queue to get serviced before reading back results
+    clFinish(queue);
+
+    clReleaseMemObject(Layer7_Weights_GPU);
+    clReleaseMemObject(Layer7_Mean_GPU);
+    clReleaseMemObject(Layer7_StanDev_GPU);
+    clReleaseMemObject(Layer7_Gamma_GPU);
+    clReleaseMemObject(Layer7_Beta_GPU);
+
+    free(Layer7_Weights_CPU);
+    free(Layer7_Mean_CPU);
+    free(Layer7_StanDev_CPU);
+    free(Layer7_Gamma_CPU);
+    free(Layer7_Beta_CPU);
+}
+
+void Read_SeventhLayer_Data(double *Layer7_Weights_CPU,
+    double * Layer7_Mean_CPU,
+    double * Layer7_StanDev_CPU,
+    double * Layer7_Gamma_CPU,
+    double * Layer7_Beta_CPU
+){
+    read_File("data/SeventhLayer/weightsNorm.txt", Layer7_Weights_CPU);
+    read_File("data/SeventhLayer/Seventh_Layer_Mean.txt", Layer7_Mean_CPU);
+    read_File("data/SeventhLayer/Seventh_Layer_StanDev.txt", Layer7_StanDev_CPU);
+    read_File("data/SeventhLayer/Seventh_Layer_Gamma.txt", Layer7_Gamma_CPU);
+    read_File("data/SeventhLayer/Seventh_Layer_Beta.txt", Layer7_Beta_CPU);
+}
+
+void Execute_Sixth_Layer(cl_mem Layer6_Neurons_GPU,
+    cl_mem Layer7_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer6_Weights_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_WEIGHT_SIZE);
+    double *Layer6_Mean_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_CHANNELS);
+    double *Layer6_StanDev_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_CHANNELS);
+    double *Layer6_Gamma_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_CHANNELS);
+    double *Layer6_Beta_CPU = (double *) malloc(sizeof(double) * SIXTH_LAYER_CHANNELS);
+
+    Read_SixthLayer_Data(
+        Layer6_Weights_CPU,        
+        Layer6_Mean_CPU,
+        Layer6_StanDev_CPU,
+        Layer6_Gamma_CPU,
+        Layer6_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer6_Weights_GPU,
+           Layer6_Mean_GPU,
+           Layer6_StanDev_GPU,
+           Layer6_Gamma_GPU,
+           Layer6_Beta_GPU;
+
+    cl_int err;
+    
+    Layer6_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SIXTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer6_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SIXTH_LAYER_CHANNELS, NULL, NULL);
+    Layer6_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SIXTH_LAYER_CHANNELS, NULL, NULL);
+    Layer6_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SIXTH_LAYER_CHANNELS, NULL, NULL);
+    Layer6_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * SIXTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer6_Weights_GPU, CL_TRUE, 0, sizeof(double) * SIXTH_LAYER_WEIGHT_SIZE, Layer6_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer6_Mean_GPU, CL_TRUE, 0, sizeof(double) * SIXTH_LAYER_CHANNELS, Layer6_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer6_StanDev_GPU, CL_TRUE, 0, sizeof(double) * SIXTH_LAYER_CHANNELS, Layer6_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer6_Gamma_GPU, CL_TRUE, 0, sizeof(double) * SIXTH_LAYER_CHANNELS, Layer6_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer6_Beta_GPU, CL_TRUE, 0, sizeof(double) * SIXTH_LAYER_CHANNELS, Layer6_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_DSC", &err);
+    
+    int inputWidth = 58, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 56, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 9, kernelSize = 3, stride = 1;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer6_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer6_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer7_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &kernelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(cl_mem), (void *) &Layer6_Mean_GPU);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer6_StanDev_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer6_Gamma_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer6_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {128, 1 * 32, 1 * 32};
+    size_t localWorkSize_A[3] = {1, 32, 32};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    cl_kernel kernelB = clCreateKernel(program, "executeGenericFunctions_DSC", &err);
+
+    inputWidth = 58, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 32;
+    outputWidth = 56, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 32;
+
+    // Setting arguments
+    clSetKernelArg(kernelB, 0, sizeof(cl_mem), (void *) &Layer6_Neurons_GPU);
+    clSetKernelArg(kernelB, 1, sizeof(cl_mem), (void *) &Layer6_Weights_GPU);
+    clSetKernelArg(kernelB, 2, sizeof(cl_mem), (void *) &Layer7_Neurons_GPU);
+    clSetKernelArg(kernelB, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernelB, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernelB, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernelB, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernelB, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernelB, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernelB, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernelB, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernelB, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernelB, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernelB, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernelB, 14, sizeof(int), (void *) &kernelSize);
+    clSetKernelArg(kernelB, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernelB, 16, sizeof(cl_mem), (void *) &Layer6_Mean_GPU);
+    clSetKernelArg(kernelB, 17, sizeof(cl_mem), (void *) &Layer6_StanDev_GPU);
+    clSetKernelArg(kernelB, 18, sizeof(cl_mem), (void *) &Layer6_Gamma_GPU);
+    clSetKernelArg(kernelB, 19, sizeof(cl_mem), (void *) &Layer6_Beta_GPU);
+
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_B[3] = {128, 1 * 32, 1 * 24};
+    size_t localWorkSize_B[3] = {1, 32, 24};
+
+    err = clEnqueueNDRangeKernel(queue, kernelB, 3, NULL, globalWorkSize_B, localWorkSize_B,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    cl_kernel kernelC = clCreateKernel(program, "executeGenericFunctions_DSC", &err);
+
+    inputWidth = 58, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 32 * 58, blockOffset2 = 0;
+    outputWidth = 56, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 56 * 32, blockOffset2Out = 0;
+
+    // Setting arguments
+    clSetKernelArg(kernelC, 0, sizeof(cl_mem), (void *) &Layer6_Neurons_GPU);
+    clSetKernelArg(kernelC, 1, sizeof(cl_mem), (void *) &Layer6_Weights_GPU);
+    clSetKernelArg(kernelC, 2, sizeof(cl_mem), (void *) &Layer7_Neurons_GPU);
+    clSetKernelArg(kernelC, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernelC, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernelC, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernelC, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernelC, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernelC, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernelC, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernelC, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernelC, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernelC, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernelC, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernelC, 14, sizeof(int), (void *) &kernelSize);
+    clSetKernelArg(kernelC, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernelC, 16, sizeof(cl_mem), (void *) &Layer6_Mean_GPU);
+    clSetKernelArg(kernelC, 17, sizeof(cl_mem), (void *) &Layer6_StanDev_GPU);
+    clSetKernelArg(kernelC, 18, sizeof(cl_mem), (void *) &Layer6_Gamma_GPU);
+    clSetKernelArg(kernelC, 19, sizeof(cl_mem), (void *) &Layer6_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_C[3] = {128, 1 * 24, 1 * 32};
+    size_t localWorkSize_C[3] = {1, 24, 32};
+
+    err = clEnqueueNDRangeKernel(queue, kernelC, 3, NULL, globalWorkSize_C, localWorkSize_C,
+                                                              0, NULL, NULL);
+    
+    cl_kernel kernelD = clCreateKernel(program, "executeGenericFunctions_DSC", &err);
+
+    inputWidth = 58, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 32 * 58, blockOffset2 = 32;
+    outputWidth = 56, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 56 * 32, blockOffset2Out = 32;
+
+    // Setting arguments
+    clSetKernelArg(kernelD, 0, sizeof(cl_mem), (void *) &Layer6_Neurons_GPU);
+    clSetKernelArg(kernelD, 1, sizeof(cl_mem), (void *) &Layer6_Weights_GPU);
+    clSetKernelArg(kernelD, 2, sizeof(cl_mem), (void *) &Layer7_Neurons_GPU);
+    clSetKernelArg(kernelD, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernelD, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernelD, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernelD, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernelD, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernelD, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernelD, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernelD, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernelD, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernelD, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernelD, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernelD, 14, sizeof(int), (void *) &kernelSize);
+    clSetKernelArg(kernelD, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernelD, 16, sizeof(cl_mem), (void *) &Layer6_Mean_GPU);
+    clSetKernelArg(kernelD, 17, sizeof(cl_mem), (void *) &Layer6_StanDev_GPU);
+    clSetKernelArg(kernelD, 18, sizeof(cl_mem), (void *) &Layer6_Gamma_GPU);
+    clSetKernelArg(kernelD, 19, sizeof(cl_mem), (void *) &Layer6_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_D[3] = {128, 1 * 24, 1 * 24};
+    size_t localWorkSize_D[3] = {1, 24, 24};
+
+    err = clEnqueueNDRangeKernel(queue, kernelD, 3, NULL, globalWorkSize_D, localWorkSize_D,
+                                                              0, NULL, NULL);
+    
+    // Wait for the command queue to get serviced before reading back results
+    clFinish(queue);
+
+    clReleaseMemObject(Layer6_Weights_GPU);
+    clReleaseMemObject(Layer6_Mean_GPU);
+    clReleaseMemObject(Layer6_StanDev_GPU);
+    clReleaseMemObject(Layer6_Gamma_GPU);
+    clReleaseMemObject(Layer6_Beta_GPU);
+
+    free(Layer6_Weights_CPU);
+    free(Layer6_Mean_CPU);
+    free(Layer6_StanDev_CPU);
+    free(Layer6_Gamma_CPU);
+    free(Layer6_Beta_CPU);
+}
+
+void Read_SixthLayer_Data(double *Layer6_Weights_CPU,
+    double * Layer6_Mean_CPU,
+    double * Layer6_StanDev_CPU,
+    double * Layer6_Gamma_CPU,
+    double * Layer6_Beta_CPU
+){
+    read_File("data/SixthLayer/weightsNorm.txt", Layer6_Weights_CPU);
+    read_File("data/SixthLayer/Sixth_Layer_Mean.txt", Layer6_Mean_CPU);
+    read_File("data/SixthLayer/Sixth_Layer_StanDev.txt", Layer6_StanDev_CPU);
+    read_File("data/SixthLayer/Sixth_Layer_Gamma.txt", Layer6_Gamma_CPU);
+    read_File("data/SixthLayer/Sixth_Layer_Beta.txt", Layer6_Beta_CPU);
+}
+
+void Execute_Fifth_Layer(cl_mem Layer5_Neurons_GPU,
+    cl_mem Layer6_Neurons_GPU, 
+    cl_context context, 
+    cl_command_queue queue, 
+    cl_program program
+){
+    double *Layer5_Weights_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_WEIGHT_SIZE);
+    double *Layer5_Mean_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_CHANNELS);
+    double *Layer5_StanDev_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_CHANNELS);
+    double *Layer5_Gamma_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_CHANNELS);
+    double *Layer5_Beta_CPU = (double *) malloc(sizeof(double) * FIFTH_LAYER_CHANNELS);
+
+    Read_FifthLayer_Data(
+        Layer5_Weights_CPU,        
+        Layer5_Mean_CPU,
+        Layer5_StanDev_CPU,
+        Layer5_Gamma_CPU,
+        Layer5_Beta_CPU
+    );
+    
+    // allocating memory for thje matrices on the GPU
+    cl_mem Layer5_Weights_GPU,
+           Layer5_Mean_GPU,
+           Layer5_StanDev_GPU,
+           Layer5_Gamma_GPU,
+           Layer5_Beta_GPU;
+
+    cl_int err;
+    
+    Layer5_Weights_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FIFTH_LAYER_WEIGHT_SIZE, NULL, NULL);
+    Layer5_Mean_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FIFTH_LAYER_CHANNELS, NULL, NULL);
+    Layer5_StanDev_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FIFTH_LAYER_CHANNELS, NULL, NULL);
+    Layer5_Gamma_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FIFTH_LAYER_CHANNELS, NULL, NULL);
+    Layer5_Beta_GPU = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(double) * FIFTH_LAYER_CHANNELS, NULL, NULL);
+
+    clEnqueueWriteBuffer(queue, Layer5_Weights_GPU, CL_TRUE, 0, sizeof(double) * FIFTH_LAYER_WEIGHT_SIZE, Layer5_Weights_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer5_Mean_GPU, CL_TRUE, 0, sizeof(double) * FIFTH_LAYER_CHANNELS, Layer5_Mean_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer5_StanDev_GPU, CL_TRUE, 0, sizeof(double) * FIFTH_LAYER_CHANNELS, Layer5_StanDev_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer5_Gamma_GPU, CL_TRUE, 0, sizeof(double) * FIFTH_LAYER_CHANNELS, Layer5_Gamma_CPU, 0, NULL, NULL);
+    clEnqueueWriteBuffer(queue, Layer5_Beta_GPU, CL_TRUE, 0, sizeof(double) * FIFTH_LAYER_CHANNELS, Layer5_Beta_CPU, 0, NULL, NULL);
+    
+    // Reading the associated kernel
+    cl_kernel kernel = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+    
+    int inputWidth = 56, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 0, blockOffset2 = 0;
+    int outputWidth = 58, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 0, blockOffset2Out = 0;
+    int weight_size = 64, channelSize = 64, stride = 1, offset = 59;
+
+    // Setting arguments
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &Layer5_Neurons_GPU);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &Layer5_Weights_GPU);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *) &Layer6_Neurons_GPU);
+    clSetKernelArg(kernel, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernel, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernel, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernel, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernel, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernel, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernel, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernel, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernel, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernel, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernel, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernel, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernel, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernel, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernel, 17, sizeof(cl_mem), (void *) &Layer5_Mean_GPU);
+    clSetKernelArg(kernel, 18, sizeof(cl_mem), (void *) &Layer5_StanDev_GPU);
+    clSetKernelArg(kernel, 19, sizeof(cl_mem), (void *) &Layer5_Gamma_GPU);
+    clSetKernelArg(kernel, 20, sizeof(cl_mem), (void *) &Layer5_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_A[3] = {128, 1 * 32, 1 * 32};
+    size_t localWorkSize_A[3] = {1, 32, 32};
+
+    err = clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    cl_kernel kernelB = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+
+    inputWidth = 56, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 32, blockOffset2 = 0;
+    outputWidth = 58, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 32, blockOffset2Out = 0;
+
+    // Setting arguments
+    clSetKernelArg(kernelB, 0, sizeof(cl_mem), (void *) &Layer5_Neurons_GPU);
+    clSetKernelArg(kernelB, 1, sizeof(cl_mem), (void *) &Layer5_Weights_GPU);
+    clSetKernelArg(kernelB, 2, sizeof(cl_mem), (void *) &Layer6_Neurons_GPU);
+    clSetKernelArg(kernelB, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernelB, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernelB, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernelB, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernelB, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernelB, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernelB, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernelB, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernelB, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernelB, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernelB, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernelB, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernelB, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernelB, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernelB, 17, sizeof(cl_mem), (void *) &Layer5_Mean_GPU);
+    clSetKernelArg(kernelB, 18, sizeof(cl_mem), (void *) &Layer5_StanDev_GPU);
+    clSetKernelArg(kernelB, 19, sizeof(cl_mem), (void *) &Layer5_Gamma_GPU);
+    clSetKernelArg(kernelB, 20, sizeof(cl_mem), (void *) &Layer5_Beta_GPU);
+
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_B[3] = {128, 1 * 32, 1 * 24};
+    size_t localWorkSize_B[3] = {1, 32, 24};
+
+    err = clEnqueueNDRangeKernel(queue, kernelB, 3, NULL, globalWorkSize_B, localWorkSize_B,
+                                                              0, NULL, NULL);
+
+    clFinish(queue);
+
+    cl_kernel kernelC = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+
+    inputWidth = 56, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 56 * 32, blockOffset2 = 0;
+    outputWidth = 58, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 58 * 32, blockOffset2Out = 0;
+
+    // Setting arguments
+    clSetKernelArg(kernelC, 0, sizeof(cl_mem), (void *) &Layer5_Neurons_GPU);
+    clSetKernelArg(kernelC, 1, sizeof(cl_mem), (void *) &Layer5_Weights_GPU);
+    clSetKernelArg(kernelC, 2, sizeof(cl_mem), (void *) &Layer6_Neurons_GPU);
+    clSetKernelArg(kernelC, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernelC, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernelC, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernelC, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernelC, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernelC, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernelC, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernelC, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernelC, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernelC, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernelC, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernelC, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernelC, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernelC, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernelC, 17, sizeof(cl_mem), (void *) &Layer5_Mean_GPU);
+    clSetKernelArg(kernelC, 18, sizeof(cl_mem), (void *) &Layer5_StanDev_GPU);
+    clSetKernelArg(kernelC, 19, sizeof(cl_mem), (void *) &Layer5_Gamma_GPU);
+    clSetKernelArg(kernelC, 20, sizeof(cl_mem), (void *) &Layer5_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_C[3] = {128, 1 * 24, 1 * 32};
+    size_t localWorkSize_C[3] = {1, 24, 32};
+
+    err = clEnqueueNDRangeKernel(queue, kernelC, 3, NULL, globalWorkSize_C, localWorkSize_C,
+                                                              0, NULL, NULL);
+    
+    cl_kernel kernelD = clCreateKernel(program, "executeGenericFunctions_PSC", &err);
+
+    inputWidth = 56, blockMultiplier1 = 0, blockMultiplier2 = 0, blockOffset1 = 56 * 32, blockOffset2 = 32;
+    outputWidth = 58, blockMultiplier1Out = 0, blockMultiplier2Out = 0, blockOffset1Out = 58 * 32, blockOffset2Out = 32;
+
+    // Setting arguments
+    clSetKernelArg(kernelD, 0, sizeof(cl_mem), (void *) &Layer5_Neurons_GPU);
+    clSetKernelArg(kernelD, 1, sizeof(cl_mem), (void *) &Layer5_Weights_GPU);
+    clSetKernelArg(kernelD, 2, sizeof(cl_mem), (void *) &Layer6_Neurons_GPU);
+    clSetKernelArg(kernelD, 3, sizeof(int), (void *) &inputWidth);
+    clSetKernelArg(kernelD, 4, sizeof(int), (void *) &blockMultiplier1);
+    clSetKernelArg(kernelD, 5, sizeof(int), (void *) &blockMultiplier2);
+    clSetKernelArg(kernelD, 6, sizeof(int), (void *) &blockOffset1);
+    clSetKernelArg(kernelD, 7, sizeof(int), (void *) &blockOffset2);
+    clSetKernelArg(kernelD, 8, sizeof(int), (void *) &outputWidth);
+    clSetKernelArg(kernelD, 9, sizeof(int), (void *) &blockMultiplier1Out);
+    clSetKernelArg(kernelD, 10, sizeof(int), (void *) &blockMultiplier2Out);
+    clSetKernelArg(kernelD, 11, sizeof(int), (void *) &blockOffset1Out);
+    clSetKernelArg(kernelD, 12, sizeof(int), (void *) &blockOffset2Out);
+    clSetKernelArg(kernelD, 13, sizeof(int), (void *) &weight_size);
+    clSetKernelArg(kernelD, 14, sizeof(int), (void *) &channelSize);
+    clSetKernelArg(kernelD, 15, sizeof(int), (void *) &stride);
+    clSetKernelArg(kernelD, 16, sizeof(int), (void *) &offset);
+    clSetKernelArg(kernelD, 17, sizeof(cl_mem), (void *) &Layer5_Mean_GPU);
+    clSetKernelArg(kernelD, 18, sizeof(cl_mem), (void *) &Layer5_StanDev_GPU);
+    clSetKernelArg(kernelD, 19, sizeof(cl_mem), (void *) &Layer5_Gamma_GPU);
+    clSetKernelArg(kernelD, 20, sizeof(cl_mem), (void *) &Layer5_Beta_GPU);
+
+    // Execute the kernel over the entire range of the data set 
+    size_t globalWorkSize_D[3] = {128, 1 * 24, 1 * 24};
+    size_t localWorkSize_D[3] = {1, 24, 24};
+
+    err = clEnqueueNDRangeKernel(queue, kernelD, 3, NULL, globalWorkSize_D, localWorkSize_D,
+                                                              0, NULL, NULL);
+
+    // Wait for the command queue to get serviced before reading back results
+    clFinish(queue);
+
+    clReleaseMemObject(Layer5_Weights_GPU);
+    clReleaseMemObject(Layer5_Mean_GPU);
+    clReleaseMemObject(Layer5_StanDev_GPU);
+    clReleaseMemObject(Layer5_Gamma_GPU);
+    clReleaseMemObject(Layer5_Beta_GPU);
+
+    free(Layer5_Weights_CPU);
+    free(Layer5_Mean_CPU);
+    free(Layer5_StanDev_CPU);
+    free(Layer5_Gamma_CPU);
+    free(Layer5_Beta_CPU);
+}
+
+void Read_FifthLayer_Data(double *Layer5_Weights_CPU,
+    double * Layer5_Mean_CPU,
+    double * Layer5_StanDev_CPU,
+    double * Layer5_Gamma_CPU,
+    double * Layer5_Beta_CPU
+
+){
+    read_File("data/FifthLayer/weightsNorm.txt", Layer5_Weights_CPU);
+    read_File("data/FifthLayer/Fifth_Layer_Mean.txt", Layer5_Mean_CPU);
+    read_File("data/FifthLayer/Fifth_Layer_StanDev.txt", Layer5_StanDev_CPU);
+    read_File("data/FifthLayer/Fifth_Layer_Gamma.txt", Layer5_Gamma_CPU);
+    read_File("data/FifthLayer/Fifth_Layer_Beta.txt", Layer5_Beta_CPU);
 }
 
 void Execute_Fourth_Layer(cl_mem Layer4_Neurons_GPU,
