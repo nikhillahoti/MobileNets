@@ -1404,7 +1404,6 @@ void NeuralNetwork(){
             sum += exp(Layer30_Neurons_CPU[i]);
         }
 
-        printf("\n\n Sum --> %lf", sum);
         for(int i = 0 ; i < value_size ; i++){
             Layer30_Neurons_CPU[i] = (exp(Layer30_Neurons_CPU[i]) * 1.0 / sum);
         }
@@ -1467,7 +1466,6 @@ void Execute_TwentyNine_Layer(cl_mem Layer29_Neurons_GPU,
     size_t globalWorkSize_A[3] = {1, 1000, 1};
     size_t localWorkSize_A[3] = {1, 1, 1};
 
-    printf("\n\n Inside of here");
     clEnqueueNDRangeKernel(queue, kernel, 3, NULL, globalWorkSize_A, localWorkSize_A,
                                                               0, NULL, NULL);
 
